@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Preoff.Data;
 using Preoff.Entity;
-using Preoff.Service;
 
 namespace Preoff.Controllers
 {
@@ -15,24 +14,14 @@ namespace Preoff.Controllers
     [Route("Test")]
     public class TestController : Controller
     {
-        public JwtSettings _jwtSettings;
         public readonly IRepository<Tuser> _userRepository;
-        private IDemoService _demoService { get; set; }
         /// <summary>
         /// 构造函数
         /// </summary>
-        /// <param name="_jwtSettingsAccesser">注入Jwt认证</param>
         /// <param name="userRepository">用户仓储</param>
-        //public TestController(IOptions<JwtSettings> _jwtSettingsAccesser, IRepository<Tuser> userRepository, IDemoService demoService)
-        //{
-        //    _jwtSettings = _jwtSettingsAccesser.Value;
-        //    _userRepository = userRepository;
-        //    _demoService = demoService;
-        //}
-        public TestController(IOptions<JwtSettings> _jwtSettingsAccesser,DemoService demoService)
+        public TestController(IRepository<Tuser> userRepository)
         {
-            _demoService = demoService;
-            _jwtSettings = _jwtSettingsAccesser.Value;
+            _userRepository = userRepository;
         }
         ///// <summary>
         ///// 添加用户[支持批量]
@@ -56,7 +45,6 @@ namespace Preoff.Controllers
         [HttpPost("add")]
         public IActionResult Add([FromBody] Tuser _user)
         {
-            _demoService.Meth();
             return Ok();
         }
     }

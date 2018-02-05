@@ -22,7 +22,7 @@ namespace Preoff.Controllers
     {
         private JwtSettings _jwtSettings;
         private CoreTestContext _dbContext;
-        ILog log = LogManager.GetLogger(Startup.repository.Name, typeof(Startup));
+        ILog log = LogManager.GetLogger(Startup.Logrepository.Name, typeof(Startup));
         /// <summary>
         /// 构造函数
         /// </summary>

@@ -25,7 +25,6 @@ using System.Reflection;
 using log4net.Repository;
 using log4net.Config;
 using log4net;
-using Preoff.Service;
 
 namespace Preoff
 {
@@ -41,8 +40,8 @@ namespace Preoff
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            repository = LogManager.CreateRepository("NETCoreRepository");
-            XmlConfigurator.Configure(repository, new FileInfo("log4net.config"));
+            Logrepository = LogManager.CreateRepository("NETCoreRepository");
+            XmlConfigurator.Configure(Logrepository, new FileInfo("log4net.config"));
         }
         /// <summary>
         /// 
@@ -51,7 +50,7 @@ namespace Preoff
         /// <summary>
         /// 
         /// </summary>
-        public static ILoggerRepository repository { get; set; }
+        public static ILoggerRepository Logrepository { get; set; }
         // This method gets called by the runtime. Use this method to add services to the container.
         /// <summary>
         /// 
@@ -99,8 +98,8 @@ namespace Preoff
             //    options.AddPolicy("SuperAdminOnly", policy => policy.RequireClaim("SuperAdminOnly"));
             //});
 
-            services.AddUnitOfWork<CoreTestContext>();
-            services.AddScoped(typeof(IDemoService), typeof(DemoService));
+            //services.AddUnitOfWork<CoreTestContext>();
+            //services.AddScoped(typeof(IDemoService), typeof(DemoService));
 
             services.AddMvc();
 
@@ -137,14 +136,14 @@ namespace Preoff
             });
             app.UseMvc();
 
-            var log = LogManager.GetLogger(repository.Name, typeof(Startup));
-            log.Info("test");
+            //var log = LogManager.GetLogger(Logrepository.Name, typeof(Startup));
+            //log.Info("test");
         }
 
-        //public void ConfigureContainer(ContainerBuilder builder)
-        //{
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
 
-            //builder.RegisterGeneric(typeof(ImplRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(ImplRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
             //builder.RegisterAssemblyTypes(typeof(TestDAL).GetTypeInfo().Assembly).AsImplementedInterfaces().AsSelf().PropertiesAutowired();//dal
             //builder.RegisterGeneric(typeof(ImplRepository<>))
             //    .InstancePerLifetimeScope()
@@ -162,6 +161,6 @@ namespace Preoff
 
 
 
-        //}
+        }
     }
 }
