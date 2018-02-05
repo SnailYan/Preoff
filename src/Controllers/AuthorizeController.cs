@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 using System.Text;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
-using Preoff.Models;
+using Preoff.Entity;
 
 namespace Preoff.Controllers
 {

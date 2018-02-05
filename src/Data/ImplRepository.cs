@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Preoff.Models;
+using Preoff.Entity;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;

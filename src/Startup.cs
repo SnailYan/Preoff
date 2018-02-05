@@ -18,13 +18,14 @@ using Swashbuckle.AspNetCore;
 using System.IO;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.EntityFrameworkCore;
-using Preoff.Models;
+using Preoff.Entity;
 using Preoff.Data;
 using Autofac;
 using System.Reflection;
 using log4net.Repository;
 using log4net.Config;
 using log4net;
+using Preoff.Service;
 
 namespace Preoff
 {
@@ -60,10 +61,10 @@ namespace Preoff
         {
             services.Configure<JwtSettings>(Configuration.GetSection("JwtSettings"));
             services.AddEntityFrameworkSqlServer().AddDbContext<CoreTestContext>(opetions => opetions.UseSqlServer(Configuration.GetConnectionString("ConnDBString")));
-
+            
             //services.AddScoped(typeof(IRepository<>), typeof(ImplRepository<>));
 
-            
+
 
             var jwtSettings=new JwtSettings();
             Configuration.Bind("JwtSettings",jwtSettings);
@@ -97,6 +98,10 @@ namespace Preoff
             //{
             //    options.AddPolicy("SuperAdminOnly", policy => policy.RequireClaim("SuperAdminOnly"));
             //});
+
+            services.AddUnitOfWork<CoreTestContext>();
+            services.AddScoped(typeof(IDemoService), typeof(DemoService));
+
             services.AddMvc();
 
             // 注入的实现ISwaggerProvider使用默认设置
@@ -111,7 +116,6 @@ namespace Preoff
                 var xmlPath = Path.Combine(basePath, "Preoff.xml");
                 c.IncludeXmlComments(xmlPath);
             });
-
      }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -137,10 +141,10 @@ namespace Preoff
             log.Info("test");
         }
 
-        public void ConfigureContainer(ContainerBuilder builder)
-        {
+        //public void ConfigureContainer(ContainerBuilder builder)
+        //{
 
-            builder.RegisterGeneric(typeof(ImplRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
+            //builder.RegisterGeneric(typeof(ImplRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
             //builder.RegisterAssemblyTypes(typeof(TestDAL).GetTypeInfo().Assembly).AsImplementedInterfaces().AsSelf().PropertiesAutowired();//dal
             //builder.RegisterGeneric(typeof(ImplRepository<>))
             //    .InstancePerLifetimeScope()
@@ -158,6 +162,6 @@ namespace Preoff
 
 
 
-        }
+        //}
     }
 }

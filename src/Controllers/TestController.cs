@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Preoff.Data;
-using Preoff.Models;
+using Preoff.Entity;
+using Preoff.Service;
 
 namespace Preoff.Controllers
 {
@@ -16,36 +17,47 @@ namespace Preoff.Controllers
     {
         public JwtSettings _jwtSettings;
         public readonly IRepository<Tuser> _userRepository;
+        private IDemoService _demoService { get; set; }
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="_jwtSettingsAccesser">注入Jwt认证</param>
         /// <param name="userRepository">用户仓储</param>
-        public TestController(IOptions<JwtSettings> _jwtSettingsAccesser, IRepository<Tuser> userRepository)
-        {
-            _jwtSettings = _jwtSettingsAccesser.Value;
-            _userRepository = userRepository;
-        }
-        //public TestController()
+        //public TestController(IOptions<JwtSettings> _jwtSettingsAccesser, IRepository<Tuser> userRepository, IDemoService demoService)
         //{
+        //    _jwtSettings = _jwtSettingsAccesser.Value;
+        //    _userRepository = userRepository;
+        //    _demoService = demoService;
         //}
-        /// <summary>
-        /// 添加用户[支持批量]
-        /// </summary>
-        /// <param name="_user">用户类</param>
-        /// <returns>执行成功则返回添加成功记录条数，失败返回0</returns>
-        [HttpPost("add")]
-        public IActionResult Add([FromBody]Tuser _user)
+        public TestController(IOptions<JwtSettings> _jwtSettingsAccesser,DemoService demoService)
         {
-            Tuser _tuser= _userRepository.Create(_user);
-            if (_tuser is null)
-            {
-                return Ok("0");
-            }
-            else
-            {
-                return Ok(_tuser);
-            }
+            _demoService = demoService;
+            _jwtSettings = _jwtSettingsAccesser.Value;
+        }
+        ///// <summary>
+        ///// 添加用户[支持批量]
+        ///// </summary>
+        ///// <param name="_user">用户类</param>
+        ///// <returns>执行成功则返回添加成功记录条数，失败返回0</returns>
+        //[HttpPost("add")]
+        //public IActionResult Add([FromBody]Tuser _user)
+        //{
+        //    Tuser _tuser= _userRepository.Create(_user);
+        //    if (_tuser is null)
+        //    {
+        //        return Ok("0");
+        //    }
+        //    else
+        //    {
+        //        return Ok(_tuser);
+        //    }
+        //}
+
+        [HttpPost("add")]
+        public IActionResult Add([FromBody] Tuser _user)
+        {
+            _demoService.Meth();
+            return Ok();
         }
     }
 }
