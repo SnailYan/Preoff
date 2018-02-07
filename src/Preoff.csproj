@@ -11,19 +11,15 @@
   <ItemGroup>
     <Compile Remove="Entity\**" />
     <Compile Remove="Models2\**" />
-    <Compile Remove="Models\**" />
     <Compile Remove="Service\**" />
     <Content Remove="Entity\**" />
     <Content Remove="Models2\**" />
-    <Content Remove="Models\**" />
     <Content Remove="Service\**" />
     <EmbeddedResource Remove="Entity\**" />
     <EmbeddedResource Remove="Models2\**" />
-    <EmbeddedResource Remove="Models\**" />
     <EmbeddedResource Remove="Service\**" />
     <None Remove="Entity\**" />
     <None Remove="Models2\**" />
-    <None Remove="Models\**" />
     <None Remove="Service\**" />
   </ItemGroup>
 
@@ -34,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\" />
     <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>

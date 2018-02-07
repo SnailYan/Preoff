@@ -59,8 +59,9 @@ namespace Preoff
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<JwtSettings>(Configuration.GetSection("JwtSettings"));
-            services.AddEntityFrameworkSqlServer().AddDbContext<CoreTestContext>(opetions => opetions.UseSqlServer(Configuration.GetConnectionString("ConnDBString")));
-            
+            //services.AddEntityFrameworkSqlServer().AddDbContext<CoreTestContext>(opetions => opetions.UseSqlServer(Configuration.GetConnectionString("ConnDBString")));
+            services.AddEntityFrameworkSqlServer().AddDbContext<PreoffContext>(opetions => opetions.UseSqlServer(Configuration.GetConnectionString("ConnDBString")));
+
             //services.AddScoped(typeof(IRepository<>), typeof(ImplRepository<>));
 
 
@@ -109,7 +110,7 @@ namespace Preoff
                 c.SwaggerDoc("v1", new Info
                 {
                     Version = "v1",
-                    Title = "Api"
+                    Title = "Api接口"
                 });
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
                 var xmlPath = Path.Combine(basePath, "Preoff.xml");
@@ -132,7 +133,7 @@ namespace Preoff
             app.UseAuthentication();
             app.UseSwagger();
             app.UseSwaggerUI(c => {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api接口");
             });
             app.UseMvc();
 
