@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Preoff.Entity
+{
+    public partial class UserTable
+    {
+        public UserTable()
+        {
+            TaskUserTable = new HashSet<TaskUserTable>();
+            UserRoleTable = new HashSet<UserRoleTable>();
+        }
+
+        public int Id { get; set; }
+        public int? UnitTableId { get; set; }
+        public string LoginName { get; set; }
+        public string LoginPwd { get; set; }
+        public string RealName { get; set; }
+        public string Gender { get; set; }
+        public int? Age { get; set; }
+        public string Telephone { get; set; }
+        public string Email { get; set; }
+        public string ViewName { get; set; }
+        public DateTime? RegTime { get; set; }
+        public DateTime? LastLoginTime { get; set; }
+        public int? LoginCount { get; set; }
+
+        public UnitTable UnitTable { get; set; }
+        public ICollection<TaskUserTable> TaskUserTable { get; set; }
+        public ICollection<UserRoleTable> UserRoleTable { get; set; }
+    }
+}

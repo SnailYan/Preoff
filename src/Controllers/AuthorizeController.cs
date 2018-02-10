@@ -20,13 +20,13 @@ namespace Preoff.Controllers
     public class AuthorizeController : Controller
     {
         private JwtSettings _jwtSettings;
-        private CoreTestContext _dbContext;
+        private PreoffContext _dbContext;
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="_jwtSettingsAccesser">注入Jwt认证</param>
         /// <param name="_db">注入数据库配置</param>
-        public AuthorizeController(IOptions<JwtSettings> _jwtSettingsAccesser, CoreTestContext _db)
+        public AuthorizeController(IOptions<JwtSettings> _jwtSettingsAccesser, PreoffContext _db)
         {
             _jwtSettings=_jwtSettingsAccesser.Value;
             _dbContext = _db;
@@ -37,7 +37,7 @@ namespace Preoff.Controllers
         /// <param name="userModel">用户</param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Token([FromBody]Tuser userModel)
+        public IActionResult Token([FromBody]UserTable userModel)
         {
             if(ModelState.IsValid)
             {
@@ -53,7 +53,7 @@ namespace Preoff.Controllers
                 //    //new Claim("SuperAdminOnly","true")
                 //};
                 var claims = new Claim[]{
-                    new Claim(ClaimTypes.Name,userModel.CName),
+                    new Claim(ClaimTypes.Name,userModel.LoginName),
                     new Claim(ClaimTypes.Role,"user"),
                     //new Claim("SuperAdminOnly","true")
                 };
