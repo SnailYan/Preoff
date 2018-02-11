@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using log4net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -14,12 +15,13 @@ namespace Preoff.Controllers
     [Route("Test")]
     public class TestController : Controller
     {
-        public readonly IRepository<Tuser> _userRepository;
+        public readonly IUserRepository _userRepository;
+        ILog log = LogManager.GetLogger(Startup.Logrepository.Name, typeof(Startup));
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="userRepository">用户仓储</param>
-        public TestController(IRepository<Tuser> userRepository)
+        public TestController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
@@ -41,10 +43,17 @@ namespace Preoff.Controllers
         //        return Ok(_tuser);
         //    }
         //}
+        [HttpGet("all")]
+        public IActionResult all()
+        {
+            _userRepository.BatchUpdateUserBirthday();
+           return Ok(_userRepository.GetAll());
+        }
 
         [HttpPost("add")]
-        public IActionResult Add([FromBody] Tuser _user)
+        public IActionResult Add([FromBody] UserTable _user)
         {
+            _userRepository.Create(_user);
             return Ok();
         }
     }

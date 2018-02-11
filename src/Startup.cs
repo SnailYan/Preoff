@@ -60,9 +60,9 @@ namespace Preoff
         {
             services.Configure<JwtSettings>(Configuration.GetSection("JwtSettings"));
             //services.AddEntityFrameworkSqlServer().AddDbContext<CoreTestContext>(opetions => opetions.UseSqlServer(Configuration.GetConnectionString("ConnDBString")));
-            services.AddEntityFrameworkSqlServer().AddDbContext<PreoffContext>(opetions => opetions.UseSqlServer(Configuration.GetConnectionString("ConnDBString")));
+            services.AddEntityFrameworkSqlServer().AddDbContext<PreoffContext>(opetions => opetions.UseSqlServer(Configuration.GetConnectionString("ConnDBString"),b=>b.UseRowNumberForPaging()));
 
-            services.AddScoped(typeof(IRepository<>), typeof(ImplRepository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>));
 
 
 
@@ -144,7 +144,8 @@ namespace Preoff
         public void ConfigureContainer(ContainerBuilder builder)
         {
 
-            builder.RegisterGeneric(typeof(ImplRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(RepositoryBase<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
+
             //builder.RegisterAssemblyTypes(typeof(TestDAL).GetTypeInfo().Assembly).AsImplementedInterfaces().AsSelf().PropertiesAutowired();//dal
             //builder.RegisterGeneric(typeof(ImplRepository<>))
             //    .InstancePerLifetimeScope()
@@ -159,9 +160,12 @@ namespace Preoff
             //builder.RegisterAssemblyTypes(dataAccess)
             //       .Where(t => t.Name.EndsWith("Repository"))
             //       .AsImplementedInterfaces();
+            //var assembly = Assembly.GetExecutingAssembly();
+            //builder.RegisterAssemblyTypes(assembly)
+            //    .InNamespace("Preoff.Entity");
+            //builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("Table"));
 
-
-
+            builder.RegisterType<UserRepository>().As<IUserRepository>();
         }
     }
 }

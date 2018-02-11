@@ -34,29 +34,6 @@ namespace Preoff.Controllers
             _dbContext = _db;
         }
 
-
-        /// <summary>
-        /// 添加用户[支持批量]
-        /// </summary>
-        /// <param name="_user">用户类</param>
-        /// <returns>执行成功则返回添加成功记录条数，失败返回0</returns>
-        [HttpPost("addUser")]
-        public IActionResult Add([FromBody]UserTable _user)
-        {
-            if (_user is null)
-            {
-                return Json(new { code = "-1", msg = "添加失败,数据为空或不合法!" });
-            }
-
-                _user.Id = 0;
-                _dbContext.Database.EnsureCreated();
-                _dbContext.UserTable.Add(_user);
-            int x = _dbContext.SaveChanges();
-            //return Ok(x);
-            return Json(new { code = "0", msg = "添加成功!共添加" + x.ToString() + "条数据。" });
-        }
-
-
         /// <summary>
         /// 添加用户[支持批量]
         /// </summary>
@@ -128,8 +105,8 @@ namespace Preoff.Controllers
         /// </summary>
         /// <param name="_userID">用户列表</param>
         /// <returns></returns>
-        [HttpDelete("delMul")]
-        public IActionResult DelMul([FromBody]List<int> _userID)
+        [HttpDelete("batchdel")]
+        public IActionResult batchdel([FromBody]List<int> _userID)
         {
             //Tuser user = _dbContext.Tuser.SingleOrDefault(u => u.Id == id);
             if (_userID is null || _userID.Count<1)
@@ -139,9 +116,11 @@ namespace Preoff.Controllers
             else
             {
                 var user=_dbContext.UserTable.Where(r => _userID.Contains(r.Id)).ToList();
+               
                 if (user.Count>0)
                 {
                     _dbContext.UserTable.RemoveRange(user);
+                    //_dbContext.Entry(user).State = EntityState.Deleted;
                     //return _dbContext.SaveChanges();
                     return Json(new { code = "0", msg = "删除成功,共删除" + _dbContext.SaveChanges() + "条数据。" });
                 }
@@ -192,47 +171,47 @@ namespace Preoff.Controllers
         //    }
         //    var _user = from s in _dbContext.Tuser
         //                select s;
-            
+
         //    return Ok(await PaginatedList<Tuser>.CreateAsync(_user.AsNoTracking(), page ?? 1, 10));
         //}
 
-        //[HttpGet("{page}")]
-        //public async Task<IActionResult> SelectPage(string sortOrder,string currentFilter,string searchString,int? page)
-        //{
-        //    if (searchString != null)
-        //    {
-        //        page = 1;
-        //    }
-        //    else
-        //    {
-        //        searchString = currentFilter;
-        //    }
-        //    var _user = from s in _dbContext.Tuser
-        //                   select s;
-        //    if (!String.IsNullOrEmpty(searchString))
-        //    {
-        //        _user = _user.Where(s => s.CName.Contains(searchString)
-        //                               || s.CValue.Contains(searchString));
-        //    }
-        //    switch (sortOrder)
-        //    {
-        //        case "name_desc":
-        //            _user = _user.OrderByDescending(s => s.CName);
-        //            break;
-        //        case "Date":
-        //            _user = _user.OrderBy(s => s.CValue);
-        //            break;
-        //        case "date_desc":
-        //            _user = _user.OrderByDescending(s => s.CValue);
-        //            break;
-        //        default:
-        //            _user = _user.OrderBy(s => s.CName);
-        //            break;
-        //    }
+        [HttpGet("{page}")]
+        public async Task<IActionResult> SelectPage(string sortOrder, string currentFilter, string searchString, int? page)
+        {
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            var _user = from s in _dbContext.UserTable
+                        select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                _user = _user.Where(s => s.RealName.Contains(searchString)
+                                       || s.ViewName.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    _user = _user.OrderByDescending(s => s.Id);
+                    break;
+                case "Date":
+                    _user = _user.OrderBy(s => s.RegTime);
+                    break;
+                case "date_desc":
+                    _user = _user.OrderByDescending(s => s.RegTime);
+                    break;
+                default:
+                    _user = _user.OrderBy(s => s.LoginName);
+                    break;
+            }
 
-        //    int pageSize = 3;
-        //    return Ok(await PaginatedList<Tuser>.CreateAsync(_user.AsNoTracking(), page ?? 1, pageSize));
-        //}
+            int pageSize = 3;
+            return Ok(await PaginatedList<UserTable>.CreateAsync(_user.AsNoTracking(), page ?? 1, pageSize));
+        }
     }
 }
 

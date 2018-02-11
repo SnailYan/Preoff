@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using log4net;
+using Microsoft.EntityFrameworkCore;
 using Preoff.Entity;
 using System;
 using System.Collections.Generic;
@@ -9,16 +10,15 @@ using System.Threading.Tasks;
 
 namespace Preoff.Data
 {
-    public class ImplRepository<T> : IRepository<T> where T : class, new()
+    public class RepositoryBase<T> : IRepository<T> where T : class, new()
     {
         private PreoffContext _dbContext;
-
-        protected ImplRepository(PreoffContext _db)
+        ILog log = LogManager.GetLogger(Startup.Logrepository.Name, typeof(Startup));
+        public RepositoryBase(PreoffContext _db)
         {
             _dbContext = _db;
         }
-
-        public virtual int BatchDelete(IList<Guid> guids)
+        public virtual int BatchDelete(IList<int> guids)
         {
             foreach (var item in guids)
             {
@@ -41,7 +41,7 @@ namespace Preoff.Data
         /// <param name="guid">指定的全局标识</param>
         /// <returns>删除数量</returns>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public virtual int Delete(Guid guid)
+        public virtual int Delete(int guid)
         {
             var model = _dbContext.Set<T>().Find(guid);
             if (model == null) throw new ArgumentOutOfRangeException(nameof(guid));
@@ -81,7 +81,7 @@ namespace Preoff.Data
             return _dbContext.Set<T>().FirstOrDefault(expression);
         }
 
-        public virtual T Retrieve(Guid guid)
+        public virtual T Retrieve(int guid)
         {
             return _dbContext.Set<T>().Find(guid);
         }
@@ -93,5 +93,4 @@ namespace Preoff.Data
             return updateRowAcount > 0 ? model : null;
         }
     }
-
 }
