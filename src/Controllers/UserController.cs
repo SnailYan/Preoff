@@ -21,35 +21,59 @@ namespace Preoff.Controllers
     public class UserController : Controller
     {
         private JwtSettings _jwtSettings;
-        private CoreTestContext _dbContext;
+        private PreoffContext _dbContext;
         ILog log = LogManager.GetLogger(Startup.Logrepository.Name, typeof(Startup));
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="_jwtSettingsAccesser">注入Jwt认证</param>
         /// <param name="_db">注入数据库配置</param>
-        public UserController(IOptions<JwtSettings> _jwtSettingsAccesser,CoreTestContext _db)
+        public UserController(IOptions<JwtSettings> _jwtSettingsAccesser, PreoffContext _db)
         {
             _jwtSettings = _jwtSettingsAccesser.Value;
             _dbContext = _db;
         }
+
+
+        /// <summary>
+        /// 添加用户[支持批量]
+        /// </summary>
+        /// <param name="_user">用户类</param>
+        /// <returns>执行成功则返回添加成功记录条数，失败返回0</returns>
+        [HttpPost("addUser")]
+        public IActionResult Add([FromBody]UserTable _user)
+        {
+            if (_user is null)
+            {
+                return Json(new { code = "-1", msg = "添加失败,数据为空或不合法!" });
+            }
+
+                _user.Id = 0;
+                _dbContext.Database.EnsureCreated();
+                _dbContext.UserTable.Add(_user);
+            int x = _dbContext.SaveChanges();
+            //return Ok(x);
+            return Json(new { code = "0", msg = "添加成功!共添加" + x.ToString() + "条数据。" });
+        }
+
+
         /// <summary>
         /// 添加用户[支持批量]
         /// </summary>
         /// <param name="_user">用户类</param>
         /// <returns>执行成功则返回添加成功记录条数，失败返回0</returns>
         [HttpPost("add")]
-        public IActionResult Add([FromBody]List<Tuser> _user)
+        public IActionResult Add([FromBody]List<UserTable> _user)
         {
             if (_user is null || _user.Count==0)
             {
                 return Json(new { code = "-1", msg = "添加失败,数据为空或不合法!" });
             }
-            foreach (Tuser user in _user)
+            foreach (UserTable user in _user)
             {
                 user.Id = 0;
                 _dbContext.Database.EnsureCreated();
-                _dbContext.Tuser.Add(user);                
+                _dbContext.UserTable.Add(user);                
             }
             int x = _dbContext.SaveChanges();
             //return Ok(x);
@@ -61,16 +85,16 @@ namespace Preoff.Controllers
         /// <param name="_user">用户类</param>
         /// <returns></returns>
         [HttpPost("modify")]
-        public IActionResult Modify([FromBody]List<Tuser> _user)
+        public IActionResult Modify([FromBody]List<UserTable> _user)
         {
             if (_user is null || _user.Count == 0)
             {
                 return Json(new { code = "-1", msg = "修改失败,数据为空或不合法!" });
             }
-            foreach (Tuser user in _user)
+            foreach (UserTable user in _user)
             {
                 ////更新全部字段
-                _dbContext.Tuser.Update(user);
+                _dbContext.UserTable.Update(user);
                 //更新部分字段
                 // db.Tuser.Single(u => u.Id == _user.Id).CName = _user.CName;                
             }
@@ -86,14 +110,14 @@ namespace Preoff.Controllers
         [HttpDelete("del/{id}")]
         public IActionResult Del(int id)
         {
-            Tuser user = _dbContext.Tuser.SingleOrDefault(u => u.Id == id);
+            UserTable user = _dbContext.UserTable.SingleOrDefault(u => u.Id == id);
             if (user is null)
             {
                 return Json(new { code = "-1", msg = "删除失败,数据不存在或不合法!" });
             }
             else
             {
-                _dbContext.Tuser.Remove(user);
+                _dbContext.UserTable.Remove(user);
                 //return Ok(_dbContext.SaveChanges());
                 return Json(new { code = "0", msg = "删除成功,共删除" + _dbContext.SaveChanges() + "条数据。" });
             }
@@ -114,10 +138,10 @@ namespace Preoff.Controllers
             }
             else
             {
-                var user=_dbContext.Tuser.Where(r => _userID.Contains(r.Id)).ToList();
+                var user=_dbContext.UserTable.Where(r => _userID.Contains(r.Id)).ToList();
                 if (user.Count>0)
                 {
-                    _dbContext.Tuser.RemoveRange(user);
+                    _dbContext.UserTable.RemoveRange(user);
                     //return _dbContext.SaveChanges();
                     return Json(new { code = "0", msg = "删除成功,共删除" + _dbContext.SaveChanges() + "条数据。" });
                 }
@@ -136,7 +160,7 @@ namespace Preoff.Controllers
         public IActionResult Select(int id)
         {
             //根据id查询
-            Tuser user = _dbContext.Tuser.SingleOrDefault(u => u.Id == id);
+            UserTable user = _dbContext.UserTable.SingleOrDefault(u => u.Id == id);
 
             //根据name过滤查询
             //var user = db.Tuser
@@ -155,7 +179,7 @@ namespace Preoff.Controllers
         [HttpGet("selectall")]
         public IActionResult SelectAll()
         {
-            var user = _dbContext.Tuser.ToList();
+            var user = _dbContext.UserTable.ToList();
             return Ok(user);
         }
 

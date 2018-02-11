@@ -11,9 +11,9 @@ namespace Preoff.Data
 {
     public class ImplRepository<T> : IRepository<T> where T : class, new()
     {
-        private CoreTestContext _dbContext;
+        private PreoffContext _dbContext;
 
-        protected ImplRepository(CoreTestContext _db)
+        protected ImplRepository(PreoffContext _db)
         {
             _dbContext = _db;
         }

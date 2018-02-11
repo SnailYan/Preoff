@@ -37,11 +37,11 @@ namespace Preoff.Controllers
         /// <param name="userModel">”√ªß</param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Token([FromBody]UserTable userModel)
+        public IActionResult Token([FromBody]AuthorizeTable _auth)
         {
             if(ModelState.IsValid)
             {
-                //var a=_dbContext.Tuser.FirstOrDefault(u => (u.CName == userModel.CName) && (u.CValue == userModel.CValue));
+                //var a = _dbContext.UserTable.FirstOrDefault(u => (u.LoginName == username) && (u.LoginPwd == pwd));
                 //if (a is null)
                 //{
                 //    return BadRequest();
@@ -53,7 +53,7 @@ namespace Preoff.Controllers
                 //    //new Claim("SuperAdminOnly","true")
                 //};
                 var claims = new Claim[]{
-                    new Claim(ClaimTypes.Name,userModel.LoginName),
+                    new Claim(ClaimTypes.Name,_auth.userName),
                     new Claim(ClaimTypes.Role,"user"),
                     //new Claim("SuperAdminOnly","true")
                 };
