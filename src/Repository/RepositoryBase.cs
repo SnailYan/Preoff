@@ -8,12 +8,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Preoff.Data
+namespace Preoff.Repository
 {
     public class RepositoryBase<T> : IRepository<T> where T : class, new()
     {
         private PreoffContext _dbContext;
-        ILog log = LogManager.GetLogger(Startup.Logrepository.Name, typeof(Startup));
         public RepositoryBase(PreoffContext _db)
         {
             _dbContext = _db;

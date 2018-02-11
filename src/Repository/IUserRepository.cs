@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Preoff.Data
+namespace Preoff.Repository
 {
     /// <summary>
     /// 用户仓储接口

@@ -24,7 +24,7 @@ using System.Reflection;
 using log4net.Repository;
 using log4net.Config;
 using log4net;
-using Preoff.Data;
+using Preoff.Repository;
 
 namespace Preoff
 {
