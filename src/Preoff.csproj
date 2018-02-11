@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\AreaController.cs" />
+    <Compile Remove="Controllers\AuthorizeController.cs" />
     <Compile Remove="Controllers\TestController.cs" />
   </ItemGroup>
 

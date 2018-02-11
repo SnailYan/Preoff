@@ -19,12 +19,12 @@ using System.IO;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.EntityFrameworkCore;
 using Preoff.Entity;
-using Preoff.Data;
 using Autofac;
 using System.Reflection;
 using log4net.Repository;
 using log4net.Config;
 using log4net;
+using Preoff.Data;
 
 namespace Preoff
 {
@@ -62,7 +62,7 @@ namespace Preoff
             //services.AddEntityFrameworkSqlServer().AddDbContext<CoreTestContext>(opetions => opetions.UseSqlServer(Configuration.GetConnectionString("ConnDBString")));
             services.AddEntityFrameworkSqlServer().AddDbContext<PreoffContext>(opetions => opetions.UseSqlServer(Configuration.GetConnectionString("ConnDBString")));
 
-            //services.AddScoped(typeof(IRepository<>), typeof(ImplRepository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(ImplRepository<>));
 
 
 
