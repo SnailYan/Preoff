@@ -1,48 +1,47 @@
-﻿using System;
+﻿using log4net;
+using Microsoft.AspNetCore.Mvc;
+using Preoff.Entity;
+using Preoff.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Preoff.Entity;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Options;
-using Microsoft.EntityFrameworkCore;
-using log4net;
-using Preoff.Repository;
 
 namespace Preoff.Controllers
 {
     /// <summary>
-    /// 用户控制器
+    /// 无人机控制器
     /// </summary>
     //[Authorize]
     [Produces("application/json")]
-    [Route("user")]
-    public class UserController : Controller
+    [Route("Airc")]
+    public class AircController : Controller
     {
-        public readonly IUserRepository _userRepository;
+        /// <summary>
+        /// 
+        /// </summary>
+        public readonly IRepository<AircTable> _aircRepository;
         ILog log = LogManager.GetLogger(Startup.Logrepository.Name, typeof(Startup));
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="_db">注入数据库配置</param>
-        public UserController(IUserRepository _db)
+        public AircController(IRepository<AircTable> _db)
         {
-            _userRepository = _db;
+            _aircRepository = _db;
         }
 
         /// <summary>
-        /// 添加用户[支持批量]
+        /// 添加无人机[支持批量]
         /// </summary>
         /// <param name="_user">用户类</param>
-        /// <returns></returns>
+        /// <returns>执行成功则返回添加成功记录条数，失败返回-1</returns>
         [HttpPost("add")]
-        public IActionResult Add([FromBody]List<UserTable> _user)
+        public IActionResult Add([FromBody]List<AircTable> _user)
         {
             try
             {
-                return Ok(_userRepository.SaveList(_user));
+                return Ok(_aircRepository.SaveList(_user));
             }
             catch (Exception ex)
             {
@@ -59,16 +58,16 @@ namespace Preoff.Controllers
         /// <param name="_user">用户类</param>
         /// <returns></returns>
         [HttpPost("UpdateList")]
-        public IActionResult UpdateList([FromBody]List<UserTable> _user)
+        public IActionResult UpdateList([FromBody]List<AircTable> _user)
         {
             try
             {
-                return Ok(_userRepository.UpdateList(_user));
+                return Ok(_aircRepository.UpdateList(_user));
             }
             catch (Exception ex)
             {
 
-                return Json(new {code = "-1"});
+                return Json(new { code = "-1" });
             }
         }
         /// <summary>
@@ -81,7 +80,7 @@ namespace Preoff.Controllers
         {
             try
             {
-                return Ok(_userRepository.Delete(p => p.Id == id));
+                return Ok(_aircRepository.Delete(p => p.Id == id));
             }
             catch (Exception ex)
             {
@@ -99,7 +98,7 @@ namespace Preoff.Controllers
         {
             try
             {
-                return Ok(_userRepository.Delete(p=> _userID.Contains(p.Id)));
+                return Ok(_aircRepository.Delete(p => _userID.Contains(p.Id)));
             }
             catch (Exception ex)
             {
@@ -112,11 +111,11 @@ namespace Preoff.Controllers
         /// <param name="_user">用户列表</param>
         /// <returns></returns>
         [HttpDelete("batchdel")]
-        public IActionResult Batchdel([FromBody]List<UserTable> _user)
+        public IActionResult Batchdel([FromBody]List<AircTable> _user)
         {
             try
             {
-               return Ok(_userRepository.DeleteList(_user));
+                return Ok(_aircRepository.DeleteList(_user));
             }
             catch (Exception ex)
             {
@@ -133,7 +132,7 @@ namespace Preoff.Controllers
         {
             try
             {
-                return Ok(_userRepository.Get(p => p.Id == id));
+                return Ok(_aircRepository.Get(p => p.Id == id));
             }
             catch (Exception ex)
             {
@@ -149,65 +148,13 @@ namespace Preoff.Controllers
         {
             try
             {
-                return Ok(_userRepository.LoadListAll());
+                return Ok(_aircRepository.LoadListAll());
             }
             catch (Exception ex)
             {
                 return Json(new { code = "-1" });
             }
-           
+
         }
-
-        //[HttpGet("{page}")]
-        //public async Task<IActionResult> pages(int? page)
-        //{
-        //    if (page<1)
-        //    {
-        //        return BadRequest();
-        //    }
-        //    var _user = from s in _dbContext.Tuser
-        //                select s;
-
-        //    return Ok(await PaginatedList<Tuser>.CreateAsync(_user.AsNoTracking(), page ?? 1, 10));
-        //}
-
-        //[HttpGet("{page}")]
-        //public async Task<IActionResult> SelectPage(string sortOrder, string currentFilter, string searchString, int? page)
-        //{
-        //    if (searchString != null)
-        //    {
-        //        page = 1;
-        //    }
-        //    else
-        //    {
-        //        searchString = currentFilter;
-        //    }
-        //    var _user = from s in _dbContext.UserTable
-        //                select s;
-        //    if (!String.IsNullOrEmpty(searchString))
-        //    {
-        //        _user = _user.Where(s => s.RealName.Contains(searchString)
-        //                               || s.ViewName.Contains(searchString));
-        //    }
-        //    switch (sortOrder)
-        //    {
-        //        case "name_desc":
-        //            _user = _user.OrderByDescending(s => s.Id);
-        //            break;
-        //        case "Date":
-        //            _user = _user.OrderBy(s => s.RegTime);
-        //            break;
-        //        case "date_desc":
-        //            _user = _user.OrderByDescending(s => s.RegTime);
-        //            break;
-        //        default:
-        //            _user = _user.OrderBy(s => s.LoginName);
-        //            break;
-        //    }
-
-        //    int pageSize = 3;
-        //    return Ok(await PaginatedList<UserTable>.CreateAsync(_user.AsNoTracking(), page ?? 1, pageSize));
-        //}
     }
 }
-

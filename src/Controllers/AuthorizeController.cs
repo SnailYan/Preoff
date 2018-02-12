@@ -34,7 +34,7 @@ namespace Preoff.Controllers
         /// <summary>
         /// 获取JWT Token
         /// </summary>
-        /// <param name="userModel">用户</param>
+        /// <param name="_auth">用户</param>
         /// <returns></returns>
         [HttpPost]
         public IActionResult Token([FromBody]AuthorizeTable _auth)

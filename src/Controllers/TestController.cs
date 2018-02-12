@@ -25,11 +25,19 @@ namespace Preoff.Controllers
         {
             _userRepository = userRepository;
         }
-        [HttpGet("all")]
-        public IActionResult all()
+        [HttpGet("select")]
+        public IActionResult Select(int id)
         {
             _userRepository.BatchUpdateUserBirthday();
-           return Ok(_userRepository.GetAll());
+            _userRepository.Get(p => p.Id == id);
+            return Ok();
+        }
+        [HttpGet("all")]
+        public IActionResult All()
+        {
+            _userRepository.BatchUpdateUserBirthday();
+            //_userRepository.Get(p=>p.Id==id);
+           return Ok(/*_userRepository.GetAll()*/);
         }
 
         [HttpPost("add")]
@@ -37,7 +45,7 @@ namespace Preoff.Controllers
         {
             try
             {
-                _userRepository.Create(_user);
+                //_userRepository.Create(_user);
                 return Ok();
             }
             catch (Exception ex)

@@ -32,6 +32,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\AreaController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove=".gitattributes" />
     <None Remove=".gitignore" />
     <None Remove="Properties\PublishProfiles\FolderProfile.pubxml" />
