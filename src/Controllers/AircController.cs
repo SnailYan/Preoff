@@ -18,7 +18,7 @@ namespace Preoff.Controllers
     public class AircController : Controller
     {
         /// <summary>
-        /// 
+        /// 无人机仓库
         /// </summary>
         public readonly IRepository<AircTable> _aircRepository;
         ILog log = LogManager.GetLogger(Startup.Logrepository.Name, typeof(Startup));
@@ -35,7 +35,7 @@ namespace Preoff.Controllers
         /// 添加无人机[支持批量]
         /// </summary>
         /// <param name="_user">用户类</param>
-        /// <returns>执行成功则返回添加成功记录条数，失败返回-1</returns>
+        /// <returns></returns>
         [HttpPost("add")]
         public IActionResult Add([FromBody]List<AircTable> _user)
         {
@@ -52,10 +52,27 @@ namespace Preoff.Controllers
                 });
             }
         }
+
+        [HttpPost("addone")]
+        public IActionResult Add([FromBody]AircTable _user)
+        {
+            try
+            {
+                return Ok(_aircRepository.SaveGetId(_user));
+            }
+            catch (Exception ex)
+            {
+
+                return Json(new
+                {
+                    code = "-1"
+                });
+            }
+        }
         /// <summary>
-        /// 更新用户[所有字段,支持批量]
+        /// 更新无人机[所有字段,支持批量]
         /// </summary>
-        /// <param name="_user">用户类</param>
+        /// <param name="_user">无人机类</param>
         /// <returns></returns>
         [HttpPost("UpdateList")]
         public IActionResult UpdateList([FromBody]List<AircTable> _user)
@@ -71,9 +88,9 @@ namespace Preoff.Controllers
             }
         }
         /// <summary>
-        /// 删除指定Id用户
+        /// 删除指定Id无人机
         /// </summary>
-        /// <param name="id">用户ID</param>
+        /// <param name="id">无人机ID</param>
         /// <returns></returns>
         [HttpDelete("del/{id}")]
         public IActionResult Del(int id)
@@ -84,14 +101,13 @@ namespace Preoff.Controllers
             }
             catch (Exception ex)
             {
-
                 return Json(new { code = "-1" });
             }
         }
         /// <summary>
-        /// 批量删除用户[根据用户ID集合批量删除]
+        /// 批量删除无人机[根据无人机ID集合批量删除]
         /// </summary>
-        /// <param name="_userID">用户列表</param>
+        /// <param name="_userID">无人机列表</param>
         /// <returns></returns>
         [HttpDelete("delids")]
         public IActionResult DelByIds([FromBody]List<int> _userID)
@@ -106,9 +122,9 @@ namespace Preoff.Controllers
             }
         }
         /// <summary>
-        /// 批量删除用户[根据用户集合批量删除]
+        /// 批量删除无人机[根据无人机集合批量删除]
         /// </summary>
-        /// <param name="_user">用户列表</param>
+        /// <param name="_user">无人机列表</param>
         /// <returns></returns>
         [HttpDelete("batchdel")]
         public IActionResult Batchdel([FromBody]List<AircTable> _user)
@@ -123,9 +139,9 @@ namespace Preoff.Controllers
             }
         }
         /// <summary>
-        /// 根据用户ID查询用户
+        /// 根据无人机ID查询无人机
         /// </summary>
-        /// <param name="id">用户ID</param>
+        /// <param name="id">无人机ID</param>
         /// <returns></returns>
         [HttpGet("select/{id}")]
         public IActionResult Select(int id)
@@ -140,9 +156,9 @@ namespace Preoff.Controllers
             }
         }
         /// <summary>
-        /// 查询所有用户
+        /// 查询所有无人机
         /// </summary>
-        /// <returns>返回所有用户</returns>
+        /// <returns>返回所有无人机</returns>
         [HttpGet("selectall")]
         public IActionResult SelectAll()
         {

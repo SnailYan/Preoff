@@ -19,85 +19,6 @@ namespace Preoff.Repository
         {
             _dbContext = _db;
         }
-        #region MyRegion
-
-
-        //public virtual int BatchDelete(IList<int> guids)
-        //{
-        //    foreach (var item in guids)
-        //    {
-        //        var model = _dbContext.Set<T>().Find(item);
-        //        _dbContext.Entry(model).State = EntityState.Deleted;
-        //    }
-        //    return _dbContext.SaveChanges();
-        //}
-
-        //public virtual T Create(T model)
-        //{
-        //    _dbContext.Entry(model).State = EntityState.Added;
-        //    var createRowCount = _dbContext.SaveChanges();
-        //    return createRowCount > 0 ? model : null;
-        //}
-
-        ///// <summary>
-        ///// 删除模型
-        ///// </summary>
-        ///// <param name="guid">指定的全局标识</param>
-        ///// <returns>删除数量</returns>
-        ///// <exception cref="ArgumentOutOfRangeException"></exception>
-        //public virtual int Delete(int guid)
-        //{
-        //    var model = _dbContext.Set<T>().Find(guid);
-        //    if (model == null) throw new ArgumentOutOfRangeException(nameof(guid));
-        //    _dbContext.Entry(model).State = EntityState.Deleted;
-        //    return _dbContext.SaveChanges();
-        //}
-
-        //public virtual List<T> GetAll()
-        //{
-        //    return _dbContext.Set<T>().Where(q => true).ToList();
-        //}
-
-        //public virtual List<T> GetAll(Expression<Func<T, bool>> expression, Expression<Func<T, dynamic>> sortPredicate, SortOrder sortOrder, int skip, int take, out int total)
-        //{
-
-        //    total = _dbContext.Set<T>().Where(expression).Count();
-        //    switch (sortOrder)
-        //    {
-        //        case SortOrder.Ascending:
-        //            return _dbContext.Set<T>().Where(expression).OrderBy(sortPredicate).Skip(skip).Take(take).ToList();
-
-        //        case SortOrder.Descending:
-        //            return _dbContext.Set<T>().Where(expression).OrderByDescending(sortPredicate).Skip(skip).Take(take).ToList();
-
-        //    }
-        //    throw new InvalidOperationException("基于分页功能的查询必须指定排序字段和排序顺序。");
-        //}
-
-        ///// <summary>
-        ///// 返回序列中的第一个元素
-        ///// </summary>
-        ///// <param name="expression">查询表达式</param>
-        ///// <returns>T</returns>
-        ///// <exception cref="ArgumentNullException">source 为 null</exception>
-        //public virtual T Retrieve(Expression<Func<T, bool>> expression)
-        //{
-        //    return _dbContext.Set<T>().FirstOrDefault(expression);
-        //}
-
-        //public virtual T Retrieve(int guid)
-        //{
-        //    return _dbContext.Set<T>().Find(guid);
-        //}
-
-        //public virtual T Update(T model)
-        //{
-        //    _dbContext.Entry(model).State = EntityState.Modified;
-        //    var updateRowAcount = _dbContext.SaveChanges();
-        //    return updateRowAcount > 0 ? model : null;
-        //}
-        #endregion
-
 
         /// <summary>
         /// 公用泛型处理属性
@@ -145,8 +66,31 @@ namespace Preoff.Repository
             {
                 throw e;
             }
-
         }
+
+        /// <summary>
+        /// 添加一条模型记录,返回模型对应值
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public virtual int SaveGetId(T entity)
+        {
+            try
+            {
+                var entry = _dbContext.Entry<T>(entity);
+                entry.State = EntityState.Added;
+                _dbContext.SaveChanges();
+                entry.State = EntityState.Detached;
+                int getid=Convert.ToInt32(entity.GetType().GetProperty("Id").GetValue(entity));
+                return getid;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
 
         /// <summary>
         /// 更新一条模型记录，自动提交更改

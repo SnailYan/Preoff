@@ -87,7 +87,12 @@ namespace Preoff.Repository
         /// <param name="entity">实体</param>
         /// <returns>ID</returns>
         bool Save(T entity);
-
+        /// <summary>
+        /// 插入实体
+        /// </summary>
+        /// <param name="entity">实体</param>
+        /// <returns>ID</returns>
+        int SaveGetId(T entity);
         /// <summary>
         /// 修改实体
         /// </summary>
