@@ -21,7 +21,7 @@ namespace Preoff.Controllers
     [Route("user")]
     public class UserController : Controller
     {
-        public readonly IUserRepository _userRepository;
+        public readonly IUserRepository _repository;
         ILog log = LogManager.GetLogger(Startup.Logrepository.Name, typeof(Startup));
         /// <summary>
         /// 构造函数
@@ -29,7 +29,7 @@ namespace Preoff.Controllers
         /// <param name="_db">注入数据库配置</param>
         public UserController(IUserRepository _db)
         {
-            _userRepository = _db;
+            _repository = _db;
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Preoff.Controllers
         {
             try
             {
-                return Ok(_userRepository.SaveList(_user));
+                return Ok(_repository.SaveList(_user));
             }
             catch (Exception ex)
             {
@@ -63,7 +63,7 @@ namespace Preoff.Controllers
         {
             try
             {
-                return Ok(_userRepository.UpdateList(_user));
+                return Ok(_repository.UpdateList(_user));
             }
             catch (Exception ex)
             {
@@ -81,7 +81,7 @@ namespace Preoff.Controllers
         {
             try
             {
-                return Ok(_userRepository.Delete(p => p.Id == id));
+                return Ok(_repository.Delete(p => p.Id == id));
             }
             catch (Exception ex)
             {
@@ -99,7 +99,7 @@ namespace Preoff.Controllers
         {
             try
             {
-                return Ok(_userRepository.Delete(p=> _userID.Contains(p.Id)));
+                return Ok(_repository.Delete(p=> _userID.Contains(p.Id)));
             }
             catch (Exception ex)
             {
@@ -116,7 +116,7 @@ namespace Preoff.Controllers
         {
             try
             {
-               return Ok(_userRepository.DeleteList(_user));
+               return Ok(_repository.DeleteList(_user));
             }
             catch (Exception ex)
             {
@@ -133,7 +133,7 @@ namespace Preoff.Controllers
         {
             try
             {
-                return Ok(_userRepository.Get(p => p.Id == id));
+                return Ok(_repository.Get(p => p.Id == id));
             }
             catch (Exception ex)
             {
@@ -149,7 +149,7 @@ namespace Preoff.Controllers
         {
             try
             {
-                return Ok(_userRepository.LoadListAll());
+                return Ok(_repository.LoadListAll());
             }
             catch (Exception ex)
             {

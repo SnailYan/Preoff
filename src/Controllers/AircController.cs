@@ -20,7 +20,7 @@ namespace Preoff.Controllers
         /// <summary>
         /// 无人机仓库
         /// </summary>
-        public readonly IRepository<AircTable> _aircRepository;
+        public readonly IRepository<AircTable> _repository;
         ILog log = LogManager.GetLogger(Startup.Logrepository.Name, typeof(Startup));
         /// <summary>
         /// 构造函数
@@ -28,7 +28,7 @@ namespace Preoff.Controllers
         /// <param name="_db">注入数据库配置</param>
         public AircController(IRepository<AircTable> _db)
         {
-            _aircRepository = _db;
+            _repository = _db;
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Preoff.Controllers
         {
             try
             {
-                return Ok(_aircRepository.SaveList(_user));
+                return Ok(_repository.SaveList(_user));
             }
             catch (Exception ex)
             {
@@ -58,7 +58,7 @@ namespace Preoff.Controllers
         {
             try
             {
-                return Ok(_aircRepository.SaveGetId(_user));
+                return Ok(_repository.SaveGetId(_user));
             }
             catch (Exception ex)
             {
@@ -79,7 +79,7 @@ namespace Preoff.Controllers
         {
             try
             {
-                return Ok(_aircRepository.UpdateList(_user));
+                return Ok(_repository.UpdateList(_user));
             }
             catch (Exception ex)
             {
@@ -97,7 +97,7 @@ namespace Preoff.Controllers
         {
             try
             {
-                return Ok(_aircRepository.Delete(p => p.Id == id));
+                return Ok(_repository.Delete(p => p.Id == id));
             }
             catch (Exception ex)
             {
@@ -114,7 +114,7 @@ namespace Preoff.Controllers
         {
             try
             {
-                return Ok(_aircRepository.Delete(p => _userID.Contains(p.Id)));
+                return Ok(_repository.Delete(p => _userID.Contains(p.Id)));
             }
             catch (Exception ex)
             {
@@ -131,7 +131,7 @@ namespace Preoff.Controllers
         {
             try
             {
-                return Ok(_aircRepository.DeleteList(_user));
+                return Ok(_repository.DeleteList(_user));
             }
             catch (Exception ex)
             {
@@ -148,7 +148,7 @@ namespace Preoff.Controllers
         {
             try
             {
-                return Ok(_aircRepository.Get(p => p.Id == id));
+                return Ok(_repository.Get(p => p.Id == id));
             }
             catch (Exception ex)
             {
@@ -164,7 +164,7 @@ namespace Preoff.Controllers
         {
             try
             {
-                return Ok(_aircRepository.LoadListAll());
+                return Ok(_repository.LoadListAll());
             }
             catch (Exception ex)
             {
