@@ -10,34 +10,34 @@ using System.Threading.Tasks;
 namespace Preoff.Controllers
 {
     /// <summary>
-    /// 无人机控制器
+    /// 单位控制器
     /// </summary>
     //[Authorize]
     [Produces("application/json")]
-    [Route("Airc")]
-    public class AircController : Controller
+    [Route("Unit")]
+    public class UnitController : Controller
     {
         /// <summary>
-        /// 无人机仓库
+        /// 单位仓库
         /// </summary>
-        public readonly IRepository<AircTable> _repository;
+        public readonly IRepository<UnitTable> _repository;
         ILog log = LogManager.GetLogger(Startup.Logrepository.Name, typeof(Startup));
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="_db">注入数据仓库</param>
-        public AircController(IRepository<AircTable> _db)
+        public UnitController(IRepository<UnitTable> _db)
         {
             _repository = _db;
         }
 
         /// <summary>
-        /// 添加无人机[支持批量]
+        /// 添加单位[支持批量]
         /// </summary>
-        /// <param name="_user">用户类</param>
+        /// <param name="_user">单位类</param>
         /// <returns></returns>
         [HttpPost("addMul")]
-        public IActionResult Add([FromBody]List<AircTable> _user)
+        public IActionResult Add([FromBody]List<UnitTable> _user)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace Preoff.Controllers
         }
 
         [HttpPost("addone")]
-        public IActionResult Add([FromBody]AircTable _user)
+        public IActionResult Add([FromBody]UnitTable _user)
         {
             try
             {
@@ -70,12 +70,12 @@ namespace Preoff.Controllers
             }
         }
         /// <summary>
-        /// 更新无人机[所有字段,支持批量]
+        /// 更新单位[所有字段,支持批量]
         /// </summary>
-        /// <param name="_user">无人机类</param>
+        /// <param name="_user">单位类</param>
         /// <returns></returns>
         [HttpPost("UpdateList")]
-        public IActionResult UpdateList([FromBody]List<AircTable> _user)
+        public IActionResult UpdateList([FromBody]List<UnitTable> _user)
         {
             try
             {
@@ -88,9 +88,9 @@ namespace Preoff.Controllers
             }
         }
         /// <summary>
-        /// 删除指定Id无人机
+        /// 删除指定Id单位
         /// </summary>
-        /// <param name="id">无人机ID</param>
+        /// <param name="id">单位ID</param>
         /// <returns></returns>
         [HttpDelete("del/{id}")]
         public IActionResult Del(int id)
@@ -105,9 +105,9 @@ namespace Preoff.Controllers
             }
         }
         /// <summary>
-        /// 批量删除无人机[根据无人机ID集合批量删除]
+        /// 批量删除单位[根据单位ID集合批量删除]
         /// </summary>
-        /// <param name="_userID">无人机列表</param>
+        /// <param name="_userID">单位列表</param>
         /// <returns></returns>
         [HttpDelete("delids")]
         public IActionResult DelByIds([FromBody]List<int> _userID)
@@ -122,12 +122,12 @@ namespace Preoff.Controllers
             }
         }
         /// <summary>
-        /// 批量删除无人机[根据无人机集合批量删除]
+        /// 批量删除单位[根据单位集合批量删除]
         /// </summary>
-        /// <param name="_user">无人机列表</param>
+        /// <param name="_user">单位列表</param>
         /// <returns></returns>
         [HttpDelete("batchdel")]
-        public IActionResult Batchdel([FromBody]List<AircTable> _user)
+        public IActionResult Batchdel([FromBody]List<UnitTable> _user)
         {
             try
             {
@@ -139,9 +139,9 @@ namespace Preoff.Controllers
             }
         }
         /// <summary>
-        /// 根据无人机ID查询无人机
+        /// 根据单位ID查询单位
         /// </summary>
-        /// <param name="id">无人机ID</param>
+        /// <param name="id">单位ID</param>
         /// <returns></returns>
         [HttpGet("select/{id}")]
         public IActionResult Select(int id)
@@ -156,9 +156,9 @@ namespace Preoff.Controllers
             }
         }
         /// <summary>
-        /// 查询所有无人机
+        /// 查询所有单位
         /// </summary>
-        /// <returns>返回所有无人机</returns>
+        /// <returns>返回所有单位</returns>
         [HttpGet("selectall")]
         public IActionResult SelectAll()
         {

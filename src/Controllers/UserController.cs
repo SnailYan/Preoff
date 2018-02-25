@@ -10,6 +10,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using log4net;
 using Preoff.Repository;
+using System.Linq.Expressions;
 
 namespace Preoff.Controllers
 {
@@ -37,7 +38,7 @@ namespace Preoff.Controllers
         /// </summary>
         /// <param name="_user">用户类</param>
         /// <returns></returns>
-        [HttpPost("add")]
+        [HttpPost("addMul")]
         public IActionResult Add([FromBody]List<UserTable> _user)
         {
             try
@@ -156,6 +157,36 @@ namespace Preoff.Controllers
                 return Json(new { code = "-1" });
             }
            
+        }
+
+        [HttpPost("filter")]
+        public IActionResult SelectPage(int pageindex,int pageSize)
+        {
+            //ParameterExpression c = Expression.Parameter(typeof(DivisionTable), "c");
+            //Expression condition = Expression.Constant(false);
+
+            //foreach (string s in starts)
+            //{
+            //    Expression con = Expression.Call(
+            //    Expression.Property(c, typeof(DivisionTable).GetProperty("id")),
+            //    typeof(string).GetMethod("StartsWith", new Type[] { typeof(string) }),
+            //    Expression.Constant(s));
+            //    condition = Expression.Or(con, condition);
+            //}
+
+            //Expression<Func<DivisionTable, bool>> end =
+            //    Expression.Lambda<Func<DivisionTable, bool>>(condition, new ParameterExpression[] { c });
+            //Expression<Func<DivisionTable, bool>> where
+            //_repository.BatchUpdateUserBirthday();
+            //_repository.Query(1, 3,"id<5", "id", _user, true);
+            //_repository.Query<UnitTable, Int32>(1, 3, p => p.Id > 1, q => q.Id,null, true);
+
+            //var linq = LinqBuilder.True<DivisionTable>();
+            //linq.And(p => p.Id == 30);
+            //Expression<Func<DivisionTable, bool>> condition = linq.Or(p => p.Id == "");
+
+
+            return Ok(_repository.Query<DivisionTable, string>(pageindex, pageSize, p => p.Id != "1", q => q.Id, null, true));
         }
 
         //[HttpGet("{page}")]

@@ -8,9 +8,10 @@ namespace Preoff.Repository
 {
     public sealed class UserRepository : RepositoryBase<UserTable>, IUserRepository
     {
+        PreoffContext _dbcontext;
         public UserRepository(PreoffContext dbcontext) : base(dbcontext)
         {
-
+            _dbcontext = dbcontext;
         }
 
         public void BatchUpdateUserBirthday()
@@ -25,6 +26,7 @@ namespace Preoff.Repository
             //    }
             //    dbcontext.SaveChanges();
             //}
+            
         }
     }
 }
