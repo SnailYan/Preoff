@@ -299,15 +299,14 @@ namespace Preoff.Repository
         /// <returns></returns>
         public virtual object ExecuteQueryProc(string procname, params DbParameter[] parameter)
         {
-            //try
-            //{
-            //    return _dbContext.Database.SqlFunctionForDynamic(procname, parameter);
-            //}
-            //catch (Exception e)
-            //{
-            //    throw e;
-            //}
-            return null;
+            try
+            {
+                return _dbContext.Set<T>().FromSql(procname, parameter);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
         #endregion
 

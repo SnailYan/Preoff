@@ -166,6 +166,7 @@ namespace Preoff
             //builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("Table"));
 
             builder.RegisterType<UserRepository>().As<IUserRepository>();
+            builder.RegisterType<DivisionRepository>().As<IDivisionRepository>();
         }
     }
 }

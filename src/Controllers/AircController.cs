@@ -25,7 +25,7 @@ namespace Preoff.Controllers
         /// <summary>
         /// 构造函数
         /// </summary>
-        /// <param name="_db">注入数据库配置</param>
+        /// <param name="_db">注入数据仓库</param>
         public AircController(IRepository<AircTable> _db)
         {
             _repository = _db;
