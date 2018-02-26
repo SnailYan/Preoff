@@ -9,21 +9,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Comm\**" />
     <Compile Remove="Data\**" />
     <Compile Remove="Entity\**" />
     <Compile Remove="Models2\**" />
     <Compile Remove="Repository\**" />
     <Compile Remove="Service\**" />
+    <Content Remove="Comm\**" />
     <Content Remove="Data\**" />
     <Content Remove="Entity\**" />
     <Content Remove="Models2\**" />
     <Content Remove="Repository\**" />
     <Content Remove="Service\**" />
+    <EmbeddedResource Remove="Comm\**" />
     <EmbeddedResource Remove="Data\**" />
     <EmbeddedResource Remove="Entity\**" />
     <EmbeddedResource Remove="Models2\**" />
     <EmbeddedResource Remove="Repository\**" />
     <EmbeddedResource Remove="Service\**" />
+    <None Remove="Comm\**" />
     <None Remove="Data\**" />
     <None Remove="Entity\**" />
     <None Remove="Models2\**" />
@@ -33,6 +37,7 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\AreaController.cs" />
+    <Compile Remove="LinqBuilder.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -67,6 +72,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="Comm\Preoff.Comm.csproj" />
     <ProjectReference Include="Entity\Preoff.Entity.csproj" />
     <ProjectReference Include="Repository\Preoff.Repository.csproj" />
   </ItemGroup>
