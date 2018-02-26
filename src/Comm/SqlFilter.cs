@@ -29,4 +29,24 @@ namespace Preoff.Comm
         /// </summary>
         public object Value { get; set; }
     }
+
+
+    public class Sort
+    {
+        public string Field { get; set; }
+        public SortOrder SortOrder { get; set; }
+
+        /// <summary>
+        /// 将排序规则转换为sql语句
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return string.Format("{0} {1}", Field, SortOrder.ToString());
+        }
+    }
+    public enum SortOrder
+    {
+        DESCENDING, ASC
+    }
 }

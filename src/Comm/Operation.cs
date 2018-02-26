@@ -11,6 +11,6 @@ namespace Preoff.Comm
         NotEqual,
         Equal,
         Like,
-        In
+        List
     }
 }
