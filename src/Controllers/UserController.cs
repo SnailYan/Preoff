@@ -161,34 +161,74 @@ namespace Preoff.Controllers
         }
 
         [HttpPost("filter")]
-        public IActionResult SelectPage(int pageindex,int pageSize)
+        public IActionResult SelectPage(int pageindex, int pageSize, List<FilterStr> filter, string order, bool isAsc)
         {
 
-            //ParameterExpression c = Expression.Parameter(typeof(DivisionTable), "c");
-            //Expression condition = Expression.Constant(false);
+            var builder = new ExpressionBuilder<UserTable>();//实例化组件
+            var filters = new List<SqlFilter>();
+            foreach (FilterStr item in filter)
+            {
+                filters.Add(SqlFilter.Create(item.Name, Operation.Equal, item.Value));
+            }
+            if (order != null && order.Trim() != string.Empty)
+            {
+                var type = typeof(UserTable);
+                var propertyName = order;
+                var param = Expression.Parameter(type, type.Name);
+                var body = Expression.Property(param, propertyName);
+                var keySelector = Expression.Lambda(body, param);
+                switch (body.Type.Name.ToString())
+                {
+                    case "String":
+                        if (filter.Count != 0)
+                        {
+                            var where = builder.Build(filters, new Dictionary<string, string>());
+                            return Ok(_repository.Query<UserTable, string>(pageindex, pageSize, where, (Expression<Func<UserTable, string>>)keySelector, null, isAsc));
+                        }
+                        else
+                        {
+                            return Ok(_repository.Query<UserTable, string>(pageindex, pageSize, null, (Expression<Func<UserTable, string>>)keySelector, null, isAsc));
+                        }
+                    case "Int32":
+                        if (filter.Count != 0)
+                        {
+                            var where = builder.Build(filters, new Dictionary<string, string>());
+                            return Ok(_repository.Query<UserTable, Int32>(pageindex, pageSize, where, (Expression<Func<UserTable, Int32>>)keySelector, null, isAsc));
+                        }
+                        else
+                        {
+                            return Ok(_repository.Query<UserTable, Int32>(pageindex, pageSize, null, (Expression<Func<UserTable, Int32>>)keySelector, null, isAsc));
+                        }
+                    case "System.DateTime":
+                        if (filter.Count != 0)
+                        {
+                            var where = builder.Build(filters, new Dictionary<string, string>());
+                            return Ok(_repository.Query<UserTable, DateTime>(pageindex, pageSize, where, (Expression<Func<UserTable, DateTime>>)keySelector, null, isAsc));
+                        }
+                        else
+                        {
+                            return Ok(_repository.Query<UserTable, DateTime>(pageindex, pageSize, null, (Expression<Func<UserTable, DateTime>>)keySelector, null, isAsc));
+                        }
+                    case "Double":
+                        if (filter.Count != 0)
+                        {
+                            var where = builder.Build(filters, new Dictionary<string, string>());
+                            return Ok(_repository.Query<UserTable, double>(pageindex, pageSize, where, (Expression<Func<UserTable, double>>)keySelector, null, isAsc));
+                        }
+                        else
+                        {
+                            return Ok(_repository.Query<UserTable, double>(pageindex, pageSize, null, (Expression<Func<UserTable, double>>)keySelector, null, isAsc));
+                        }
+                    default:
+                        break;
+                }
 
-            //foreach (string s in starts)
-            //{
-            //    Expression con = Expression.Call(
-            //    Expression.Property(c, typeof(DivisionTable).GetProperty("id")),
-            //    typeof(string).GetMethod("StartsWith", new Type[] { typeof(string) }),
-            //    Expression.Constant(s));
-            //    condition = Expression.Or(con, condition);
-            //}
-
-            //Expression<Func<DivisionTable, bool>> end =
-            //    Expression.Lambda<Func<DivisionTable, bool>>(condition, new ParameterExpression[] { c });
-            //Expression<Func<DivisionTable, bool>> where
-            //_repository.BatchUpdateUserBirthday();
-            //_repository.Query(1, 3,"id<5", "id", _user, true);
-            //_repository.Query<UnitTable, Int32>(1, 3, p => p.Id > 1, q => q.Id,null, true);
-
-            //var linq = LinqBuilder.True<DivisionTable>();
-            //linq.And(p => p.Id == 30);
-            //Expression<Func<DivisionTable, bool>> condition = linq.Or(p => p.Id == "");
-
-
-            return Ok(_repository.Query<DivisionTable, string>(pageindex, pageSize, p => p.Id != "1", q => q.Id, null, true));
+                return Ok("-1");
+            }
+            else
+            {
+                return Ok(_repository.Query<UserTable, string>(pageindex, pageSize, null, null, null, isAsc));
+            }
         }
 
         //[HttpGet("{page}")]
