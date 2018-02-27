@@ -10,34 +10,34 @@ using System.Threading.Tasks;
 namespace Preoff.Controllers
 {
     /// <summary>
-    /// 无人机控制器
+    /// 事件控制器
     /// </summary>
     //[Authorize]
     [Produces("application/json")]
-    [Route("Airc")]
-    public class AircController : Controller
+    [Route("Event")]
+    public class EventController : Controller
     {
         /// <summary>
-        /// 无人机仓库
+        /// 事件仓库
         /// </summary>
-        public readonly IRepository<AircTable> _repository;
+        public readonly IRepository<EventTable> _repository;
         ILog log = LogManager.GetLogger(Startup.Logrepository.Name, typeof(Startup));
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="_db">注入数据仓库</param>
-        public AircController(IRepository<AircTable> _db)
+        public EventController(IRepository<EventTable> _db)
         {
             _repository = _db;
         }
 
         /// <summary>
-        /// 添加无人机[支持批量]
+        /// 添加事件[支持批量]
         /// </summary>
         /// <param name="_user">用户类</param>
         /// <returns></returns>
         [HttpPost("addMul")]
-        public IActionResult Add([FromBody]List<AircTable> _user)
+        public IActionResult Add([FromBody]List<EventTable> _user)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace Preoff.Controllers
         }
 
         [HttpPost("addone")]
-        public IActionResult Add([FromBody]AircTable _user)
+        public IActionResult Add([FromBody]EventTable _user)
         {
             try
             {
@@ -72,12 +72,12 @@ namespace Preoff.Controllers
             }
         }
         /// <summary>
-        /// 更新无人机[所有字段,支持批量]
+        /// 更新事件[所有字段,支持批量]
         /// </summary>
-        /// <param name="_user">无人机类</param>
+        /// <param name="_user">事件类</param>
         /// <returns></returns>
         [HttpPost("UpdateList")]
-        public IActionResult UpdateList([FromBody]List<AircTable> _user)
+        public IActionResult UpdateList([FromBody]List<EventTable> _user)
         {
             try
             {
@@ -93,9 +93,9 @@ namespace Preoff.Controllers
             }
         }
         /// <summary>
-        /// 删除指定Id无人机
+        /// 删除指定Id事件
         /// </summary>
-        /// <param name="id">无人机ID</param>
+        /// <param name="id">事件ID</param>
         /// <returns></returns>
         [HttpDelete("del/{id}")]
         public IActionResult Del(int id)
@@ -113,9 +113,9 @@ namespace Preoff.Controllers
             }
         }
         /// <summary>
-        /// 批量删除无人机[根据无人机ID集合批量删除]
+        /// 批量删除事件[根据事件ID集合批量删除]
         /// </summary>
-        /// <param name="_userID">无人机列表</param>
+        /// <param name="_userID">事件列表</param>
         /// <returns></returns>
         [HttpDelete("delids")]
         public IActionResult DelByIds([FromBody]List<int> _userID)
@@ -133,12 +133,12 @@ namespace Preoff.Controllers
             }
         }
         /// <summary>
-        /// 批量删除无人机[根据无人机集合批量删除]
+        /// 批量删除事件[根据事件集合批量删除]
         /// </summary>
-        /// <param name="_user">无人机列表</param>
+        /// <param name="_user">事件列表</param>
         /// <returns></returns>
         [HttpDelete("batchdel")]
-        public IActionResult Batchdel([FromBody]List<AircTable> _user)
+        public IActionResult Batchdel([FromBody]List<EventTable> _user)
         {
             try
             {
@@ -153,9 +153,9 @@ namespace Preoff.Controllers
             }
         }
         /// <summary>
-        /// 根据无人机ID查询无人机
+        /// 根据事件ID查询事件
         /// </summary>
-        /// <param name="id">无人机ID</param>
+        /// <param name="id">事件ID</param>
         /// <returns></returns>
         [HttpGet("select/{id}")]
         public IActionResult Select(int id)
@@ -173,9 +173,9 @@ namespace Preoff.Controllers
             }
         }
         /// <summary>
-        /// 查询所有无人机
+        /// 查询所有事件
         /// </summary>
-        /// <returns>返回所有无人机</returns>
+        /// <returns>返回所有事件</returns>
         [HttpGet("selectall")]
         public IActionResult SelectAll()
         {

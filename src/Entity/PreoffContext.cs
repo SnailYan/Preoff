@@ -17,8 +17,8 @@ namespace Preoff.Entity
         public virtual DbSet<EquipFacTable> EquipFacTable { get; set; }
         public virtual DbSet<EventTypeTable> EventTypeTable { get; set; }
         public virtual DbSet<EventVideoTable> EventVideoTable { get; set; }
-        public virtual DbSet<EvevtImgTable> EvevtImgTable { get; set; }
-        public virtual DbSet<EvevtTable> EvevtTable { get; set; }
+        public virtual DbSet<EventImgTable> EventImgTable { get; set; }
+        public virtual DbSet<EventTable> EventTable { get; set; }
         public virtual DbSet<ExecTaskTable> ExecTaskTable { get; set; }
         public virtual DbSet<PermissonTable> PermissonTable { get; set; }
         public virtual DbSet<RolePermissionTable> RolePermissionTable { get; set; }
@@ -265,9 +265,9 @@ namespace Preoff.Entity
                     .HasMaxLength(200);
             });
 
-            modelBuilder.Entity<EvevtImgTable>(entity =>
+            modelBuilder.Entity<EventImgTable>(entity =>
             {
-                entity.ToTable("evevtImgTable");
+                entity.ToTable("eventImgTable");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
@@ -278,9 +278,9 @@ namespace Preoff.Entity
                     .HasMaxLength(200);
             });
 
-            modelBuilder.Entity<EvevtTable>(entity =>
+            modelBuilder.Entity<EventTable>(entity =>
             {
-                entity.ToTable("evevtTable");
+                entity.ToTable("eventTable");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 

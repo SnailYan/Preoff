@@ -43,7 +43,10 @@ namespace Preoff.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { code = "-1" });
+                return Json(new {
+                    state = "-1",
+                    msg = "非法操作！"
+                });
             }
         }
         /// <summary>
@@ -60,7 +63,10 @@ namespace Preoff.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { code = "-1" });
+                return Json(new {
+                    state = "-1",
+                    msg = "非法操作！"
+                });
             }
         }
         /// <summary>
@@ -76,7 +82,10 @@ namespace Preoff.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { code = "-1" });
+                return Json(new {
+                    state = "-1",
+                    msg = "非法操作！"
+                });
             }
 
         }

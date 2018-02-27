@@ -25,6 +25,8 @@ using log4net.Repository;
 using log4net.Config;
 using log4net;
 using Preoff.Repository;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Http;
 
 namespace Preoff
 {
@@ -103,7 +105,13 @@ namespace Preoff
             //services.AddScoped(typeof(IDemoService), typeof(DemoService));
 
             services.AddMvc();
-
+            #region CORS
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                 builder => builder.WithOrigins("http://localhost").AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
+            });
+            #endregion
             // 注入的实现ISwaggerProvider使用默认设置
             services.AddSwaggerGen(c =>
             {
@@ -136,7 +144,13 @@ namespace Preoff
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api接口");
             });
             app.UseMvc();
+            app.UseCors("AllowSpecificOrigin");
 
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(@"E:\", @"corewebapi")),
+                RequestPath = new PathString("/Upload")
+            });
             //var log = LogManager.GetLogger(Logrepository.Name, typeof(Startup));
             //log.Info("test");
         }

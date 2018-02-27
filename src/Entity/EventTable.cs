@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Preoff.Entity
 {
-    public partial class EvevtTable
+    public partial class EventTable
     {
         public int Id { get; set; }
         public int? ExecTaskTableId { get; set; }
