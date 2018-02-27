@@ -15,5 +15,6 @@ namespace Preoff.Repository
         /// 批量修改用户生日
         /// </summary>
         void BatchUpdateUserBirthday();
+        UserTable getUser(int id);
     }
 }

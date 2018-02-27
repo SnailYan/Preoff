@@ -41,11 +41,15 @@ namespace Preoff.Controllers
         {
             if(ModelState.IsValid)
             {
-                //var a = _dbContext.UserTable.FirstOrDefault(u => (u.LoginName == username) && (u.LoginPwd == pwd));
-                //if (a is null)
-                //{
-                //    return BadRequest();
-                //}
+                var a = _dbContext.UserTable.FirstOrDefault(u => (u.LoginName == _auth.userName) && (u.LoginPwd == _auth.password));
+                if (a is null)
+                {
+                    return Json(new
+                    {
+                        state = "-1",
+                        msg= "账号不存在或密码错误！"
+                    });
+                }
 
                 //var claims=new Claim[]{
                 //    new Claim(ClaimTypes.Name,userModel.CName),
@@ -68,12 +72,17 @@ namespace Preoff.Controllers
                     claims,
                     DateTime.Now,DateTime.Now.AddMinutes(_jwtSettings.TimeOut),
                     creds);
-
-                return Ok(new {token=new JwtSecurityTokenHandler().WriteToken(token)});
-
-
+                TokenUser _tokenUser = new TokenUser();
+                _tokenUser.token = new JwtSecurityTokenHandler().WriteToken(token);
+                _tokenUser.user = a;
+                //return Ok(new {token=new JwtSecurityTokenHandler().WriteToken(token)});
+                return Ok(_tokenUser);
             }
-            return BadRequest();
+            return Json(new
+            {
+                state = "-1",
+                msg = "非法操作！"
+            });
         }
     }
 }

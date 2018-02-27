@@ -135,6 +135,7 @@ namespace Preoff.Controllers
         {
             try
             {
+                //return Ok(_repository.getUser(id));
                 return Ok(_repository.Get(p => p.Id == id));
             }
             catch (Exception ex)

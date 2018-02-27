@@ -25,8 +25,14 @@ namespace Preoff.Repository
             //        dbcontext.Entry(item).State = EntityState.Modified;
             //    }
             //    dbcontext.SaveChanges();
-            //}
-            
+            //}            
+        }
+
+        public UserTable getUser(int id)
+        {
+            //var sg = db.Users.GroupJoin(db.Departments, u => u.DepartmentId, d => d.DepartmentId, (u, d) => new { u, d }).Select(o => o).ToList();
+            var sg=_dbcontext.UserTable.Join(_dbcontext.UnitTable, d => d.UnitTableId, p => p.Id, (d, p) => new { d, p }).Where(o => o.d.Id==id).ToList();
+            return null;
         }
     }
 }

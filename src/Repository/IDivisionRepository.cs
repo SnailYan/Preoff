@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Preoff.Repository
 {
     /// <summary>
-    /// 用户仓储接口
+    /// 区域仓储接口
     /// </summary>
     public interface IDivisionRepository : IRepository<DivisionTable>
     {
