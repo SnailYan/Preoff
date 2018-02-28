@@ -37,6 +37,8 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\AreaController.cs" />
+    <Compile Remove="Controllers\TestController.cs" />
+    <Compile Remove="Controllers\ValuesController.cs" />
     <Compile Remove="LinqBuilder.cs" />
   </ItemGroup>
 

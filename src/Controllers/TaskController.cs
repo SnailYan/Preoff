@@ -34,7 +34,7 @@ namespace Preoff.Controllers
         /// <summary>
         /// 添加任务[支持批量]
         /// </summary>
-        /// <param name="_task">用户类</param>
+        /// <param name="_task">任务类</param>
         /// <returns></returns>
         [HttpPost("addMul")]
         public IActionResult Add([FromBody]List<TaskTable> _task)

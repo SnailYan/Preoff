@@ -461,7 +461,7 @@ namespace Preoff.Entity
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.FlyTaskTableId).HasColumnName("flyTaskTable_id");
+                entity.Property(e => e.TaskTableId).HasColumnName("taskTable_id");
 
                 entity.Property(e => e.UserTableId).HasColumnName("userTable_id");
             });

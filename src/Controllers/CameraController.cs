@@ -10,45 +10,45 @@ using System.Threading.Tasks;
 namespace Preoff.Controllers
 {
     /// <summary>
-    /// 无人机控制器
+    /// 摄像头控制器
     /// </summary>
     //[Authorize]
     [Produces("application/json")]
-    [Route("Airc")]
-    public class AircController : Controller
+    [Route("Camera")]
+    public class CameraController : Controller
     {
         /// <summary>
-        /// 无人机仓库
+        /// 摄像头仓库
         /// </summary>
-        public readonly IRepository<AircTable> _repository;
+        public readonly IRepository<CameraTable> _repository;
         ILog log = LogManager.GetLogger(Startup.Logrepository.Name, typeof(Startup));
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="_db">注入数据仓库</param>
-        public AircController(IRepository<AircTable> _db)
+        public CameraController(IRepository<CameraTable> _db)
         {
             _repository = _db;
         }
 
         /// <summary>
-        /// 添加无人机[支持批量]
+        /// 添加摄像头[支持批量]
         /// </summary>
-        /// <param name="_airc">无人机类</param>
+        /// <param name="_camera">摄像头类</param>
         /// <returns></returns>
         [HttpPost("addMul")]
-        public IActionResult Add([FromBody]List<AircTable> _airc)
+        public IActionResult Add([FromBody]List<CameraTable> _camera)
         {
             try
             {
-                int count=_repository.SaveList(_airc);
+                int count=_repository.SaveList(_camera);
                 return Json(new
                 {
                     count,
                     state = "0",
                     msg = "操作成功！"
                 });
-                //return Ok(_repository.SaveList(_airc));
+                //return Ok(_repository.SaveList(_camera));
             }
             catch (Exception ex)
             {
@@ -61,17 +61,17 @@ namespace Preoff.Controllers
             }
         }
         /// <summary>
-        /// 添加无人机返回无人机id
+        /// 添加摄像头返回摄像头id
         /// </summary>
-        /// <param name="_airc">无人机</param>
+        /// <param name="_camera">摄像头</param>
         /// <returns></returns>
         [HttpPost("addone")]
-        public IActionResult Add([FromBody]AircTable _airc)
+        public IActionResult Add([FromBody]CameraTable _camera)
         {
             try
             {
-                //return Ok(_repository.SaveGetId(_airc));
-                int id = _repository.SaveGetId(_airc);
+                //return Ok(_repository.SaveGetId(_camera));
+                int id = _repository.SaveGetId(_camera);
                 return Json(new
                 {
                     id,
@@ -90,17 +90,17 @@ namespace Preoff.Controllers
             }
         }
         /// <summary>
-        /// 更新无人机[所有字段,支持批量]
+        /// 更新摄像头[所有字段,支持批量]
         /// </summary>
-        /// <param name="_airc">无人机类</param>
+        /// <param name="_camera">摄像头类</param>
         /// <returns></returns>
         [HttpPost("UpdateList")]
-        public IActionResult UpdateList([FromBody]List<AircTable> _airc)
+        public IActionResult UpdateList([FromBody]List<CameraTable> _camera)
         {
             try
             {
-                //return Ok(_repository.UpdateList(_airc));
-                int count = _repository.UpdateList(_airc);
+                //return Ok(_repository.UpdateList(_camera));
+                int count = _repository.UpdateList(_camera);
                 return Json(new
                 {
                     count,
@@ -118,9 +118,9 @@ namespace Preoff.Controllers
             }
         }
         /// <summary>
-        /// 删除指定Id无人机
+        /// 删除指定Id摄像头
         /// </summary>
-        /// <param name="id">无人机ID</param>
+        /// <param name="id">摄像头ID</param>
         /// <returns></returns>
         [HttpDelete("del/{id}")]
         public IActionResult Del(int id)
@@ -145,17 +145,17 @@ namespace Preoff.Controllers
             }
         }
         /// <summary>
-        /// 批量删除无人机[根据无人机ID集合批量删除]
+        /// 批量删除摄像头[根据摄像头ID集合批量删除]
         /// </summary>
-        /// <param name="_aircID">无人机列表</param>
+        /// <param name="_cameraID">摄像头列表</param>
         /// <returns></returns>
         [HttpDelete("delids")]
-        public IActionResult DelByIds([FromBody]List<int> _aircID)
+        public IActionResult DelByIds([FromBody]List<int> _cameraID)
         {
             try
             {
-                //return Ok(_repository.Delete(p => _aircID.Contains(p.Id)));
-                int count = _repository.Delete(p => _aircID.Contains(p.Id));
+                //return Ok(_repository.Delete(p => _cameraID.Contains(p.Id)));
+                int count = _repository.Delete(p => _cameraID.Contains(p.Id));
                 return Json(new
                 {
                     count,
@@ -172,17 +172,17 @@ namespace Preoff.Controllers
             }
         }
         /// <summary>
-        /// 批量删除无人机[根据无人机集合批量删除]
+        /// 批量删除摄像头[根据摄像头集合批量删除]
         /// </summary>
-        /// <param name="_airc">无人机列表</param>
+        /// <param name="_camera">摄像头列表</param>
         /// <returns></returns>
         [HttpDelete("batchdel")]
-        public IActionResult Batchdel([FromBody]List<AircTable> _airc)
+        public IActionResult Batchdel([FromBody]List<CameraTable> _camera)
         {
             try
             {
-                //return Ok(_repository.DeleteList(_airc));
-                int count = _repository.DeleteList(_airc);
+                //return Ok(_repository.DeleteList(_camera));
+                int count = _repository.DeleteList(_camera);
                 return Json(new
                 {
                     count,
@@ -199,9 +199,9 @@ namespace Preoff.Controllers
             }
         }
         /// <summary>
-        /// 根据无人机ID查询无人机
+        /// 根据摄像头ID查询摄像头
         /// </summary>
-        /// <param name="id">无人机ID</param>
+        /// <param name="id">摄像头ID</param>
         /// <returns></returns>
         [HttpGet("select/{id}")]
         public IActionResult Select(int id)
@@ -225,9 +225,9 @@ namespace Preoff.Controllers
             }
         }
         /// <summary>
-        /// 查询所有无人机
+        /// 查询所有摄像头
         /// </summary>
-        /// <returns>返回所有无人机</returns>
+        /// <returns>返回所有摄像头</returns>
         [HttpGet("selectall")]
         public IActionResult SelectAll()
         {

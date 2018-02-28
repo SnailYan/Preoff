@@ -34,7 +34,7 @@ namespace Preoff.Controllers
         /// <summary>
         /// 添加事件[支持批量]
         /// </summary>
-        /// <param name="_event">用户类</param>
+        /// <param name="_event">事件类</param>
         /// <returns></returns>
         [HttpPost("addMul")]
         public IActionResult Add([FromBody]List<EventTable> _event)

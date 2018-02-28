@@ -39,6 +39,33 @@ namespace Preoff.Controllers
             hostingEnv = env;
         }
         /// <summary>
+        /// 根据事件id查询图片表
+        /// </summary>
+        /// <param name="id">事件id</param>
+        /// <returns></returns>
+        [HttpGet("select/{id}")]
+        public IActionResult Get(int id)
+        {
+            try
+            {
+                return Json(new
+                {
+                    table=_repository.LoadListAll(p => p.EventTableId == id),
+                    state = "0",
+                    msg = "操作成功!"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    state = "-1",
+                    msg = "下载失败!"
+                });
+            }
+           
+        }
+        /// <summary>
         /// 上传图片[限制大小10M]
         /// </summary>
         /// <param name="id">事件id</param>
@@ -51,7 +78,7 @@ namespace Preoff.Controllers
             {
                 var files = Request.Form.Files[0];
                 var fileExtension = Path.GetExtension(files.FileName);
-                string fileFilt = ".gif|.jpg|.bmp|.png|.jpeg|.png";
+                string fileFilt = ".jpg";
 
 
                 if (fileExtension == null)
@@ -113,6 +140,7 @@ namespace Preoff.Controllers
                 {
                     return Json(new
                     {
+                        path= $@"\Upload\Img\{filePathExt}\{fileName}",
                         state = "0",
                         msg = message
                     });
@@ -135,6 +163,33 @@ namespace Preoff.Controllers
                     msg = "上传失败!"
                 });
             }
+        }
+        /// <summary>
+        /// 根据图片id下载图片
+        /// </summary>
+        /// <param name="id">图片id</param>
+        /// <returns></returns>
+        [HttpGet("DownLoad")]
+        public IActionResult Down(int id)
+        {
+            try
+            {
+                var pic = _repository.Get(p => p.Id == id);
+                string basepath = @"E:\corewebapi";
+                string contentType = "image/jpg";
+                string path = (basepath + pic.ImgPath);
+                var stream = System.IO.File.OpenRead(path);
+                return File(stream, contentType);
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    state = "-1",
+                    msg = "下载失败!"
+                });
+            }
+
         }
     }
 }
