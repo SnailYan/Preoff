@@ -172,7 +172,7 @@ namespace Preoff.Controllers
             }
         }
         /// <summary>
-        /// 批量删除无人机类型[根据无人机集合批量删除]
+        /// 批量删除无人机类型[根据无人机类型集合批量删除]
         /// </summary>
         /// <param name="_aircType">无人机类型类</param>
         /// <returns></returns>
