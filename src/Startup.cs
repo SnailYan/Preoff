@@ -132,6 +132,7 @@ namespace Preoff
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
+        /// <param name="loggerFactory"></param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
@@ -154,7 +155,10 @@ namespace Preoff
             //var log = LogManager.GetLogger(Logrepository.Name, typeof(Startup));
             //log.Info("test");
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
         public void ConfigureContainer(ContainerBuilder builder)
         {
 

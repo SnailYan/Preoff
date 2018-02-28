@@ -39,7 +39,13 @@ namespace Preoff.Controllers
         {
             try
             {
-                return Ok(_repository.Get(p => p.PId == "000000000000"));
+                //return Ok(_repository.Get(p => p.PId == "000000000000"));
+                return Json(new
+                {
+                    table = _repository.Get(p => p.Id == "000000000000"),
+                    state = "0",
+                    msg = "操作成功！"
+                });
             }
             catch (Exception ex)
             {
@@ -59,7 +65,13 @@ namespace Preoff.Controllers
         {
             try
             {
-                return Ok(_repository.LoadAll(p => p.PId == id));
+                //return Ok(_repository.LoadAll(p => p.PId == id));
+                return Json(new
+                {
+                    table = _repository.LoadAll(p => p.PId == id),
+                    state = "0",
+                    msg = "操作成功！"
+                });
             }
             catch (Exception ex)
             {

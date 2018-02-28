@@ -34,14 +34,21 @@ namespace Preoff.Controllers
         /// <summary>
         /// 添加任务[支持批量]
         /// </summary>
-        /// <param name="_user">用户类</param>
+        /// <param name="_task">用户类</param>
         /// <returns></returns>
         [HttpPost("addMul")]
-        public IActionResult Add([FromBody]List<TaskTable> _user)
+        public IActionResult Add([FromBody]List<TaskTable> _task)
         {
             try
             {
-                return Ok(_repository.SaveList(_user));
+                //return Ok(_repository.SaveList(_task));
+                int count = _repository.SaveList(_task);
+                return Json(new
+                {
+                    count,
+                    state = "0",
+                    msg = "操作成功！"
+                });
             }
             catch (Exception ex)
             {
@@ -53,13 +60,24 @@ namespace Preoff.Controllers
                 });
             }
         }
-
+        /// <summary>
+        /// 添加任务返回任务id
+        /// </summary>
+        /// <param name="_task">任务</param>
+        /// <returns></returns>
         [HttpPost("addone")]
-        public IActionResult Add([FromBody]TaskTable _user)
+        public IActionResult Add([FromBody]TaskTable _task)
         {
             try
             {
-                return Ok(_repository.SaveGetId(_user));
+                //return Ok(_repository.SaveGetId(_task));
+                int id = _repository.SaveGetId(_task);
+                return Json(new
+                {
+                    id,
+                    state = "0",
+                    msg = "添加成功！"
+                });
             }
             catch (Exception ex)
             {
@@ -74,14 +92,21 @@ namespace Preoff.Controllers
         /// <summary>
         /// 更新任务[所有字段,支持批量]
         /// </summary>
-        /// <param name="_user">任务类</param>
+        /// <param name="_task">任务类</param>
         /// <returns></returns>
         [HttpPost("UpdateList")]
-        public IActionResult UpdateList([FromBody]List<TaskTable> _user)
+        public IActionResult UpdateList([FromBody]List<TaskTable> _task)
         {
             try
             {
-                return Ok(_repository.UpdateList(_user));
+                //return Ok(_repository.UpdateList(_task));
+                int count = _repository.UpdateList(_task);
+                return Json(new
+                {
+                    count,
+                    state = "0",
+                    msg = "操作成功！"
+                });
             }
             catch (Exception ex)
             {
@@ -102,7 +127,14 @@ namespace Preoff.Controllers
         {
             try
             {
-                return Ok(_repository.Delete(p => p.Id == id));
+                //return Ok(_repository.Delete(p => p.Id == id));
+                int count = _repository.Delete(p => p.Id == id);
+                return Json(new
+                {
+                    count,
+                    state = "0",
+                    msg = "操作成功！"
+                });
             }
             catch (Exception ex)
             {
@@ -115,14 +147,21 @@ namespace Preoff.Controllers
         /// <summary>
         /// 批量删除任务[根据任务ID集合批量删除]
         /// </summary>
-        /// <param name="_userID">任务列表</param>
+        /// <param name="_taskID">任务列表</param>
         /// <returns></returns>
         [HttpDelete("delids")]
-        public IActionResult DelByIds([FromBody]List<int> _userID)
+        public IActionResult DelByIds([FromBody]List<int> _taskID)
         {
             try
             {
-                return Ok(_repository.Delete(p => _userID.Contains(p.Id)));
+                //return Ok(_repository.Delete(p => _taskID.Contains(p.Id)));
+                int count = _repository.Delete(p => _taskID.Contains(p.Id));
+                return Json(new
+                {
+                    count,
+                    state = "0",
+                    msg = "操作成功！"
+                });
             }
             catch (Exception ex)
             {
@@ -135,14 +174,21 @@ namespace Preoff.Controllers
         /// <summary>
         /// 批量删除任务[根据任务集合批量删除]
         /// </summary>
-        /// <param name="_user">任务列表</param>
+        /// <param name="_task">任务列表</param>
         /// <returns></returns>
         [HttpDelete("batchdel")]
-        public IActionResult Batchdel([FromBody]List<TaskTable> _user)
+        public IActionResult Batchdel([FromBody]List<TaskTable> _task)
         {
             try
             {
-                return Ok(_repository.DeleteList(_user));
+                //return Ok(_repository.DeleteList(_task));
+                int count = _repository.DeleteList(_task);
+                return Json(new
+                {
+                    count,
+                    state = "0",
+                    msg = "操作成功！"
+                });
             }
             catch (Exception ex)
             {
@@ -162,7 +208,13 @@ namespace Preoff.Controllers
         {
             try
             {
-                return Ok(_repository.Get(p => p.Id == id));
+                //return Ok(_repository.Get(p => p.Id == id));
+                return Json(new
+                {
+                    table = _repository.Get(p => p.Id == id),
+                    state = "0",
+                    msg = "操作成功！"
+                });
             }
             catch (Exception ex)
             {
@@ -181,7 +233,13 @@ namespace Preoff.Controllers
         {
             try
             {
-                return Ok(_repository.LoadListAll());
+                //return Ok(_repository.LoadListAll());
+                return Json(new
+                {
+                    table = _repository.LoadListAll(),
+                    state = "0",
+                    msg = "操作成功!"
+                });
             }
             catch (Exception ex)
             {

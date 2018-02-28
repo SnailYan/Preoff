@@ -72,9 +72,13 @@ namespace Preoff.Controllers
                     claims,
                     DateTime.Now,DateTime.Now.AddMinutes(_jwtSettings.TimeOut),
                     creds);
-                TokenUser _tokenUser = new TokenUser();
-                _tokenUser.token = new JwtSecurityTokenHandler().WriteToken(token);
-                _tokenUser.user = a;
+                TokenUser _tokenUser = new TokenUser
+                {
+                    token = new JwtSecurityTokenHandler().WriteToken(token),
+                    user = a,
+                    state = "0",
+                    msg="²Ù×÷³É¹¦!"
+                };
                 //return Ok(new {token=new JwtSecurityTokenHandler().WriteToken(token)});
                 return Ok(_tokenUser);
             }

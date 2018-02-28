@@ -32,6 +32,7 @@ namespace Preoff.Controllers
         /// 构造函数
         /// </summary>
         /// <param name="_db">注入数据仓库</param>
+        /// <param name="env">环境</param>
         public EventImgController(IRepository<EventImgTable> _db, IHostingEnvironment env)
         {
             _repository = _db;
@@ -108,12 +109,22 @@ namespace Preoff.Controllers
                     EventTableId = id,
                     ImgPath = $@"\Upload\Img\{filePathExt}\{fileName}"
                 };
-                _repository.Save(_img);
-                return Json(new
+                if (_repository.Save(_img))
                 {
-                    state = "0",
-                    msg = message
-                });
+                    return Json(new
+                    {
+                        state = "0",
+                        msg = message
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        state = "-1",
+                        msg = "上传失败!"
+                    });
+                }
             }
 
             catch (Exception ex)

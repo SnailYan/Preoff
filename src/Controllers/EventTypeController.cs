@@ -40,7 +40,12 @@ namespace Preoff.Controllers
         {
             try
             {
-                return Ok(_repository.LoadListAll());
+                return Json(new
+                {
+                    table=_repository.LoadListAll(),
+                    state = "0",
+                    msg = "操作成功!"
+                });
             }
             catch (Exception ex)
             {
