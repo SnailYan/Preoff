@@ -323,7 +323,7 @@ namespace Preoff.Controllers
                             _filter += "==";
                             break;
                         case OperationStr.Like:
-                            _filter += "like";
+                            _filter += ".Contains(\"";
                             break;
                         default:
                             _filter += "==";
@@ -334,9 +334,17 @@ namespace Preoff.Controllers
                     {
                         case "String":
                         case "string":
-                            _filter +="\"";
-                            _filter += item.Value;
-                            _filter += "\"";
+                            if (item.Operation == OperationStr.Like)
+                            {
+                                _filter += item.Value;
+                                _filter += "\")";
+                            }
+                            else
+                            {
+                                _filter += "\"";
+                                _filter += item.Value;
+                                _filter += "\"";
+                            }
                             break;
                         case "Int32":
                         case "Int64":
