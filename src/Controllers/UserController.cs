@@ -266,114 +266,117 @@ namespace Preoff.Controllers
 
         }
 
-        //[HttpPost("Page")]
-        //public IActionResult SelectPage(int pageIndex, int pageSize, [FromBody]List<FilterStr> filter, string order, bool isAsc)
-        //{
-        //    IQueryable<UserTable> _user = _repository.LoadAll();
-        //    var where = new Interpreter().ParseAsExpression<Func<UserTable, bool>>("_user.Id > 5", "_user");
-        //    var orderby = new Interpreter().ParseAsExpression<Func<UserTable, string>>("_user.Id", "_user");
-        //    _repository.Query<UserTable, string>(pageIndex, pageSize, where, orderby, null, isAsc);
-
-
-        //    return Json(new
-        //    {
-        //        table = _repository.Query<UserTable, string>(pageIndex, pageSize, where, orderby, null, isAsc),
-        //        state = "0",
-        //        msg = "操作成功！"
-        //    });
-        //}
+        /// <summary>
+        /// 分页
+        /// </summary>
+        /// <param name="pageIndex">页码</param>
+        /// <param name="pageSize">每页数据条数</param>
+        /// <param name="filter">过滤条件</param>
+        /// <param name="order">排序字段</param>
+        /// <param name="isAsc">是否升序</param>
+        /// <returns></returns>
         [HttpPost("Page")]
         public IActionResult SelectPage(int pageIndex, int pageSize, [FromBody]List<FilterStr> filter, string order, bool isAsc)
         {
-
-           // IQueryable<UserTable> _user = _repository.Get(p=>)
-            string _order = string.Empty;
-            Expression<Func<UserTable, string>> orderby = null;
-            Expression<Func<UserTable, bool>> where = null;
-
-            if (order != null && order != string.Empty)
-            {
-                _order = "x." + order;
-                orderby = new Interpreter().ParseAsExpression<Func<UserTable, string>>(_order, "x");
-            }
-            if (filter != null && filter.Count > 0)
-            {
-                string _filter = string.Empty;
-                foreach (FilterStr item in filter)
-                {
-                    _filter += "p." + item.FieldName;
-                    switch (item.Operation)
-                    {
-                        case OperationStr.GreaterThan:
-                            _filter += ">";
-                            break;
-                        case OperationStr.LessThan:
-                            _filter += "<";
-                            break;
-                        case OperationStr.GreaterThanOrEqual:
-                            _filter += ">=";
-                            break;
-                        case OperationStr.LessThanOrEqual:
-                            _filter += "<=";
-                            break;
-                        case OperationStr.NotEqual:
-                            _filter += "!=";
-                            break;
-                        case OperationStr.Equal:
-                            _filter += "==";
-                            break;
-                        case OperationStr.Like:
-                            _filter += ".Contains(\"";
-                            break;
-                        default:
-                            _filter += "==";
-                            break;
-                    }
-                    string xxx = item.Value.GetType().Name.ToString();
-                    switch (item.Value.GetType().Name.ToString())
-                    {
-                        case "String":
-                        case "string":
-                            if (item.Operation == OperationStr.Like)
-                            {
-                                _filter += item.Value;
-                                _filter += "\")";
-                            }
-                            else
-                            {
-                                _filter += "\"";
-                                _filter += item.Value;
-                                _filter += "\"";
-                            }
-                            break;
-                        case "Int32":
-                        case "Int64":
-                        case "Int":
-                        case "Double":
-                            _filter += item.Value;
-                            break;
-                        case "DateTime":
-                            _filter += "DateTime.Parse(\"";
-                            _filter += item.Value;
-                            _filter += "\")";
-                            break;
-                        default:
-                            break;
-                    }
-                    _filter += "&&";
-                }
-                _filter = _filter.Substring(0, _filter.Length - 2);
-                where = new Interpreter().ParseAsExpression<Func<UserTable, bool>>(_filter, "p"); 
-            }
-
             try
             {
-                return Json(new
+                string _order = string.Empty;
+                Expression<Func<UserTable, string>> orderby = null;
+                Expression<Func<UserTable, int>> orderbyint = null;
+                Expression<Func<UserTable, bool>> where = null;
+
+                getOrder(order, ref _order, ref orderby, ref orderbyint);
+                if (filter != null && filter.Count > 0)
                 {
-                    table = _repository.Query<UserTable, string>(pageIndex, pageSize, where, orderby, null, isAsc),
-                    state = "0",
-                    msg = "操作成功！"
-                });
+                    string _filter = string.Empty;
+                    foreach (FilterStr item in filter)
+                    {
+                        _filter += "p." + item.FieldName;
+                        _filter = SwitchOper.SwitchOperation(_filter, item);
+                        switch (item.Value.GetType().Name.ToString())
+                        {
+                            case "String":
+                            case "string":
+                                if (item.Operation == OperationStr.Like)
+                                {
+                                    _filter += item.Value;
+                                    _filter += "\")";
+                                }
+                                else if (item.Operation == OperationStr.Equal || item.Operation == OperationStr.NotEqual)
+                                {
+                                    _filter += "\"";
+                                    _filter += item.Value;
+                                    _filter += "\"";
+                                }
+                                else
+                                {
+                                    return Json(new
+                                    {
+                                        state = "-1",
+                                        msg = "条件无效！"
+                                    });
+                                }
+                                break;
+                            case "Int32":
+                            case "Int64":
+                            case "Int":
+                            case "Double":
+                                if (item.Operation == OperationStr.Like)
+                                {
+                                    return Json(new
+                                    {
+                                        state = "-1",
+                                        msg = "条件无效！"
+                                    });
+                                }
+                                else
+                                {
+                                    _filter += item.Value;
+                                }
+                                break;
+                            case "DateTime":
+                                if (item.Operation == OperationStr.Like)
+                                {
+                                    return Json(new
+                                    {
+                                        state = "-1",
+                                        msg = "条件无效！"
+                                    });
+                                }
+                                else
+                                {
+                                    _filter += "DateTime.Parse(\"";
+                                    _filter += item.Value;
+                                    _filter += "\")";
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        _filter += "&&";
+                    }
+                    _filter = _filter.Substring(0, _filter.Length - 2);
+                    where = new Interpreter().ParseAsExpression<Func<UserTable, bool>>(_filter, "p");
+                }
+
+                if (orderbyint == null)
+                {
+                    return Json(new
+                    {
+                        table = _repository.Query<UserTable, string>(pageIndex, pageSize, where, orderby, null, isAsc),
+                        state = "0",
+                        msg = "操作成功！"
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        table = _repository.Query<UserTable, int>(pageIndex, pageSize, where, orderbyint, null, isAsc),
+                        state = "0",
+                        msg = "操作成功！"
+                    });
+                }
             }
             catch (Exception ex)
             {
@@ -386,215 +389,32 @@ namespace Preoff.Controllers
 
         }
 
-        //[HttpPost("Page")]
-        //public IActionResult SelectPage(int pageIndex, int pageSize, [FromBody]List<FilterStr> filter, string order, bool isAsc)
-        //{
 
-        //    if (filter==null)
-        //    {
-        //        FilterStr _f = new FilterStr();
-        //        _f.Name = "1";
-        //        _f.Operation = Operation.Like;
-        //        _f.Value = "s";
-        //        filter.Add(_f);
-        //        return Ok(filter);
-        //    }
-        //    var builder = new ExpressionBuilder<UserTable>();//实例化组件
-        //    var filters = new List<SqlFilter>();
-        //    foreach (FilterStr item in filter)
-        //    {
-        //        filters.Add(SqlFilter.Create(item.Name, item.Operation, item.Value));
-        //    }
-        //    if (order != null && order.Trim() != string.Empty)
-        //    {
-        //        var type = typeof(UserTable);
-        //        var propertyName = order;
-        //        var param = Expression.Parameter(type, type.Name);
-        //        var body = Expression.Property(param, propertyName);
-        //        var keySelector = Expression.Lambda(body, param);
-        //        switch (body.Type.Name.ToString())
-        //        {
-        //            case "String":
-        //                if (filter.Count != 0)
-        //                {
-        //                    var where = builder.Build(filters, new Dictionary<string, string>());
-        //                    return Ok(_repository.Query<UserTable, string>(pageIndex, pageSize, where, (Expression<Func<UserTable, string>>)keySelector, null, isAsc));
-        //                }
-        //                else
-        //                {
-        //                    return Ok(_repository.Query<UserTable, string>(pageIndex, pageSize, null, (Expression<Func<UserTable, string>>)keySelector, null, isAsc));
-        //                }
-        //            case "Int32":
-        //                if (filter.Count != 0)
-        //                {
-        //                    var where = builder.Build(filters, new Dictionary<string, string>());
-        //                    return Ok(_repository.Query<UserTable, Int32>(pageIndex, pageSize, where, (Expression<Func<UserTable, Int32>>)keySelector, null, isAsc));
-        //                }
-        //                else
-        //                {
-        //                    return Ok(_repository.Query<UserTable, Int32>(pageIndex, pageSize, null, (Expression<Func<UserTable, Int32>>)keySelector, null, isAsc));
-        //                }
-        //            case "System.DateTime":
-        //                if (filter.Count != 0)
-        //                {
-        //                    var where = builder.Build(filters, new Dictionary<string, string>());
-        //                    return Ok(_repository.Query<UserTable, DateTime>(pageIndex, pageSize, where, (Expression<Func<UserTable, DateTime>>)keySelector, null, isAsc));
-        //                }
-        //                else
-        //                {
-        //                    return Ok(_repository.Query<UserTable, DateTime>(pageIndex, pageSize, null, (Expression<Func<UserTable, DateTime>>)keySelector, null, isAsc));
-        //                }
-        //            case "Double":
-        //                if (filter.Count != 0)
-        //                {
-        //                    var where = builder.Build(filters, new Dictionary<string, string>());
-        //                    return Ok(_repository.Query<UserTable, double>(pageIndex, pageSize, where, (Expression<Func<UserTable, double>>)keySelector, null, isAsc));
-        //                }
-        //                else
-        //                {
-        //                    return Ok(_repository.Query<UserTable, double>(pageIndex, pageSize, null, (Expression<Func<UserTable, double>>)keySelector, null, isAsc));
-        //                }
-        //            default:
-        //                break;
-        //        }
+        private static void getOrder(string order, ref string _order, ref Expression<Func<UserTable, string>> orderby, ref Expression<Func<UserTable, int>> orderbyint)
+        {
+            if (order != null && order != string.Empty)
+            {
+                _order = "x." + order;
+                try
+                {
+                    orderby = new Interpreter().ParseAsExpression<Func<UserTable, string>>(_order, "x");
 
-        //        return Json(new
-        //        {
-        //            state = "-1",
-        //            msg = "非法操作！"
-        //        });
-        //    }
-        //    else
-        //    {
-        //        var where = builder.Build(filters, new Dictionary<string, string>());
-        //        return Ok(_repository.Query<UserTable, string>(pageIndex, pageSize, where, null, null, isAsc));
-        //    }
-        //}
-        //[HttpPost("filter")]
-        //public IActionResult SelectPage(int pageindex, int pageSize, List<FilterStr> filter, string order, bool isAsc)
-        //{
+                }
+                catch (Exception ex)
+                {
+                    try
+                    {
 
-        //    var builder = new ExpressionBuilder<UserTable>();//实例化组件
-        //    var filters = new List<SqlFilter>();
-        //    foreach (FilterStr item in filter)
-        //    {
-        //        filters.Add(SqlFilter.Create(item.Name, Operation.Equal, item.Value));
-        //    }
-        //    if (order != null && order.Trim() != string.Empty)
-        //    {
-        //        var type = typeof(UserTable);
-        //        var propertyName = order;
-        //        var param = Expression.Parameter(type, type.Name);
-        //        var body = Expression.Property(param, propertyName);
-        //        var keySelector = Expression.Lambda(body, param);
-        //        switch (body.Type.Name.ToString())
-        //        {
-        //            case "String":
-        //                if (filter.Count != 0)
-        //                {
-        //                    var where = builder.Build(filters, new Dictionary<string, string>());
-        //                    return Ok(_repository.Query<UserTable, string>(pageindex, pageSize, where, (Expression<Func<UserTable, string>>)keySelector, null, isAsc));
-        //                }
-        //                else
-        //                {
-        //                    return Ok(_repository.Query<UserTable, string>(pageindex, pageSize, null, (Expression<Func<UserTable, string>>)keySelector, null, isAsc));
-        //                }
-        //            case "Int32":
-        //                if (filter.Count != 0)
-        //                {
-        //                    var where = builder.Build(filters, new Dictionary<string, string>());
-        //                    return Ok(_repository.Query<UserTable, Int32>(pageindex, pageSize, where, (Expression<Func<UserTable, Int32>>)keySelector, null, isAsc));
-        //                }
-        //                else
-        //                {
-        //                    return Ok(_repository.Query<UserTable, Int32>(pageindex, pageSize, null, (Expression<Func<UserTable, Int32>>)keySelector, null, isAsc));
-        //                }
-        //            case "System.DateTime":
-        //                if (filter.Count != 0)
-        //                {
-        //                    var where = builder.Build(filters, new Dictionary<string, string>());
-        //                    return Ok(_repository.Query<UserTable, DateTime>(pageindex, pageSize, where, (Expression<Func<UserTable, DateTime>>)keySelector, null, isAsc));
-        //                }
-        //                else
-        //                {
-        //                    return Ok(_repository.Query<UserTable, DateTime>(pageindex, pageSize, null, (Expression<Func<UserTable, DateTime>>)keySelector, null, isAsc));
-        //                }
-        //            case "Double":
-        //                if (filter.Count != 0)
-        //                {
-        //                    var where = builder.Build(filters, new Dictionary<string, string>());
-        //                    return Ok(_repository.Query<UserTable, double>(pageindex, pageSize, where, (Expression<Func<UserTable, double>>)keySelector, null, isAsc));
-        //                }
-        //                else
-        //                {
-        //                    return Ok(_repository.Query<UserTable, double>(pageindex, pageSize, null, (Expression<Func<UserTable, double>>)keySelector, null, isAsc));
-        //                }
-        //            default:
-        //                break;
-        //        }
+                    }
+                    catch (Exception e)
+                    {
+                        orderbyint = new Interpreter().ParseAsExpression<Func<UserTable, int>>(_order, "x");
+                    }
 
-        //        return Json(new
-        //        {
-        //            state = "-1",
-        //            msg = "非法操作！"
-        //        });
-        //    }
-        //    else
-        //    {
-        //        return Ok(_repository.Query<UserTable, string>(pageindex, pageSize, null, null, null, isAsc));
-        //    }
-        //}
+                }
 
-        //[HttpGet("{page}")]
-        //public async Task<IActionResult> pages(int? page)
-        //{
-        //    if (page<1)
-        //    {
-        //        return BadRequest();
-        //    }
-        //    var _user = from s in _dbContext.Tuser
-        //                select s;
-
-        //    return Ok(await PaginatedList<Tuser>.CreateAsync(_user.AsNoTracking(), page ?? 1, 10));
-        //}
-
-        //[HttpGet("{page}")]
-        //public async Task<IActionResult> SelectPage(string sortOrder, string currentFilter, string searchString, int? page)
-        //{
-        //    if (searchString != null)
-        //    {
-        //        page = 1;
-        //    }
-        //    else
-        //    {
-        //        searchString = currentFilter;
-        //    }
-        //    var _user = from s in _dbContext.UserTable
-        //                select s;
-        //    if (!String.IsNullOrEmpty(searchString))
-        //    {
-        //        _user = _user.Where(s => s.RealName.Contains(searchString)
-        //                               || s.ViewName.Contains(searchString));
-        //    }
-        //    switch (sortOrder)
-        //    {
-        //        case "name_desc":
-        //            _user = _user.OrderByDescending(s => s.Id);
-        //            break;
-        //        case "Date":
-        //            _user = _user.OrderBy(s => s.RegTime);
-        //            break;
-        //        case "date_desc":
-        //            _user = _user.OrderByDescending(s => s.RegTime);
-        //            break;
-        //        default:
-        //            _user = _user.OrderBy(s => s.LoginName);
-        //            break;
-        //    }
-
-        //    int pageSize = 3;
-        //    return Ok(await PaginatedList<UserTable>.CreateAsync(_user.AsNoTracking(), page ?? 1, pageSize));
-        //}
+            }
+        }
     }
 
 }
