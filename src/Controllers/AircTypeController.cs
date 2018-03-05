@@ -392,11 +392,11 @@ namespace Preoff.Controllers
                 {
                     try
                     {
-
+                        orderbyint = new Interpreter().ParseAsExpression<Func<AircTypeTable, int>>(_order, "x");
                     }
                     catch (Exception e)
                     {
-                        orderbyint = new Interpreter().ParseAsExpression<Func<AircTypeTable, int>>(_order, "x");
+                        
                     }
 
                 }
