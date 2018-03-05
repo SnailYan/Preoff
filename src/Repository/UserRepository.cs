@@ -1,4 +1,5 @@
-﻿using Preoff.Entity;
+﻿using Microsoft.EntityFrameworkCore;
+using Preoff.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,9 @@ namespace Preoff.Repository
 
         public Object GetTask(int id)
         {
+            //var xxx=_dbcontext.Database.ExecuteSqlCommand("select * from dbo.VTaskTable");
+            //IQueryable<ViewTask> iQueryTable = _dbcontext.Set<ViewTask>().FromSql("select * from dbo.VTaskTable");
+            //_dbcontext.Database.SqlQuery<ViewTask>("select * from dbo.YourView");
             var myList = _dbcontext.TaskTable
                 .Join(
                     _dbcontext.TaskUserTable, 

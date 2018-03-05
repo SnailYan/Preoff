@@ -31,7 +31,6 @@ namespace Preoff.Entity
         public virtual DbSet<UnitTable> UnitTable { get; set; }
         public virtual DbSet<UserRoleTable> UserRoleTable { get; set; }
         public virtual DbSet<UserTable> UserTable { get; set; }
-
         /// <summary>
         /// 
         /// </summary>
@@ -443,7 +442,6 @@ namespace Preoff.Entity
 
                 entity.Property(e => e.UserTableId).HasColumnName("userTable_id");
             });
-
             modelBuilder.Entity<TaskTypeTable>(entity =>
             {
                 entity.ToTable("taskTypeTable");
