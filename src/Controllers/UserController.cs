@@ -388,8 +388,6 @@ namespace Preoff.Controllers
             }
 
         }
-
-
         private static void getOrder(string order, ref string _order, ref Expression<Func<UserTable, string>> orderby, ref Expression<Func<UserTable, int>> orderbyint)
         {
             if (order != null && order != string.Empty)
@@ -414,6 +412,20 @@ namespace Preoff.Controllers
                 }
 
             }
+        }
+
+
+        [HttpGet("GetTask")]
+        public IActionResult GetTask(int id)
+        {
+            
+            return Json(new
+            {
+                table = _repository.GetTask(id),
+                state = "0",
+                msg = "操作成功!"
+            });
+            //return Ok();
         }
     }
 

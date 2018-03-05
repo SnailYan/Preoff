@@ -28,6 +28,32 @@ namespace Preoff.Repository
             //}            
         }
 
+        public Object GetTask(int id)
+        {
+            var myList = _dbcontext.TaskTable
+                .Join(
+                    _dbcontext.TaskUserTable, 
+                    a => a.Id, 
+                    b => b.TaskTableId, 
+                    (a, b) => new{task = a,taskUser = b })
+                .Join(
+                    _dbcontext.UserTable.Where(c => c.Id == id),
+                    d => d.taskUser.UserTableId,
+                    c => c.Id,
+                    (d, c) => new { d.task, d.taskUser, IndustryCode = c.Id })
+                .Select(c => new {
+                    c.task.Id,                
+                    c.task.TaskName,                
+                    c.task.TaskTypeTableId,
+                    c.task.UserTableId,
+                    c.task.PubTime,
+                    c.task.EndTime,
+                    c.task.TaskDesc,
+                    c.task.TaskStateTableId
+                });
+            return myList;
+        }
+
         public UserTable getUser(int id)
         {
             //var sg = db.Users.GroupJoin(db.Departments, u => u.DepartmentId, d => d.DepartmentId, (u, d) => new { u, d }).Select(o => o).ToList();

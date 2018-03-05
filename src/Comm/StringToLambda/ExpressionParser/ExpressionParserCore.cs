@@ -46,27 +46,29 @@ namespace Lenic.DI.Core
         static ExpressionParserCore()
         {
             // 数字类型优先级
-            numericTypeLevel = new Dictionary<Type, int>();
-            numericTypeLevel.Add(typeof(byte), 1);
-            numericTypeLevel.Add(typeof(byte?), 1);
-            numericTypeLevel.Add(typeof(short), 2);
-            numericTypeLevel.Add(typeof(short?), 2);
-            numericTypeLevel.Add(typeof(ushort), 3);
-            numericTypeLevel.Add(typeof(ushort?), 3);
-            numericTypeLevel.Add(typeof(int), 4);
-            numericTypeLevel.Add(typeof(int?), 4);
-            numericTypeLevel.Add(typeof(uint), 5);
-            numericTypeLevel.Add(typeof(uint?), 5);
-            numericTypeLevel.Add(typeof(long), 6);
-            numericTypeLevel.Add(typeof(long?), 6);
-            numericTypeLevel.Add(typeof(ulong), 7);
-            numericTypeLevel.Add(typeof(ulong?), 7);
-            numericTypeLevel.Add(typeof(float), 8);
-            numericTypeLevel.Add(typeof(float?), 8);
-            numericTypeLevel.Add(typeof(double), 9);
-            numericTypeLevel.Add(typeof(double?), 9);
-            numericTypeLevel.Add(typeof(decimal), 10);
-            numericTypeLevel.Add(typeof(decimal?), 10);
+            numericTypeLevel = new Dictionary<Type, int>
+            {
+                { typeof(byte), 1 },
+                { typeof(byte?), 1 },
+                { typeof(short), 2 },
+                { typeof(short?), 2 },
+                { typeof(ushort), 3 },
+                { typeof(ushort?), 3 },
+                { typeof(int), 4 },
+                { typeof(int?), 4 },
+                { typeof(uint), 5 },
+                { typeof(uint?), 5 },
+                { typeof(long), 6 },
+                { typeof(long?), 6 },
+                { typeof(ulong), 7 },
+                { typeof(ulong?), 7 },
+                { typeof(float), 8 },
+                { typeof(float?), 8 },
+                { typeof(double), 9 },
+                { typeof(double?), 9 },
+                { typeof(decimal), 10 },
+                { typeof(decimal?), 10 }
+            };
         }
 
         /// <summary>

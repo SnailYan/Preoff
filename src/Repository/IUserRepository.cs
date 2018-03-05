@@ -16,5 +16,6 @@ namespace Preoff.Repository
         /// </summary>
         void BatchUpdateUserBirthday();
         UserTable getUser(int id);
+        Object GetTask(int id);
     }
 }
