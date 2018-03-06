@@ -14,5 +14,6 @@ namespace Preoff.Entity
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
         public int? TaskStateTableId { get; set; }
+        public string StateName { get; set; }
     }
 }

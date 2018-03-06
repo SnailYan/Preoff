@@ -184,7 +184,15 @@ namespace Preoff
             //builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("Table"));
 
             builder.RegisterType<UserRepository>().As<IUserRepository>();
+            builder.RegisterType<AircRepository>().As<IAircRepository>();
+            builder.RegisterType<AirLoadRepository>().As<IAirLoadRepository>();
+            builder.RegisterType<CameraRepository>().As<ICameraRepository>();
+            builder.RegisterType<CameraTypeRepository>().As<ICameraTypeRepository>();
+            builder.RegisterType<EventRepository>().As<IEventRepository>();
+            builder.RegisterType<ExecTaskRepository>().As<IExecTaskRepository>();
             builder.RegisterType<DivisionRepository>().As<IDivisionRepository>();
+            builder.RegisterType<TaskRepository>().As<ITaskRepository>();
+            builder.RegisterType<UnitRepository>().As<IUnitRepository>();
         }
     }
 }
