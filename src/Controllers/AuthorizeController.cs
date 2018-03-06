@@ -28,7 +28,7 @@ namespace Preoff.Controllers
         /// <param name="_db">注入数据库配置</param>
         public AuthorizeController(IOptions<JwtSettings> _jwtSettingsAccesser, PreoffContext _db)
         {
-            _jwtSettings=_jwtSettingsAccesser.Value;
+            _jwtSettings = _jwtSettingsAccesser.Value;
             _dbContext = _db;
         }
         /// <summary>
@@ -39,54 +39,72 @@ namespace Preoff.Controllers
         [HttpPost]
         public IActionResult Token([FromBody]AuthorizeTable _auth)
         {
-            if(ModelState.IsValid)
+            try
             {
-                var a = _dbContext.UserTable.FirstOrDefault(u => (u.LoginName == _auth.userName) && (u.LoginPwd == _auth.password));
-                if (a is null)
-                {
-                    return Json(new
-                    {
-                        state = "-1",
-                        msg= "账号不存在或密码错误！"
-                    });
-                }
 
-                //var claims=new Claim[]{
-                //    new Claim(ClaimTypes.Name,userModel.CName),
-                //    new Claim(ClaimTypes.Role,"user"),
-                //    //new Claim("SuperAdminOnly","true")
-                //};
-                var claims = new Claim[]{
+
+                if (ModelState.IsValid)
+                {
+                    var a = _dbContext.UserTable.FirstOrDefault(u => (u.LoginName == _auth.userName) && (u.LoginPwd == _auth.password));
+                    if (a is null)
+                    {
+                        return Json(new
+                        {
+                            state = "-1",
+                            msg = "账号不存在或密码错误！"
+                        });
+                    }
+                    a.LoginCount =(a.LoginCount is null) ? a.LoginCount = 1 : a.LoginCount + 1;
+                    a.LastLoginTime = DateTime.Now;
+                    //a.LoginCount = a.LoginCount + 1;
+                    _dbContext.UserTable.Update(a);
+                    _dbContext.SaveChanges();
+                    //var claims=new Claim[]{
+                    //    new Claim(ClaimTypes.Name,userModel.CName),
+                    //    new Claim(ClaimTypes.Role,"user"),
+                    //    //new Claim("SuperAdminOnly","true")
+                    //};
+
+                    var claims = new Claim[]{
                     new Claim(ClaimTypes.Name,_auth.userName),
                     new Claim(ClaimTypes.Role,"user"),
                     //new Claim("SuperAdminOnly","true")
                 };
 
 
-                var key =new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
-                var creds=new SigningCredentials(key,SecurityAlgorithms.HmacSha256);
+                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
+                    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-                var token= new JwtSecurityToken(
-                    _jwtSettings.Issuer,
-                    _jwtSettings.Audience,
-                    claims,
-                    DateTime.Now,DateTime.Now.AddMinutes(_jwtSettings.TimeOut),
-                    creds);
-                TokenUser _tokenUser = new TokenUser
+                    var token = new JwtSecurityToken(
+                        _jwtSettings.Issuer,
+                        _jwtSettings.Audience,
+                        claims,
+                        DateTime.Now, DateTime.Now.AddMinutes(_jwtSettings.TimeOut),
+                        creds);
+                    TokenUser _tokenUser = new TokenUser
+                    {
+                        token = new JwtSecurityTokenHandler().WriteToken(token),
+                        user = a,
+                        state = "0",
+                        msg = "操作成功!"
+                    };
+                    //return Ok(new {token=new JwtSecurityTokenHandler().WriteToken(token)});
+                    return Ok(_tokenUser);
+                }
+                return Json(new
                 {
-                    token = new JwtSecurityTokenHandler().WriteToken(token),
-                    user = a,
-                    state = "0",
-                    msg="操作成功!"
-                };
-                //return Ok(new {token=new JwtSecurityTokenHandler().WriteToken(token)});
-                return Ok(_tokenUser);
+                    state = "-1",
+                    msg = "非法操作！"
+                });
             }
-            return Json(new
+            catch (Exception ex)
             {
-                state = "-1",
-                msg = "非法操作！"
-            });
+                return Json(new
+                {
+                    state = "-1",
+                    msg = "非法操作！"
+                });
+            }
         }
     }
 }

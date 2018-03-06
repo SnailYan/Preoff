@@ -77,7 +77,31 @@ namespace Preoff.Controllers
         {
             try
             {
-                //return Ok(_repository.SaveGetId(_user));
+                if (_user==null)
+                {
+                    return Json(new
+                    {
+                        state = "-1",
+                        msg = "请输入用户！"
+                    });
+                }
+                if(_repository.IsExist(p=>p.LoginName==_user.LoginName))
+                {
+                    return Json(new
+                    {
+                        state = "-1",
+                        msg = "帐号已存在！"
+                    });
+                }
+                if (_repository.IsExist(p => p.ViewName == _user.ViewName))
+                {
+                    return Json(new
+                    {
+                        state = "-1",
+                        msg = "昵称已存在！"
+                    });
+                }
+                _user.RegTime = DateTime.Now;
                 int id = _repository.SaveGetId(_user);
                 return Json(new
                 {
