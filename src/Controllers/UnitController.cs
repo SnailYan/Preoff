@@ -23,13 +23,13 @@ namespace Preoff.Controllers
         /// <summary>
         /// 单位仓库
         /// </summary>
-        public readonly IRepository<UnitTable> _repository;
+        public readonly IUnitRepository _repository;
         ILog log = LogManager.GetLogger(Startup.Logrepository.Name, typeof(Startup));
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="_db">注入数据仓库</param>
-        public UnitController(IRepository<UnitTable> _db)
+        public UnitController(IUnitRepository _db)
         {
             _repository = _db;
         }
@@ -214,7 +214,7 @@ namespace Preoff.Controllers
                 //return Ok(_repository.Get(p => p.Id == id));
                 return Json(new
                 {
-                    table = _repository.Get(p => p.Id == id),
+                    table = _repository.Single(id),
                     state = "0",
                     msg = "操作成功！"
                 });
@@ -269,9 +269,9 @@ namespace Preoff.Controllers
             try
             {
                 string _order = string.Empty;
-                Expression<Func<UnitTable, string>> orderby = null;
-                Expression<Func<UnitTable, int>> orderbyint = null;
-                Expression<Func<UnitTable, bool>> where = null;
+                Expression<Func<UnitView, string>> orderby = null;
+                Expression<Func<UnitView, int>> orderbyint = null;
+                Expression<Func<UnitView, bool>> where = null;
 
                 getOrder(order, ref _order, ref orderby, ref orderbyint);
                 if (filter != null && filter.Count > 0)
@@ -344,14 +344,14 @@ namespace Preoff.Controllers
                         _filter += "&&";
                     }
                     _filter = _filter.Substring(0, _filter.Length - 2);
-                    where = new Interpreter().ParseAsExpression<Func<UnitTable, bool>>(_filter, "p");
+                    where = new Interpreter().ParseAsExpression<Func<UnitView, bool>>(_filter, "p");
                 }
 
                 if (orderbyint == null)
                 {
                     return Json(new
                     {
-                        table = _repository.Query<UnitTable, string>(pageIndex, pageSize, where, orderby, null, isAsc),
+                        table = _repository.Query<UnitView, string>(pageIndex, pageSize, where, orderby, null, isAsc),
                         state = "0",
                         msg = "操作成功！"
                     });
@@ -360,7 +360,7 @@ namespace Preoff.Controllers
                 {
                     return Json(new
                     {
-                        table = _repository.Query<UnitTable, int>(pageIndex, pageSize, where, orderbyint, null, isAsc),
+                        table = _repository.Query<UnitView, int>(pageIndex, pageSize, where, orderbyint, null, isAsc),
                         state = "0",
                         msg = "操作成功！"
                     });
@@ -378,21 +378,21 @@ namespace Preoff.Controllers
         }
 
 
-        private static void getOrder(string order, ref string _order, ref Expression<Func<UnitTable, string>> orderby, ref Expression<Func<UnitTable, int>> orderbyint)
+        private static void getOrder(string order, ref string _order, ref Expression<Func<UnitView, string>> orderby, ref Expression<Func<UnitView, int>> orderbyint)
         {
             if (order != null && order != string.Empty)
             {
                 _order = "x." + order;
                 try
                 {
-                    orderby = new Interpreter().ParseAsExpression<Func<UnitTable, string>>(_order, "x");
+                    orderby = new Interpreter().ParseAsExpression<Func<UnitView, string>>(_order, "x");
 
                 }
                 catch (Exception ex)
                 {
                     try
                     {
-                        orderbyint = new Interpreter().ParseAsExpression<Func<UnitTable, int>>(_order, "x");
+                        orderbyint = new Interpreter().ParseAsExpression<Func<UnitView, int>>(_order, "x");
                     }
                     catch (Exception e)
                     {

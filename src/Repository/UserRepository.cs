@@ -32,7 +32,7 @@ namespace Preoff.Repository
         public Object GetTask(int id)
         {
             //var xxx=_dbcontext.Database.ExecuteSqlCommand("select * from dbo.VTaskTable");
-            //IQueryable<ViewTask> iQueryTable = _dbcontext.Set<ViewTask>().FromSql("select * from dbo.VTaskTable");
+            TaskView iQueryTable = _dbcontext.Set<TaskView>().FirstOrDefault(p=>p.Id>0);
             //_dbcontext.Database.SqlQuery<ViewTask>("select * from dbo.YourView");
             var myList = _dbcontext.TaskTable
                 .Join(
@@ -46,7 +46,7 @@ namespace Preoff.Repository
                     c => c.Id,
                     (d, c) => new { d.task, d.taskUser, IndustryCode = c.Id })
                 .Select(c => new {
-                    c.task.Id,                
+                    c.task.Id,
                     c.task.TaskName,                
                     c.task.TaskTypeTableId,
                     c.task.UserTableId,
@@ -63,6 +63,11 @@ namespace Preoff.Repository
             //var sg = db.Users.GroupJoin(db.Departments, u => u.DepartmentId, d => d.DepartmentId, (u, d) => new { u, d }).Select(o => o).ToList();
             var sg=_dbcontext.UserTable.Join(_dbcontext.UnitTable, d => d.UnitTableId, p => p.Id, (d, p) => new { d, p }).Where(o => o.d.Id==id).ToList();
             return null;
+        }
+
+        public UserView Single(int id)
+        {
+            return _dbcontext.UserView.SingleOrDefault(p => p.Id == id);
         }
     }
 }

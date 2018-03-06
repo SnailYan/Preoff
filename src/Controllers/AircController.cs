@@ -23,13 +23,13 @@ namespace Preoff.Controllers
         /// <summary>
         /// 无人机仓库
         /// </summary>
-        public readonly IRepository<AircTable> _repository;
+        public readonly IAircRepository _repository;
         ILog log = LogManager.GetLogger(Startup.Logrepository.Name, typeof(Startup));
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="_db">注入数据仓库</param>
-        public AircController(IRepository<AircTable> _db)
+        public AircController(IAircRepository _db)
         {
             _repository = _db;
         }
@@ -214,7 +214,7 @@ namespace Preoff.Controllers
                 //return Ok(_repository.Get(p => p.Id == id));
                 return Json(new
                 {
-                    table= _repository.Get(p => p.Id == id),
+                    table= _repository.Single(id),
                     state = "0",
                     msg = "操作成功！"
                 });
@@ -269,9 +269,9 @@ namespace Preoff.Controllers
             try
             {
                 string _order = string.Empty;
-                Expression<Func<AircTable, string>> orderby = null;
-                Expression<Func<AircTable, int>> orderbyint = null;
-                Expression<Func<AircTable, bool>> where = null;
+                Expression<Func<AircView, string>> orderby = null;
+                Expression<Func<AircView, int>> orderbyint = null;
+                Expression<Func<AircView, bool>> where = null;
 
                 getOrder(order, ref _order, ref orderby, ref orderbyint);
                 if (filter != null && filter.Count > 0)
@@ -344,14 +344,14 @@ namespace Preoff.Controllers
                         _filter += "&&";
                     }
                     _filter = _filter.Substring(0, _filter.Length - 2);
-                    where = new Interpreter().ParseAsExpression<Func<AircTable, bool>>(_filter, "p");
+                    where = new Interpreter().ParseAsExpression<Func<AircView, bool>>(_filter, "p");
                 }
 
                 if (orderbyint == null)
                 {
                     return Json(new
                     {
-                        table = _repository.Query<AircTable, string>(pageIndex, pageSize, where, orderby, null, isAsc),
+                        table = _repository.Query<AircView, string>(pageIndex, pageSize, where, orderby, null, isAsc),
                         state = "0",
                         msg = "操作成功！"
                     });
@@ -360,7 +360,7 @@ namespace Preoff.Controllers
                 {
                     return Json(new
                     {
-                        table = _repository.Query<AircTable, int>(pageIndex, pageSize, where, orderbyint, null, isAsc),
+                        table = _repository.Query<AircView, int>(pageIndex, pageSize, where, orderbyint, null, isAsc),
                         state = "0",
                         msg = "操作成功！"
                     });
@@ -377,21 +377,21 @@ namespace Preoff.Controllers
 
         }
 
-        private static void getOrder(string order, ref string _order, ref Expression<Func<AircTable, string>> orderby, ref Expression<Func<AircTable, int>> orderbyint)
+        private static void getOrder(string order, ref string _order, ref Expression<Func<AircView, string>> orderby, ref Expression<Func<AircView, int>> orderbyint)
         {
             if (order != null && order != string.Empty)
             {
                 _order = "x." + order;
                 try
                 {
-                    orderby = new Interpreter().ParseAsExpression<Func<AircTable, string>>(_order, "x");
+                    orderby = new Interpreter().ParseAsExpression<Func<AircView, string>>(_order, "x");
 
                 }
                 catch (Exception ex)
                 {
                     try
                     {
-                        orderbyint = new Interpreter().ParseAsExpression<Func<AircTable, int>>(_order, "x");
+                        orderbyint = new Interpreter().ParseAsExpression<Func<AircView, int>>(_order, "x");
                     }
                     catch (Exception e)
                     {

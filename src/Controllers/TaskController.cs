@@ -23,13 +23,13 @@ namespace Preoff.Controllers
         /// <summary>
         /// 任务仓库
         /// </summary>
-        public readonly IRepository<TaskTable> _repository;
+        public readonly ITaskRepository _repository;
         ILog log = LogManager.GetLogger(Startup.Logrepository.Name, typeof(Startup));
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="_db">注入数据仓库</param>
-        public TaskController(IRepository<TaskTable> _db)
+        public TaskController(ITaskRepository _db)
         {
             _repository = _db;
         }
@@ -210,11 +210,10 @@ namespace Preoff.Controllers
         public IActionResult Select(int id)
         {
             try
-            {
-                //return Ok(_repository.Get(p => p.Id == id));
+            {                
                 return Json(new
                 {
-                    table = _repository.Get(p => p.Id == id),
+                    table = _repository.Single(id),
                     state = "0",
                     msg = "操作成功！"
                 });
@@ -401,6 +400,174 @@ namespace Preoff.Controllers
                 }
 
             }
+        }
+
+        private static void getOrder(string order, ref string _order, ref Expression<Func<TaskView, string>> orderby, ref Expression<Func<TaskView, int>> orderbyint)
+        {
+            if (order != null && order != string.Empty)
+            {
+                _order = "x." + order;
+                try
+                {
+                    orderby = new Interpreter().ParseAsExpression<Func<TaskView, string>>(_order, "x");
+
+                }
+                catch (Exception ex)
+                {
+                    try
+                    {
+                        orderbyint = new Interpreter().ParseAsExpression<Func<TaskView, int>>(_order, "x");
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+
+                }
+
+            }
+        }
+        /// <summary>
+        /// 根据用户id返回对应任务，id为-1返回所有任务
+        /// </summary>
+        /// <param name="userid">接收任务的用户id</param>
+        /// <param name="pageIndex">页码</param>
+        /// <param name="pageSize">每页数据条数</param>
+        /// <param name="filter">过滤条件</param>
+        /// <param name="order">排序字段</param>
+        /// <param name="isAsc">是否升序</param>
+        /// <returns></returns>
+        [HttpPost("GetTaskFromUserID")]
+        public IActionResult GetTask(int userid,int pageIndex, int pageSize, [FromBody]List<FilterStr> filter, string order, bool isAsc)
+        { 
+            if (userid!=-1)
+            {
+                if (filter is null)
+                {
+                    filter = new List<FilterStr>();
+                }
+                FilterStr _f = new FilterStr();
+                _f.FieldName = "UserId";
+                _f.Operation = OperationStr.Equal;
+                _f.Value = userid;
+                filter.Add(_f);
+            }
+            try
+            {
+                string _order = string.Empty;
+                Expression<Func<TaskView, string>> orderby = null;
+                Expression<Func<TaskView, int>> orderbyint = null;
+                Expression<Func<TaskView, bool>> where = null;
+
+                getOrder(order, ref _order, ref orderby, ref orderbyint);
+                if (filter != null && filter.Count > 0)
+                {
+                    string _filter = string.Empty;
+                    foreach (FilterStr item in filter)
+                    {
+                        _filter += "p." + item.FieldName;
+                        _filter = SwitchOper.SwitchOperation(_filter, item);
+                        switch (item.Value.GetType().Name.ToString())
+                        {
+                            case "String":
+                            case "string":
+                                if (item.Operation == OperationStr.Like)
+                                {
+                                    _filter += item.Value;
+                                    _filter += "\")";
+                                }
+                                else if (item.Operation == OperationStr.Equal || item.Operation == OperationStr.NotEqual)
+                                {
+                                    _filter += "\"";
+                                    _filter += item.Value;
+                                    _filter += "\"";
+                                }
+                                else
+                                {
+                                    return Json(new
+                                    {
+                                        state = "-1",
+                                        msg = "条件无效！"
+                                    });
+                                }
+                                break;
+                            case "Int32":
+                            case "Int64":
+                            case "Int":
+                            case "Double":
+                                if (item.Operation == OperationStr.Like)
+                                {
+                                    return Json(new
+                                    {
+                                        state = "-1",
+                                        msg = "条件无效！"
+                                    });
+                                }
+                                else
+                                {
+                                    _filter += item.Value;
+                                }
+                                break;
+                            case "DateTime":
+                                if (item.Operation == OperationStr.Like)
+                                {
+                                    return Json(new
+                                    {
+                                        state = "-1",
+                                        msg = "条件无效！"
+                                    });
+                                }
+                                else
+                                {
+                                    _filter += "DateTime.Parse(\"";
+                                    _filter += item.Value;
+                                    _filter += "\")";
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        _filter += "&&";
+                    }
+                    _filter = _filter.Substring(0, _filter.Length - 2);
+                    where = new Interpreter().ParseAsExpression<Func<TaskView, bool>>(_filter, "p");
+                }
+
+                if (orderbyint == null)
+                {
+                    return Json(new
+                    {
+                        table = _repository.Query<TaskView, string>(pageIndex, pageSize, where, orderby, null, isAsc),
+                        state = "0",
+                        msg = "操作成功！"
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        table = _repository.Query<TaskView, int>(pageIndex, pageSize, where, orderbyint, null, isAsc),
+                        state = "0",
+                        msg = "操作成功！"
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    state = "-1",
+                    msg = "非法操作！"
+                });
+            }
+
+            //return Json(new
+            //{
+            //    table = _repository.GetTask(id),
+            //    state = "0",
+            //    msg = "操作成功!"
+            //});
+            //return Ok();
         }
     }
 }

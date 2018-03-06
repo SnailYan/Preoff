@@ -8,18 +8,24 @@ namespace Preoff.Entity
     {
         public virtual DbSet<AircTable> AircTable { get; set; }
         public virtual DbSet<AircTypeTable> AircTypeTable { get; set; }
+        public virtual DbSet<AircView> AircView { get; set; }
         public virtual DbSet<AirFacTable> AirFacTable { get; set; }
         public virtual DbSet<AirLoadTable> AirLoadTable { get; set; }
+        public virtual DbSet<AirLoadView> AirLoadView { get; set; }
         public virtual DbSet<CameraFacTable> CameraFacTable { get; set; }
         public virtual DbSet<CameraTable> CameraTable { get; set; }
         public virtual DbSet<CameraTypeTable> CameraTypeTable { get; set; }
+        public virtual DbSet<CameraTypeView> CameraTypeView { get; set; }
+        public virtual DbSet<CameraView> CameraView { get; set; }
         public virtual DbSet<DivisionTable> DivisionTable { get; set; }
         public virtual DbSet<EquipFacTable> EquipFacTable { get; set; }
-        public virtual DbSet<EventTypeTable> EventTypeTable { get; set; }
-        public virtual DbSet<EventVideoTable> EventVideoTable { get; set; }
         public virtual DbSet<EventImgTable> EventImgTable { get; set; }
         public virtual DbSet<EventTable> EventTable { get; set; }
+        public virtual DbSet<EventTypeTable> EventTypeTable { get; set; }
+        public virtual DbSet<EventVideoTable> EventVideoTable { get; set; }
+        public virtual DbSet<EventView> EventView { get; set; }
         public virtual DbSet<ExecTaskTable> ExecTaskTable { get; set; }
+        public virtual DbSet<ExecTaskView> ExecTaskView { get; set; }
         public virtual DbSet<PermissonTable> PermissonTable { get; set; }
         public virtual DbSet<RolePermissionTable> RolePermissionTable { get; set; }
         public virtual DbSet<RoleTable> RoleTable { get; set; }
@@ -28,9 +34,12 @@ namespace Preoff.Entity
         public virtual DbSet<TaskTable> TaskTable { get; set; }
         public virtual DbSet<TaskTypeTable> TaskTypeTable { get; set; }
         public virtual DbSet<TaskUserTable> TaskUserTable { get; set; }
+        public virtual DbSet<TaskView> TaskView { get; set; }
         public virtual DbSet<UnitTable> UnitTable { get; set; }
+        public virtual DbSet<UnitView> UnitView { get; set; }
         public virtual DbSet<UserRoleTable> UserRoleTable { get; set; }
         public virtual DbSet<UserTable> UserTable { get; set; }
+        public virtual DbSet<UserView> UserView { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -84,6 +93,53 @@ namespace Preoff.Entity
                     .HasMaxLength(20);
             });
 
+            modelBuilder.Entity<AircView>(entity =>
+            {
+                entity.ToTable("aircView");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.AirDesc)
+                    .HasColumnName("air_desc")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.AirFacTableId).HasColumnName("airFacTable_id");
+
+                entity.Property(e => e.AirLoadTableId).HasColumnName("airLoadTable_id");
+
+                entity.Property(e => e.AircTypeName)
+                    .HasColumnName("airc_type_name")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.AircTypeTableId).HasColumnName("aircTypeTable_id");
+
+                entity.Property(e => e.EquipName)
+                    .HasColumnName("equip_name")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.FacName)
+                    .HasColumnName("fac_name")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.RegDate)
+                    .HasColumnName("reg_date")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.SerialNum)
+                    .HasColumnName("serial_num")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.UnitName)
+                    .HasColumnName("unit_name")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.UnitTableId).HasColumnName("unitTable_id");
+
+                entity.Property(e => e.UsedDesc)
+                    .HasColumnName("used_desc")
+                    .HasMaxLength(100);
+            });
+
             modelBuilder.Entity<AirFacTable>(entity =>
             {
                 entity.ToTable("airFacTable");
@@ -114,6 +170,25 @@ namespace Preoff.Entity
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.EquipDesc).HasColumnName("equip_desc");
+
+                entity.Property(e => e.EquipFacTableId).HasColumnName("equipFacTable_id");
+
+                entity.Property(e => e.EquipName)
+                    .HasColumnName("equip_name")
+                    .HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<AirLoadView>(entity =>
+            {
+                entity.ToTable("airLoadView");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.EquipDesc).HasColumnName("equip_desc");
+
+                entity.Property(e => e.EquipFacName)
+                    .HasColumnName("equip_fac_name")
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.EquipFacTableId).HasColumnName("equipFacTable_id");
 
@@ -195,6 +270,68 @@ namespace Preoff.Entity
                     .HasMaxLength(20);
             });
 
+            modelBuilder.Entity<CameraTypeView>(entity =>
+            {
+                entity.ToTable("cameraTypeView");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.CameraFacName)
+                    .HasColumnName("camera_fac_name")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.CameraFacTableId).HasColumnName("cameraFacTable_id");
+
+                entity.Property(e => e.CameraTypeName)
+                    .HasColumnName("camera_type_name")
+                    .HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<CameraView>(entity =>
+            {
+                entity.ToTable("cameraView");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.CameraAddr)
+                    .HasColumnName("camera_addr")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.CameraName)
+                    .HasColumnName("camera_name")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.CameraPort)
+                    .HasColumnName("camera_port")
+                    .HasMaxLength(5);
+
+                entity.Property(e => e.CameraPwd)
+                    .HasColumnName("camera_pwd")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.CameraTypeName)
+                    .HasColumnName("camera_type_name")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.CameraTypeTableId).HasColumnName("cameraTypeTable_id");
+
+                entity.Property(e => e.CameraX).HasColumnName("camera_x");
+
+                entity.Property(e => e.CameraY).HasColumnName("camera_y");
+
+                entity.Property(e => e.CameraZ).HasColumnName("camera_z");
+
+                entity.Property(e => e.IpAddr)
+                    .HasColumnName("ip_addr")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.UnitName)
+                    .HasColumnName("unit_name")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.UnitTableId).HasColumnName("unitTable_id");
+            });
+
             modelBuilder.Entity<DivisionTable>(entity =>
             {
                 entity.ToTable("divisionTable");
@@ -236,34 +373,6 @@ namespace Preoff.Entity
                     .HasMaxLength(20);
             });
 
-            modelBuilder.Entity<EventTypeTable>(entity =>
-            {
-                entity.ToTable("eventTypeTable");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.EventDesc)
-                    .HasColumnName("event_desc")
-                    .HasMaxLength(200);
-
-                entity.Property(e => e.EventName)
-                    .HasColumnName("event_name")
-                    .HasMaxLength(20);
-            });
-
-            modelBuilder.Entity<EventVideoTable>(entity =>
-            {
-                entity.ToTable("eventVideoTable");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.EventTableId).HasColumnName("eventTable_id");
-
-                entity.Property(e => e.VideoPath)
-                    .HasColumnName("video_path")
-                    .HasMaxLength(200);
-            });
-
             modelBuilder.Entity<EventImgTable>(entity =>
             {
                 entity.ToTable("eventImgTable");
@@ -302,6 +411,63 @@ namespace Preoff.Entity
                 entity.Property(e => e.PosZ).HasColumnName("pos_z");
             });
 
+            modelBuilder.Entity<EventTypeTable>(entity =>
+            {
+                entity.ToTable("eventTypeTable");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.EventDesc)
+                    .HasColumnName("event_desc")
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.EventName)
+                    .HasColumnName("event_name")
+                    .HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<EventVideoTable>(entity =>
+            {
+                entity.ToTable("eventVideoTable");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.EventTableId).HasColumnName("eventTable_id");
+
+                entity.Property(e => e.VideoPath)
+                    .HasColumnName("video_path")
+                    .HasMaxLength(200);
+            });
+
+            modelBuilder.Entity<EventView>(entity =>
+            {
+                entity.ToTable("eventView");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.EventDesc)
+                    .HasColumnName("event_desc")
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.EventName)
+                    .HasColumnName("event_name")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.EventTime)
+                    .HasColumnName("event_time")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.EventTypeTableId).HasColumnName("eventTypeTable_id");
+
+                entity.Property(e => e.ExecTaskTableId).HasColumnName("execTaskTable_id");
+
+                entity.Property(e => e.PosX).HasColumnName("pos_x");
+
+                entity.Property(e => e.PosY).HasColumnName("pos_y");
+
+                entity.Property(e => e.PosZ).HasColumnName("pos_z");
+            });
+
             modelBuilder.Entity<ExecTaskTable>(entity =>
             {
                 entity.ToTable("execTaskTable");
@@ -323,6 +489,37 @@ namespace Preoff.Entity
                 entity.Property(e => e.TaskTableId).HasColumnName("taskTable_id");
 
                 entity.Property(e => e.UserTableId).HasColumnName("userTable_id");
+            });
+
+            modelBuilder.Entity<ExecTaskView>(entity =>
+            {
+                entity.ToTable("execTaskView");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.AircTableId).HasColumnName("aircTable_id");
+
+                entity.Property(e => e.EndTime)
+                    .HasColumnName("end_time")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.StartTime)
+                    .HasColumnName("start_time")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.TaskName)
+                    .HasColumnName("task_name")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.TaskStateTableId).HasColumnName("taskStateTable_id");
+
+                entity.Property(e => e.TaskTableId).HasColumnName("taskTable_id");
+
+                entity.Property(e => e.UserTableId).HasColumnName("userTable_id");
+
+                entity.Property(e => e.ViewName)
+                    .HasColumnName("view_name")
+                    .HasMaxLength(20);
             });
 
             modelBuilder.Entity<PermissonTable>(entity =>
@@ -442,6 +639,7 @@ namespace Preoff.Entity
 
                 entity.Property(e => e.UserTableId).HasColumnName("userTable_id");
             });
+
             modelBuilder.Entity<TaskTypeTable>(entity =>
             {
                 entity.ToTable("taskTypeTable");
@@ -464,6 +662,45 @@ namespace Preoff.Entity
                 entity.Property(e => e.UserTableId).HasColumnName("userTable_id");
             });
 
+            modelBuilder.Entity<TaskView>(entity =>
+            {
+                entity.ToTable("taskView");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.EndTime)
+                    .HasColumnName("end_time")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.PubTime)
+                    .HasColumnName("pub_time")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.StateName)
+                    .HasColumnName("state_name")
+                    .HasMaxLength(10);
+
+                entity.Property(e => e.TaskDesc).HasColumnName("task_desc");
+
+                entity.Property(e => e.TaskName)
+                    .HasColumnName("task_name")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.TaskStateTableId).HasColumnName("taskStateTable_id");
+
+                entity.Property(e => e.TaskTypeName)
+                    .HasColumnName("task_type_name")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.TaskTypeTableId).HasColumnName("taskTypeTable_id");
+
+                entity.Property(e => e.UserTableId).HasColumnName("userTable_id");
+
+                entity.Property(e => e.ViewName)
+                    .HasColumnName("view_name")
+                    .HasMaxLength(20);
+            });
+
             modelBuilder.Entity<UnitTable>(entity =>
             {
                 entity.ToTable("unitTable");
@@ -473,6 +710,37 @@ namespace Preoff.Entity
                 entity.Property(e => e.DivisionTableId)
                     .HasColumnName("divisionTable_id")
                     .HasMaxLength(12);
+
+                entity.Property(e => e.StreamVideoServerTableId).HasColumnName("streamVideoServerTable_id");
+
+                entity.Property(e => e.UnitAddr)
+                    .HasColumnName("unit_addr")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.UnitDesc).HasColumnName("unit_desc");
+
+                entity.Property(e => e.UnitName)
+                    .HasColumnName("unit_name")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.UnitPhone)
+                    .HasColumnName("unit_phone")
+                    .HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<UnitView>(entity =>
+            {
+                entity.ToTable("unitView");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.DivisionTableId)
+                    .HasColumnName("divisionTable_id")
+                    .HasMaxLength(12);
+
+                entity.Property(e => e.ServerName)
+                    .HasColumnName("server_name")
+                    .HasMaxLength(20);
 
                 entity.Property(e => e.StreamVideoServerTableId).HasColumnName("streamVideoServerTable_id");
 
@@ -543,6 +811,59 @@ namespace Preoff.Entity
                 entity.Property(e => e.Telephone)
                     .HasColumnName("telephone")
                     .HasMaxLength(20);
+
+                entity.Property(e => e.UnitTableId).HasColumnName("unitTable_id");
+
+                entity.Property(e => e.ViewName)
+                    .HasColumnName("view_name")
+                    .HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<UserView>(entity =>
+            {
+                entity.ToTable("userView");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Age).HasColumnName("age");
+
+                entity.Property(e => e.Email)
+                    .HasColumnName("email")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.Gender)
+                    .HasColumnName("gender")
+                    .HasMaxLength(4);
+
+                entity.Property(e => e.LastLoginTime)
+                    .HasColumnName("last_login_time")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.LoginCount).HasColumnName("login_count");
+
+                entity.Property(e => e.LoginName)
+                    .HasColumnName("login_name")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.LoginPwd)
+                    .HasColumnName("login_pwd")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.RealName)
+                    .HasColumnName("real_name")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.RegTime)
+                    .HasColumnName("reg_time")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.Telephone)
+                    .HasColumnName("telephone")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.UnitName)
+                    .HasColumnName("unit_name")
+                    .HasMaxLength(100);
 
                 entity.Property(e => e.UnitTableId).HasColumnName("unitTable_id");
 

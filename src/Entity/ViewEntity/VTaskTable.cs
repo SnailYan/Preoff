@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Preoff.Entity
 {
-    public partial class ViewTask
+    public partial class VTaskTable
     {
         public int Id { get; set; }
         public string TaskName { get; set; }

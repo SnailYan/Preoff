@@ -220,11 +220,9 @@ namespace Preoff.Controllers
         {
             try
             {
-                //return Ok(_repository.getUser(id));
-                //return Ok(_repository.Get(p => p.Id == id));
                 return Json(new
                 {
-                    table = _repository.Get(p => p.Id == id),
+                    table = _repository.Single(id),
                     state = "0",
                     msg = "操作成功！"
                 });
@@ -281,9 +279,9 @@ namespace Preoff.Controllers
             try
             {
                 string _order = string.Empty;
-                Expression<Func<UserTable, string>> orderby = null;
-                Expression<Func<UserTable, int>> orderbyint = null;
-                Expression<Func<UserTable, bool>> where = null;
+                Expression<Func<UserView, string>> orderby = null;
+                Expression<Func<UserView, int>> orderbyint = null;
+                Expression<Func<UserView, bool>> where = null;
 
                 getOrder(order, ref _order, ref orderby, ref orderbyint);
                 if (filter != null && filter.Count > 0)
@@ -356,14 +354,14 @@ namespace Preoff.Controllers
                         _filter += "&&";
                     }
                     _filter = _filter.Substring(0, _filter.Length - 2);
-                    where = new Interpreter().ParseAsExpression<Func<UserTable, bool>>(_filter, "p");
+                    where = new Interpreter().ParseAsExpression<Func<UserView, bool>>(_filter, "p");
                 }
 
                 if (orderbyint == null)
                 {
                     return Json(new
                     {
-                        table = _repository.Query<UserTable, string>(pageIndex, pageSize, where, orderby, null, isAsc),
+                        table = _repository.Query<UserView, string>(pageIndex, pageSize, where, orderby, null, isAsc),
                         state = "0",
                         msg = "操作成功！"
                     });
@@ -372,7 +370,7 @@ namespace Preoff.Controllers
                 {
                     return Json(new
                     {
-                        table = _repository.Query<UserTable, int>(pageIndex, pageSize, where, orderbyint, null, isAsc),
+                        table = _repository.Query<UserView, int>(pageIndex, pageSize, where, orderbyint, null, isAsc),
                         state = "0",
                         msg = "操作成功！"
                     });
@@ -388,21 +386,21 @@ namespace Preoff.Controllers
             }
 
         }
-        private static void getOrder(string order, ref string _order, ref Expression<Func<UserTable, string>> orderby, ref Expression<Func<UserTable, int>> orderbyint)
+        private static void getOrder(string order, ref string _order, ref Expression<Func<UserView, string>> orderby, ref Expression<Func<UserView, int>> orderbyint)
         {
             if (order != null && order != string.Empty)
             {
                 _order = "x." + order;
                 try
                 {
-                    orderby = new Interpreter().ParseAsExpression<Func<UserTable, string>>(_order, "x");
+                    orderby = new Interpreter().ParseAsExpression<Func<UserView, string>>(_order, "x");
 
                 }
                 catch (Exception ex)
                 {
                     try
                     {
-                        orderbyint = new Interpreter().ParseAsExpression<Func<UserTable, int>>(_order, "x");
+                        orderbyint = new Interpreter().ParseAsExpression<Func<UserView, int>>(_order, "x");
                     }
                     catch (Exception e)
                     {
@@ -412,20 +410,6 @@ namespace Preoff.Controllers
                 }
 
             }
-        }
-
-
-        [HttpGet("GetTask")]
-        public IActionResult GetTask(int id)
-        {
-            
-            return Json(new
-            {
-                table = _repository.GetTask(id),
-                state = "0",
-                msg = "操作成功!"
-            });
-            //return Ok();
         }
     }
 
