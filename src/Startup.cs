@@ -27,6 +27,7 @@ using log4net;
 using Preoff.Repository;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Preoff
 {
@@ -66,7 +67,7 @@ namespace Preoff
 
             services.AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>));
 
-
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             var jwtSettings=new JwtSettings();
             Configuration.Bind("JwtSettings",jwtSettings);
@@ -152,8 +153,10 @@ namespace Preoff
                 FileProvider = new PhysicalFileProvider(Path.Combine(@"E:\", @"corewebapi")),
                 RequestPath = new PathString("/Upload")
             });
-            //var log = LogManager.GetLogger(Logrepository.Name, typeof(Startup));
-            //log.Info("test");
+            //app.UseForwardedHeaders(new ForwardedHeadersOptions
+            //{
+            //    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            //});
         }
         /// <summary>
         /// 

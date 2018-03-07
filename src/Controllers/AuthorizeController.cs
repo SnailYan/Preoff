@@ -10,6 +10,7 @@ using System.Text;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Preoff.Entity;
+using Microsoft.AspNetCore.Http;
 
 namespace Preoff.Controllers
 {
@@ -21,15 +22,17 @@ namespace Preoff.Controllers
     {
         private JwtSettings _jwtSettings;
         private PreoffContext _dbContext;
+        private IHttpContextAccessor _httpaccessor;
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="_jwtSettingsAccesser">注入Jwt认证</param>
         /// <param name="_db">注入数据库配置</param>
-        public AuthorizeController(IOptions<JwtSettings> _jwtSettingsAccesser, PreoffContext _db)
+        public AuthorizeController(IOptions<JwtSettings> _jwtSettingsAccesser, PreoffContext _db, IHttpContextAccessor _accessor)
         {
             _jwtSettings = _jwtSettingsAccesser.Value;
             _dbContext = _db;
+            _httpaccessor = _accessor;
         }
         /// <summary>
         /// 获取JWT Token
@@ -41,7 +44,7 @@ namespace Preoff.Controllers
         {
             try
             {
-
+                //string x=HttpContextExtension.GetUserIp(_httpaccessor.HttpContext);
 
                 if (ModelState.IsValid)
                 {

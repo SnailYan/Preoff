@@ -272,7 +272,7 @@ namespace Preoff.Controllers
                 Expression<Func<EventView, int>> orderbyint = null;
                 Expression<Func<EventView, bool>> where = null;
 
-                getOrder(order, ref _order, ref orderby, ref orderbyint);
+                GetOrder(order, ref _order, ref orderby, ref orderbyint);
                 if (filter != null && filter.Count > 0)
                 {
                     string _filter = string.Empty;
@@ -377,7 +377,7 @@ namespace Preoff.Controllers
         }
 
 
-        private static void getOrder(string order, ref string _order, ref Expression<Func<EventView, string>> orderby, ref Expression<Func<EventView, int>> orderbyint)
+        private static void GetOrder(string order, ref string _order, ref Expression<Func<EventView, string>> orderby, ref Expression<Func<EventView, int>> orderbyint)
         {
             if (order != null && order != string.Empty)
             {

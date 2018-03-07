@@ -6,11 +6,27 @@ using System.Threading.Tasks;
 
 namespace Preoff
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class PaginatedList<T> : List<T>
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public int PageIndex { get; private set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public int TotalPages { get; private set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="items"></param>
+        /// <param name="count"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
         public PaginatedList(List<T> items, int count, int pageIndex, int pageSize)
         {
             PageIndex = pageIndex;
@@ -18,7 +34,9 @@ namespace Preoff
 
             this.AddRange(items);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public bool HasPreviousPage
         {
             get
@@ -26,7 +44,9 @@ namespace Preoff
                 return (PageIndex > 1);
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public bool HasNextPage
         {
             get
@@ -34,7 +54,13 @@ namespace Preoff
                 return (PageIndex < TotalPages);
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
         {
             var count = await source.CountAsync();

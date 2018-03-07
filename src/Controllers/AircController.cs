@@ -273,7 +273,7 @@ namespace Preoff.Controllers
                 Expression<Func<AircView, int>> orderbyint = null;
                 Expression<Func<AircView, bool>> where = null;
 
-                getOrder(order, ref _order, ref orderby, ref orderbyint);
+                GetOrder(order, ref _order, ref orderby, ref orderbyint);
                 if (filter != null && filter.Count > 0)
                 {
                     string _filter = string.Empty;
@@ -377,7 +377,7 @@ namespace Preoff.Controllers
 
         }
 
-        private static void getOrder(string order, ref string _order, ref Expression<Func<AircView, string>> orderby, ref Expression<Func<AircView, int>> orderbyint)
+        private static void GetOrder(string order, ref string _order, ref Expression<Func<AircView, string>> orderby, ref Expression<Func<AircView, int>> orderbyint)
         {
             if (order != null && order != string.Empty)
             {

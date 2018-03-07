@@ -272,7 +272,7 @@ namespace Preoff.Controllers
                 Expression<Func<ExecTaskView, int>> orderbyint = null;
                 Expression<Func<ExecTaskView, bool>> where = null;
 
-                getOrder(order, ref _order, ref orderby, ref orderbyint);
+                GetOrder(order, ref _order, ref orderby, ref orderbyint);
                 if (filter != null && filter.Count > 0)
                 {
                     string _filter = string.Empty;
@@ -377,7 +377,7 @@ namespace Preoff.Controllers
         }
 
 
-        private static void getOrder(string order, ref string _order, ref Expression<Func<ExecTaskView, string>> orderby, ref Expression<Func<ExecTaskView, int>> orderbyint)
+        private static void GetOrder(string order, ref string _order, ref Expression<Func<ExecTaskView, string>> orderby, ref Expression<Func<ExecTaskView, int>> orderbyint)
         {
             if (order != null && order != string.Empty)
             {

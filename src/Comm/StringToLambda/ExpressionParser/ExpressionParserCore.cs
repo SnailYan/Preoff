@@ -416,7 +416,7 @@ namespace Lenic.DI.Core
         {
             Token selector = new Token { ID = TokenId.Comma, Text = "," };
             var result = new List<TypeVariable>();
-            if (ReferenceEquals(obj, null) || !obj.Any())
+            if (obj is null || !obj.Any())
                 return result.ToArray();
 
             if (obj.Last() != selector)

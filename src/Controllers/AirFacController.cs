@@ -66,7 +66,7 @@ namespace Preoff.Controllers
         /// <summary>
         /// 添加无人机厂商返回无人机厂商id
         /// </summary>
-        /// <param name="_aircType">无人机厂商类</param>
+        /// <param name="_aircFac">无人机厂商类</param>
         /// <returns></returns>
         [HttpPost("addone")]
         public IActionResult Add([FromBody]AirFacTable _aircFac)
@@ -273,7 +273,7 @@ namespace Preoff.Controllers
                 Expression<Func<AirFacTable, int>> orderbyint = null;
                 Expression<Func<AirFacTable, bool>> where = null;
 
-                getOrder(order, ref _order, ref orderby, ref orderbyint);
+                GetOrder(order, ref _order, ref orderby, ref orderbyint);
                 if (filter != null && filter.Count > 0)
                 {
                     string _filter = string.Empty;
@@ -377,7 +377,7 @@ namespace Preoff.Controllers
 
         }
 
-        private static void getOrder(string order, ref string _order, ref Expression<Func<AirFacTable, string>> orderby, ref Expression<Func<AirFacTable, int>> orderbyint)
+        private static void GetOrder(string order, ref string _order, ref Expression<Func<AirFacTable, string>> orderby, ref Expression<Func<AirFacTable, int>> orderbyint)
         {
             if (order != null && order != string.Empty)
             {

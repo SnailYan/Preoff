@@ -273,7 +273,7 @@ namespace Preoff.Controllers
                 Expression<Func<TaskUserTable, int>> orderbyint = null;
                 Expression<Func<TaskUserTable, bool>> where = null;
 
-                getOrder(order, ref _order, ref orderby, ref orderbyint);
+                GetOrder(order, ref _order, ref orderby, ref orderbyint);
                 if (filter != null && filter.Count > 0)
                 {
                     string _filter = string.Empty;
@@ -378,7 +378,7 @@ namespace Preoff.Controllers
         }
 
 
-        private static void getOrder(string order, ref string _order, ref Expression<Func<TaskUserTable, string>> orderby, ref Expression<Func<TaskUserTable, int>> orderbyint)
+        private static void GetOrder(string order, ref string _order, ref Expression<Func<TaskUserTable, string>> orderby, ref Expression<Func<TaskUserTable, int>> orderbyint)
         {
             if (order != null && order != string.Empty)
             {
