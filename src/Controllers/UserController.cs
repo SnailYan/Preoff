@@ -297,23 +297,16 @@ namespace Preoff.Controllers
         /// <param name="id">用户编号</param>
         /// <param name="pwd">原始密码</param>
         /// <param name="newpwd">新密码</param>
+        /// <param name="isAdmin">是否超级管理员</param>
         /// <returns></returns>
         [HttpPut("changpwd")]
-        public IActionResult ChangePwd(int id,string pwd,string newpwd)
+        public IActionResult ChangePwd(int id,string pwd,string newpwd,bool isAdmin=false)
         {
-            UserTable _ut = _repository.Get(p => p.Id == id&& p.LoginPwd== Pwd.Ecoding(pwd));
-            if (_ut is null)
+            if (isAdmin)
             {
-                return Json(new
-                {
-                    state = "-1",
-                    msg = "原始密码错误！"
-                });
-            }
-            else
-            {
+                UserTable _ut = _repository.Get(p => p.Id == id);
                 _ut.LoginPwd = Pwd.Ecoding(newpwd);
-                if(_repository.Update(_ut))
+                if (_repository.Update(_ut))
                 {
                     return Json(new
                     {
@@ -329,6 +322,39 @@ namespace Preoff.Controllers
                         msg = "密码修改失败！"
                     });
 
+                }
+            }
+            else
+            {
+                UserTable _ut = _repository.Get(p => p.Id == id && p.LoginPwd == Pwd.Ecoding(pwd));
+                if (_ut is null)
+                {
+                    return Json(new
+                    {
+                        state = "-1",
+                        msg = "原始密码错误！"
+                    });
+                }
+                else
+                {
+                    _ut.LoginPwd = Pwd.Ecoding(newpwd);
+                    if (_repository.Update(_ut))
+                    {
+                        return Json(new
+                        {
+                            state = "0",
+                            msg = "密码修改成功！"
+                        });
+                    }
+                    else
+                    {
+                        return Json(new
+                        {
+                            state = "-1",
+                            msg = "密码修改失败！"
+                        });
+
+                    }
                 }
             }
         }
