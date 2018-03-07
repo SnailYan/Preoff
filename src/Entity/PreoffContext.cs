@@ -636,8 +636,6 @@ namespace Preoff.Entity
                     .HasColumnName("task_name")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.TaskStateTableId).HasColumnName("taskStateTable_id");
-
                 entity.Property(e => e.TaskTypeTableId).HasColumnName("taskTypeTable_id");
 
                 entity.Property(e => e.UserTableId).HasColumnName("userTable_id");
