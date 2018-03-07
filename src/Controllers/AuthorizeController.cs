@@ -12,6 +12,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Preoff.Entity;
 using Microsoft.AspNetCore.Http;
 using Preoff.Comm;
+using log4net;
 
 namespace Preoff.Controllers
 {
@@ -24,6 +25,7 @@ namespace Preoff.Controllers
         private JwtSettings _jwtSettings;
         private PreoffContext _dbContext;
         private IHttpContextAccessor _httpaccessor;
+        ILog log = LogManager.GetLogger(Startup.Logrepository.Name, typeof(Startup));
         /// <summary>
         /// ¹¹Ôìº¯Êý
         /// </summary>
@@ -46,8 +48,8 @@ namespace Preoff.Controllers
         {
             try
             {
-                //string x=HttpContextExtension.GetUserIp(_httpaccessor.HttpContext);
-
+                string x=HttpContextExtension.GetUserIp(_httpaccessor.HttpContext);
+                log.Info(x);
                 if (ModelState.IsValid)
                 {
                     var a = _dbContext.UserTable.FirstOrDefault(u => (u.LoginName == _auth.userName) && (u.LoginPwd == Pwd.Ecoding(_auth.password)));
