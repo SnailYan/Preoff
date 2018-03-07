@@ -29,6 +29,7 @@ namespace Preoff.Controllers
         /// </summary>
         /// <param name="_jwtSettingsAccesser">注入Jwt认证</param>
         /// <param name="_db">注入数据库配置</param>
+        /// <param name="_accessor">注入http</param>
         public AuthorizeController(IOptions<JwtSettings> _jwtSettingsAccesser, PreoffContext _db, IHttpContextAccessor _accessor)
         {
             _jwtSettings = _jwtSettingsAccesser.Value;

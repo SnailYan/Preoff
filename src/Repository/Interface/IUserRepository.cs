@@ -11,8 +11,18 @@ namespace Preoff.Repository
     /// </summary>
     public interface IUserRepository : IRepository<UserTable>
     {
-        int UpdateList(List<UserTable> _user);
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="_user"></param>
+        ///// <returns></returns>
+        //int UpdateList(List<UserTable> _user);
         UserView Single(int id);
-        int SaveList(List<UserTable> _user);
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="_user"></param>
+        ///// <returns></returns>
+        //int SaveList(List<UserTable> _user);
     }
 }
