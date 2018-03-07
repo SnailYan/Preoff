@@ -34,35 +34,35 @@ namespace Preoff.Controllers
             _repository = _db;
         }
 
-        /// <summary>
-        /// 添加单位[支持批量]
-        /// </summary>
-        /// <param name="_unit">单位类</param>
-        /// <returns></returns>
-        [HttpPost("addMul")]
-        public IActionResult Add([FromBody]List<UnitTable> _unit)
-        {
-            try
-            {
-                //return Ok(_repository.SaveList(_unit));
-                int count = _repository.SaveList(_unit);
-                return Json(new
-                {
-                    count,
-                    state = "0",
-                    msg = "操作成功！"
-                });
-            }
-            catch (Exception ex)
-            {
+        ///// <summary>
+        ///// 添加单位[支持批量]
+        ///// </summary>
+        ///// <param name="_unit">单位类</param>
+        ///// <returns></returns>
+        //[HttpPost("addMul")]
+        //public IActionResult Add([FromBody]List<UnitTable> _unit)
+        //{
+        //    try
+        //    {
+        //        //return Ok(_repository.SaveList(_unit));
+        //        int count = _repository.SaveList(_unit);
+        //        return Json(new
+        //        {
+        //            count,
+        //            state = "0",
+        //            msg = "操作成功！"
+        //        });
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                return Json(new
-                {
-                    state = "-1",
-                    msg = "非法操作！"
-                });
-            }
-        }
+        //        return Json(new
+        //        {
+        //            state = "-1",
+        //            msg = "非法操作！"
+        //        });
+        //    }
+        //}
         /// <summary>
         /// 添加单位返回单位id
         /// </summary>

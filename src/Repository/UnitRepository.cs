@@ -17,7 +17,7 @@ namespace Preoff.Repository
 
         public UnitView Single(int id)
         {
-            return _dbcontext.UnitView.SingleOrDefault(p => p.Id == id);
+            return _dbcontext.UnitView.FirstOrDefault(p => p.Id == id);
         }
     }
 }

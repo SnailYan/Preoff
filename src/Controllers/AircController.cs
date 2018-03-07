@@ -34,35 +34,35 @@ namespace Preoff.Controllers
             _repository = _db;
         }
 
-        /// <summary>
-        /// 添加无人机[支持批量]
-        /// </summary>
-        /// <param name="_airc">无人机类</param>
-        /// <returns></returns>
-        [HttpPost("addMul")]
-        public IActionResult Add([FromBody]List<AircTable> _airc)
-        {
-            try
-            {
-                int count=_repository.SaveList(_airc);
-                return Json(new
-                {
-                    count,
-                    state = "0",
-                    msg = "操作成功！"
-                });
-                //return Ok(_repository.SaveList(_airc));
-            }
-            catch (Exception ex)
-            {
+        ///// <summary>
+        ///// 添加无人机[支持批量]
+        ///// </summary>
+        ///// <param name="_airc">无人机类</param>
+        ///// <returns></returns>
+        //[HttpPost("addMul")]
+        //public IActionResult Add([FromBody]List<AircTable> _airc)
+        //{
+        //    try
+        //    {
+        //        int count=_repository.SaveList(_airc);
+        //        return Json(new
+        //        {
+        //            count,
+        //            state = "0",
+        //            msg = "操作成功！"
+        //        });
+        //        //return Ok(_repository.SaveList(_airc));
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                return Json(new
-                {
-                    state = "-1",
-                    msg = "非法操作！"
-                });
-            }
-        }
+        //        return Json(new
+        //        {
+        //            state = "-1",
+        //            msg = "非法操作！"
+        //        });
+        //    }
+        //}
         /// <summary>
         /// 添加无人机返回无人机id
         /// </summary>

@@ -41,35 +41,35 @@ namespace Preoff.Controllers
             _repository = _db;
         }
 
-        /// <summary>
-        /// 添加用户[支持批量]
-        /// </summary>
-        /// <param name="_user">用户类</param>
-        /// <returns></returns>
-        [HttpPost("addMul")]
-        public IActionResult Add([FromBody]List<UserTable> _user)
-        {
-            try
-            {
-                //return Ok(_repository.SaveList(_user));
-                int count = _repository.SaveList(_user);
-                return Json(new
-                {
-                    count,
-                    state = "0",
-                    msg = "操作成功！"
-                });
-            }
-            catch (Exception ex)
-            {
+        ///// <summary>
+        ///// 添加用户[支持批量]
+        ///// </summary>
+        ///// <param name="_user">用户类</param>
+        ///// <returns></returns>
+        //[HttpPost("addMul")]
+        //public IActionResult Add([FromBody]List<UserTable> _user)
+        //{
+        //    try
+        //    {
+        //        //return Ok(_repository.SaveList(_user));
+        //        int count = _repository.SaveList(_user);
+        //        return Json(new
+        //        {
+        //            count,
+        //            state = "0",
+        //            msg = "操作成功！"
+        //        });
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                return Json(new
-                {
-                    state = "-1",
-                    msg = "非法操作！"
-                });
-            }
-        }
+        //        return Json(new
+        //        {
+        //            state = "-1",
+        //            msg = "非法操作！"
+        //        });
+        //    }
+        //}
         /// <summary>
         /// 添加用户返回用户id
         /// </summary>

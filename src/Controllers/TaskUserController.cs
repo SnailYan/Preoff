@@ -34,35 +34,35 @@ namespace Preoff.Controllers
             _repository = _db;
         }
 
-        /// <summary>
-        /// 添加任务用户映射表[支持批量]
-        /// </summary>
-        /// <param name="_taskUser">任务用户映射表类</param>
-        /// <returns></returns>
-        [HttpPost("addMul")]
-        public IActionResult Add([FromBody]List<TaskUserTable> _taskUser)
-        {
-            try
-            {
-                int count=_repository.SaveList(_taskUser);
-                return Json(new
-                {
-                    count,
-                    state = "0",
-                    msg = "操作成功！"
-                });
-                //return Ok(_repository.SaveList(_taskUser));
-            }
-            catch (Exception ex)
-            {
+        ///// <summary>
+        ///// 添加任务用户映射表[支持批量]
+        ///// </summary>
+        ///// <param name="_taskUser">任务用户映射表类</param>
+        ///// <returns></returns>
+        //[HttpPost("addMul")]
+        //public IActionResult Add([FromBody]List<TaskUserTable> _taskUser)
+        //{
+        //    try
+        //    {
+        //        int count=_repository.SaveList(_taskUser);
+        //        return Json(new
+        //        {
+        //            count,
+        //            state = "0",
+        //            msg = "操作成功！"
+        //        });
+        //        //return Ok(_repository.SaveList(_taskUser));
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                return Json(new
-                {
-                    state = "-1",
-                    msg = "非法操作！"
-                });
-            }
-        }
+        //        return Json(new
+        //        {
+        //            state = "-1",
+        //            msg = "非法操作！"
+        //        });
+        //    }
+        //}
         /// <summary>
         /// 添加任务用户映射表返回任务用户映射表id
         /// </summary>

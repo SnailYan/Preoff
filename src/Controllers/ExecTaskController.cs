@@ -34,35 +34,35 @@ namespace Preoff.Controllers
             _repository = _db;
         }
 
-        /// <summary>
-        /// 添加执行任务[支持批量]
-        /// </summary>
-        /// <param name="_execTask">执行任务类</param>
-        /// <returns></returns>
-        [HttpPost("addMul")]
-        public IActionResult Add([FromBody]List<ExecTaskTable> _execTask)
-        {
-            try
-            {
-                int count=_repository.SaveList(_execTask);
-                return Json(new
-                {
-                    count,
-                    state = "0",
-                    msg = "操作成功！"
-                });
-                //return Ok(_repository.SaveList(_execTask));
-            }
-            catch (Exception ex)
-            {
+        ///// <summary>
+        ///// 添加执行任务[支持批量]
+        ///// </summary>
+        ///// <param name="_execTask">执行任务类</param>
+        ///// <returns></returns>
+        //[HttpPost("addMul")]
+        //public IActionResult Add([FromBody]List<ExecTaskTable> _execTask)
+        //{
+        //    try
+        //    {
+        //        int count=_repository.SaveList(_execTask);
+        //        return Json(new
+        //        {
+        //            count,
+        //            state = "0",
+        //            msg = "操作成功！"
+        //        });
+        //        //return Ok(_repository.SaveList(_execTask));
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                return Json(new
-                {
-                    state = "-1",
-                    msg = "非法操作！"
-                });
-            }
-        }
+        //        return Json(new
+        //        {
+        //            state = "-1",
+        //            msg = "非法操作！"
+        //        });
+        //    }
+        //}
         /// <summary>
         /// 添加执行任务返回执行任务id
         /// </summary>

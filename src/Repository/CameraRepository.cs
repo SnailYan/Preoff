@@ -17,7 +17,7 @@ namespace Preoff.Repository
 
         public CameraView Single(int id)
         {
-            return _dbcontext.CameraView.SingleOrDefault(p => p.Id == id);
+            return _dbcontext.CameraView.FirstOrDefault(p => p.Id == id);
         }
     }
 }

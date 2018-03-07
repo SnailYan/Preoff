@@ -17,7 +17,7 @@ namespace Preoff.Repository
 
         public AircView Single(int id)
         {
-            return _dbcontext.AircView.SingleOrDefault(p => p.Id == id);
+            return _dbcontext.AircView.FirstOrDefault(p => p.Id == id);
         }
     }
 }

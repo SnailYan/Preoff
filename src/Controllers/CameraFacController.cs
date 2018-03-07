@@ -34,35 +34,35 @@ namespace Preoff.Controllers
             _repository = _db;
         }
 
-        /// <summary>
-        /// 添加摄像头厂商[支持批量]
-        /// </summary>
-        /// <param name="_cameraFac">摄像头厂商类</param>
-        /// <returns></returns>
-        [HttpPost("addMul")]
-        public IActionResult Add([FromBody]List<CameraFacTable> _cameraFac)
-        {
-            try
-            {
-                int count=_repository.SaveList(_cameraFac);
-                return Json(new
-                {
-                    count,
-                    state = "0",
-                    msg = "操作成功！"
-                });
-                //return Ok(_repository.SaveList(_cameraFac));
-            }
-            catch (Exception ex)
-            {
+        ///// <summary>
+        ///// 添加摄像头厂商[支持批量]
+        ///// </summary>
+        ///// <param name="_cameraFac">摄像头厂商类</param>
+        ///// <returns></returns>
+        //[HttpPost("addMul")]
+        //public IActionResult Add([FromBody]List<CameraFacTable> _cameraFac)
+        //{
+        //    try
+        //    {
+        //        int count=_repository.SaveList(_cameraFac);
+        //        return Json(new
+        //        {
+        //            count,
+        //            state = "0",
+        //            msg = "操作成功！"
+        //        });
+        //        //return Ok(_repository.SaveList(_cameraFac));
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                return Json(new
-                {
-                    state = "-1",
-                    msg = "非法操作！"
-                });
-            }
-        }
+        //        return Json(new
+        //        {
+        //            state = "-1",
+        //            msg = "非法操作！"
+        //        });
+        //    }
+        //}
         /// <summary>
         /// 添加摄像头厂商返回摄像头厂商id
         /// </summary>

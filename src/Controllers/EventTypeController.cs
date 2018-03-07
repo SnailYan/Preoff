@@ -61,35 +61,35 @@ namespace Preoff.Controllers
             }
         }
 
-        /// <summary>
-        /// 添加事件类型[支持批量]
-        /// </summary>
-        /// <param name="_airc">事件类型类</param>
-        /// <returns></returns>
-        [HttpPost("addMul")]
-        public IActionResult Add([FromBody]List<EventTypeTable> _airc)
-        {
-            try
-            {
-                int count = _repository.SaveList(_airc);
-                return Json(new
-                {
-                    count,
-                    state = "0",
-                    msg = "操作成功！"
-                });
-                //return Ok(_repository.SaveList(_airc));
-            }
-            catch (Exception ex)
-            {
+        ///// <summary>
+        ///// 添加事件类型[支持批量]
+        ///// </summary>
+        ///// <param name="_airc">事件类型类</param>
+        ///// <returns></returns>
+        //[HttpPost("addMul")]
+        //public IActionResult Add([FromBody]List<EventTypeTable> _airc)
+        //{
+        //    try
+        //    {
+        //        int count = _repository.SaveList(_airc);
+        //        return Json(new
+        //        {
+        //            count,
+        //            state = "0",
+        //            msg = "操作成功！"
+        //        });
+        //        //return Ok(_repository.SaveList(_airc));
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                return Json(new
-                {
-                    state = "-1",
-                    msg = "非法操作！"
-                });
-            }
-        }
+        //        return Json(new
+        //        {
+        //            state = "-1",
+        //            msg = "非法操作！"
+        //        });
+        //    }
+        //}
         /// <summary>
         /// 添加事件类型返回事件类型id
         /// </summary>

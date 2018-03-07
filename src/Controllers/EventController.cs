@@ -34,35 +34,35 @@ namespace Preoff.Controllers
             _repository = _db;
         }
 
-        /// <summary>
-        /// 添加事件[支持批量]
-        /// </summary>
-        /// <param name="_event">事件类</param>
-        /// <returns></returns>
-        [HttpPost("addMul")]
-        public IActionResult Add([FromBody]List<EventTable> _event)
-        {
-            try
-            {
-                //return Ok(_repository.SaveList(_event));
-                int count = _repository.SaveList(_event);
-                return Json(new
-                {
-                    count,
-                    state = "0",
-                    msg = "操作成功！"
-                });
-            }
-            catch (Exception ex)
-            {
+        ///// <summary>
+        ///// 添加事件[支持批量]
+        ///// </summary>
+        ///// <param name="_event">事件类</param>
+        ///// <returns></returns>
+        //[HttpPost("addMul")]
+        //public IActionResult Add([FromBody]List<EventTable> _event)
+        //{
+        //    try
+        //    {
+        //        //return Ok(_repository.SaveList(_event));
+        //        int count = _repository.SaveList(_event);
+        //        return Json(new
+        //        {
+        //            count,
+        //            state = "0",
+        //            msg = "操作成功！"
+        //        });
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                return Json(new
-                {
-                    state = "-1",
-                    msg = "非法操作！"
-                });
-            }
-        }
+        //        return Json(new
+        //        {
+        //            state = "-1",
+        //            msg = "非法操作！"
+        //        });
+        //    }
+        //}
         /// <summary>
         /// 添加事件返回事件id
         /// </summary>

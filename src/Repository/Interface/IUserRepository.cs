@@ -13,5 +13,6 @@ namespace Preoff.Repository
     {
         int UpdateList(List<UserTable> _user);
         UserView Single(int id);
+        int SaveList(List<UserTable> _user);
     }
 }

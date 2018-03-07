@@ -17,7 +17,7 @@ namespace Preoff.Repository
 
         public TaskView Single(int id)
         {
-            return _dbcontext.TaskView.SingleOrDefault(p => p.Id == id);
+            return _dbcontext.TaskView.FirstOrDefault(p => p.Id == id);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Preoff.Repository
 
         public EventView Single(int id)
         {
-            return _dbcontext.EventView.SingleOrDefault(p => p.Id == id);
+            return _dbcontext.EventView.FirstOrDefault(p => p.Id == id);
         }
     }
 }
