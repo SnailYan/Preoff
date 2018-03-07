@@ -15,6 +15,7 @@ using Preoff.Comm;
 using DynamicExpresso;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Preoff.Controllers
 {
@@ -24,7 +25,7 @@ namespace Preoff.Controllers
     //[Authorize]
     [Produces("application/json")]
     [Route("user")]
-    public class UserController : Controller
+    public class UserController : BaseController
     {
 
         /// <summary>
@@ -40,6 +41,7 @@ namespace Preoff.Controllers
         {
             _repository = _db;
         }
+
 
         ///// <summary>
         ///// 添加用户[支持批量]
