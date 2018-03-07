@@ -11,7 +11,7 @@ namespace Preoff.Entity
         public string LoginPwd { get; set; }
         public string RealName { get; set; }
         public string Gender { get; set; }
-        public int? Age { get; set; }
+        public DateTime? Birthday { get; set; }
         public string Telephone { get; set; }
         public string Email { get; set; }
         public string ViewName { get; set; }

@@ -13,6 +13,8 @@ using Preoff.Repository;
 using System.Linq.Expressions;
 using Preoff.Comm;
 using DynamicExpresso;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Preoff.Controllers
 {
@@ -24,6 +26,7 @@ namespace Preoff.Controllers
     [Route("user")]
     public class UserController : Controller
     {
+
         /// <summary>
         /// 用户仓库
         /// </summary>
@@ -77,7 +80,7 @@ namespace Preoff.Controllers
         {
             try
             {
-                if (_user==null)
+                if (_user == null)
                 {
                     return Json(new
                     {
@@ -85,7 +88,7 @@ namespace Preoff.Controllers
                         msg = "请输入用户！"
                     });
                 }
-                if(_repository.IsExist(p=>p.LoginName==_user.LoginName))
+                if (_repository.IsExist(p => p.LoginName == _user.LoginName))
                 {
                     return Json(new
                     {
@@ -102,6 +105,7 @@ namespace Preoff.Controllers
                     });
                 }
                 _user.RegTime = DateTime.Now;
+                _user.LoginPwd = Pwd.Ecoding(_user.LoginPwd);
                 int id = _repository.SaveGetId(_user);
                 return Json(new
                 {
@@ -287,7 +291,47 @@ namespace Preoff.Controllers
             }
 
         }
+        /// <summary>
+        /// 修改用户密码
+        /// </summary>
+        /// <param name="id">用户编号</param>
+        /// <param name="pwd">原始密码</param>
+        /// <param name="newpwd">新密码</param>
+        /// <returns></returns>
+        [HttpPut("changpwd")]
+        public IActionResult ChangePwd(int id,string pwd,string newpwd)
+        {
+            UserTable _ut = _repository.Get(p => p.Id == id&& p.LoginPwd== Pwd.Ecoding(pwd));
+            if (_ut is null)
+            {
+                return Json(new
+                {
+                    state = "-1",
+                    msg = "原始密码错误！"
+                });
+            }
+            else
+            {
+                _ut.LoginPwd = Pwd.Ecoding(newpwd);
+                if(_repository.Update(_ut))
+                {
+                    return Json(new
+                    {
+                        state = "0",
+                        msg = "密码修改成功！"
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        state = "-1",
+                        msg = "密码修改失败！"
+                    });
 
+                }
+            }
+        }
         /// <summary>
         /// 分页
         /// </summary>

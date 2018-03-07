@@ -774,7 +774,8 @@ namespace Preoff.Entity
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Age).HasColumnName("age");
+                entity.Property(e => e.Birthday).HasColumnName("birthday")
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.Email)
                     .HasColumnName("email")
@@ -796,7 +797,7 @@ namespace Preoff.Entity
 
                 entity.Property(e => e.LoginPwd)
                     .HasColumnName("login_pwd")
-                    .HasMaxLength(20);
+                    .HasMaxLength(32);
 
                 entity.Property(e => e.RealName)
                     .HasColumnName("real_name")
@@ -823,7 +824,8 @@ namespace Preoff.Entity
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Age).HasColumnName("age");
+                entity.Property(e => e.Birthday).HasColumnName("birthday")
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.Email)
                     .HasColumnName("email")
@@ -845,7 +847,7 @@ namespace Preoff.Entity
 
                 entity.Property(e => e.LoginPwd)
                     .HasColumnName("login_pwd")
-                    .HasMaxLength(20);
+                    .HasMaxLength(32);
 
                 entity.Property(e => e.RealName)
                     .HasColumnName("real_name")

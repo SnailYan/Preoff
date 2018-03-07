@@ -11,6 +11,7 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Preoff.Entity;
 using Microsoft.AspNetCore.Http;
+using Preoff.Comm;
 
 namespace Preoff.Controllers
 {
@@ -48,7 +49,7 @@ namespace Preoff.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    var a = _dbContext.UserTable.FirstOrDefault(u => (u.LoginName == _auth.userName) && (u.LoginPwd == _auth.password));
+                    var a = _dbContext.UserTable.FirstOrDefault(u => (u.LoginName == _auth.userName) && (u.LoginPwd == Pwd.Ecoding(_auth.password)));
                     if (a is null)
                     {
                         return Json(new

@@ -11,12 +11,7 @@ namespace Preoff.Repository
     /// </summary>
     public interface IUserRepository : IRepository<UserTable>
     {
-        /// <summary>
-        /// 批量修改用户生日
-        /// </summary>
-        void BatchUpdateUserBirthday();
-        UserTable getUser(int id);
-        Object GetTask(int id);
+        int UpdateList(List<UserTable> _user);
         UserView Single(int id);
     }
 }
