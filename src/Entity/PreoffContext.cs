@@ -679,17 +679,12 @@ namespace Preoff.Entity
                     .HasColumnName("pub_time")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.StateName)
-                    .HasColumnName("state_name")
-                    .HasMaxLength(10);
 
                 entity.Property(e => e.TaskDesc).HasColumnName("task_desc");
 
                 entity.Property(e => e.TaskName)
                     .HasColumnName("task_name")
                     .HasMaxLength(50);
-
-                entity.Property(e => e.TaskStateTableId).HasColumnName("taskStateTable_id");
 
                 entity.Property(e => e.TaskTypeName)
                     .HasColumnName("task_type_name")
