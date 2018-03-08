@@ -18,7 +18,7 @@ namespace Preoff.Controllers
     //[Authorize]
     [Produces("application/json")]
     [Route("AirLoad")]
-    public class AirLoadController : Controller
+    public class AirLoadController : BaseController
     {
         /// <summary>
         /// 无人机载荷仓库

@@ -15,18 +15,6 @@ namespace Preoff
     /// </summary>
     public class BaseController : Controller
     {
-        //public override void OnActionExecuting(ActionExecutingContext filterContext)
-        //{
-
-        //    String name = filterContext.HttpContext.Request.Path;
-        //    if (name == null)
-        //    {
-        //        //重定向到登录页面  
-        //        HttpContext.Response.Redirect("Home/Login");
-        //        return;
-        //    }
-        //    base.OnActionExecuting(filterContext);
-        //}
         ILog log = LogManager.GetLogger(Startup.Logrepository.Name, typeof(Startup));
         /// <summary>
         /// 
@@ -40,11 +28,11 @@ namespace Preoff
             var time = stopwach.Elapsed;
             if (time.TotalSeconds > 5)
             {
-                log.Warn($"{httpContext.Request.Path}-{time.ToString()}-{HttpContextExtension.GetUserIp(httpContext)}");
+                log.Warn($"{HttpContextExtension.GetUserIp(httpContext)}-{httpContext.Request.Path}-{time.ToString()}");
             }
             else
             {
-                log.Info($"{httpContext.Request.Path}-{HttpContextExtension.GetUserIp(httpContext)}");
+                log.Info($"{HttpContextExtension.GetUserIp(httpContext)}-{httpContext.Request.Path}");
             }
         }
         /// <summary>

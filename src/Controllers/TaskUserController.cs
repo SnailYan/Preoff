@@ -18,7 +18,7 @@ namespace Preoff.Controllers
     //[Authorize]
     [Produces("application/json")]
     [Route("TaskUser")]
-    public class TaskUserController : Controller
+    public class TaskUserController : BaseController
     {
         /// <summary>
         /// 任务用户映射表仓库

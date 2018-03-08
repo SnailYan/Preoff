@@ -18,7 +18,7 @@ namespace Preoff.Controllers
     //[Authorize]
     [Produces("application/json")]
     [Route("TaskState")]
-    public class TaskStateController : Controller
+    public class TaskStateController : BaseController
     {
         /// <summary>
         /// 任务状态仓库

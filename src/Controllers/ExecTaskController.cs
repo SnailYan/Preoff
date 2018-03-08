@@ -18,7 +18,7 @@ namespace Preoff.Controllers
     //[Authorize]
     [Produces("application/json")]
     [Route("ExecTask")]
-    public class ExecTaskController : Controller
+    public class ExecTaskController : BaseController
     {
         /// <summary>
         /// 执行任务仓库

@@ -18,7 +18,7 @@ namespace Preoff.Controllers
     //[Authorize]
     [Produces("application/json")]
     [Route("StreamVideoServer")]
-    public class StreamVideoServerController : Controller
+    public class StreamVideoServerController : BaseController
     {
         /// <summary>
         /// 流媒体服务器仓库

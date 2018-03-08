@@ -20,7 +20,7 @@ namespace Preoff.Controllers
     //[Authorize]
     [EnableCors("AllowSpecificOrigin")]
     [Route("EventImg")]
-    public class EventImgController : Controller
+    public class EventImgController : BaseController
     {
         /// <summary>
         /// 事件类型仓库

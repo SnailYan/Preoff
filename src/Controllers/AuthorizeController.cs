@@ -20,23 +20,20 @@ namespace Preoff.Controllers
     /// 授权控制器
     /// </summary>
     [Route("[controller]")]
-    public class AuthorizeController : Controller
+    public class AuthorizeController : BaseController
     {
         private JwtSettings _jwtSettings;
         private PreoffContext _dbContext;
-        private IHttpContextAccessor _httpaccessor;
-        ILog log = LogManager.GetLogger(Startup.Logrepository.Name, typeof(Startup));
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="_jwtSettingsAccesser">注入Jwt认证</param>
         /// <param name="_db">注入数据库配置</param>
         /// <param name="_accessor">注入http</param>
-        public AuthorizeController(IOptions<JwtSettings> _jwtSettingsAccesser, PreoffContext _db, IHttpContextAccessor _accessor)
+        public AuthorizeController(IOptions<JwtSettings> _jwtSettingsAccesser, PreoffContext _db)
         {
             _jwtSettings = _jwtSettingsAccesser.Value;
             _dbContext = _db;
-            _httpaccessor = _accessor;
         }
         /// <summary>
         /// 获取JWT Token
@@ -48,8 +45,6 @@ namespace Preoff.Controllers
         {
             try
             {
-                string x=HttpContextExtension.GetUserIp(_httpaccessor.HttpContext);
-                log.Info(x);
                 if (ModelState.IsValid)
                 {
                     var a = _dbContext.UserTable.FirstOrDefault(u => (u.LoginName == _auth.userName) && (u.LoginPwd == Pwd.Ecoding(_auth.password)));

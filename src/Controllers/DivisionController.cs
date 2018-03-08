@@ -18,7 +18,7 @@ namespace Preoff.Controllers
     //[Authorize]
     [Produces("application/json")]
     [Route("Division")]
-    public class DivisionController : Controller
+    public class DivisionController : BaseController
     {
         /// <summary>
         /// 行政区仓库

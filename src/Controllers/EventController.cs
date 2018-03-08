@@ -18,7 +18,7 @@ namespace Preoff.Controllers
     //[Authorize]
     [Produces("application/json")]
     [Route("Event")]
-    public class EventController : Controller
+    public class EventController : BaseController
     {
         /// <summary>
         /// 事件仓库

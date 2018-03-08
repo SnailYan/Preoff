@@ -18,7 +18,7 @@ namespace Preoff.Controllers
     //[Authorize]
     [Produces("application/json")]
     [Route("Unit")]
-    public class UnitController : Controller
+    public class UnitController : BaseController
     {
         /// <summary>
         /// 单位仓库

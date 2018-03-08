@@ -18,7 +18,7 @@ namespace Preoff.Controllers
     //[Authorize]
     [Produces("application/json")]
     [Route("EquipFac")]
-    public class EquipFacController : Controller
+    public class EquipFacController : BaseController
     {
         /// <summary>
         /// 载荷厂商仓库
