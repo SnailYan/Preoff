@@ -34,17 +34,9 @@ namespace Preoff.Controllers
             _repository = _db;
         }
 
-        ///// <summary>
-        ///// 分页
-        ///// </summary>
-        ///// <param name="pageIndex">页码</param>
-        ///// <param name="pageSize">每页数据条数</param>
-        ///// <param name="filter">过滤条件</param>
-        ///// <param name="order">排序字段</param>
-        ///// <param name="isAsc">是否升序</param>
-        ///// <returns></returns>
+
         //[HttpPost("Page")]
-        //public IActionResult SelectPage(int pageIndex, int pageSize,string code,string startdate,string enddate,string hour, string order, bool isAsc)
+        //public IActionResult SelectPage(int pageIndex, int pageSize, string code, string startdate, string enddate, string hour, string order, bool isAsc)
         //{
         //    //if (code.Trim()==string.Empty)
         //    //{

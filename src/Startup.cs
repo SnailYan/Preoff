@@ -42,7 +42,6 @@ namespace Preoff
         /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
-
             Configuration = configuration;
             Logrepository = LogManager.CreateRepository("NETCoreRepository");
             XmlConfigurator.Configure(Logrepository, new FileInfo("log4net.config"));
