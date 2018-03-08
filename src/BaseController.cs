@@ -40,11 +40,11 @@ namespace Preoff
             var time = stopwach.Elapsed;
             if (time.TotalSeconds > 5)
             {
-                log.Warn($"{httpContext.Request.Path}-{time.ToString()}-{HttpContextExtension.GetUserIp(httpContext)}");
+                log.Warn($"{HttpContextExtension.GetUserIp(httpContext)}-{httpContext.Request.Path}-{time.ToString()}");
             }
             else
             {
-                log.Info($"{httpContext.Request.Path}-{HttpContextExtension.GetUserIp(httpContext)}");
+                log.Info($"{HttpContextExtension.GetUserIp(httpContext)}-{httpContext.Request.Path}");
             }
         }
         /// <summary>
