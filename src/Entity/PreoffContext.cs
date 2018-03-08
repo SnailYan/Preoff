@@ -40,6 +40,7 @@ namespace Preoff.Entity
         public virtual DbSet<UserRoleTable> UserRoleTable { get; set; }
         public virtual DbSet<UserTable> UserTable { get; set; }
         public virtual DbSet<UserView> UserView { get; set; }
+        public virtual DbSet<FireStationDataTable> FireStationData { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -868,6 +869,41 @@ namespace Preoff.Entity
                 entity.Property(e => e.ViewName)
                     .HasColumnName("view_name")
                     .HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<FireStationDataTable>(entity =>
+            {
+                entity.ToTable("fireStationData");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.CatDate)
+                    .HasColumnName("cat_date")
+                    .HasMaxLength(8);
+
+                entity.Property(e => e.CatHour)
+                    .HasColumnName("cat_hour")
+                    .HasMaxLength(2);
+
+                entity.Property(e => e.Code)
+                    .HasColumnName("code")
+                    .HasMaxLength(12);
+
+                entity.Property(e => e.DateType)
+                    .HasColumnName("date_type")
+                    .HasMaxLength(5);
+
+                entity.Property(e => e.Firelevel).HasColumnName("firelevel");
+
+                entity.Property(e => e.Humidity).HasColumnName("humidity");
+
+                entity.Property(e => e.Rain).HasColumnName("rain");
+
+                entity.Property(e => e.Temperature).HasColumnName("temperature");
+
+                entity.Property(e => e.WindSpeed).HasColumnName("wind_speed");
+
+                entity.Property(e => e.Winddirect).HasColumnName("winddirect");
             });
         }
     }
