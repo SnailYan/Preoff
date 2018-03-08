@@ -20,7 +20,7 @@ namespace Preoff.Controllers
     //[Authorize]
     [EnableCors("AllowSpecificOrigin")]
     [Route("EventVideo")]
-    public class EventVideoController : Controller
+    public class EventVideoController : BaseController
     {
         /// <summary>
         /// 事件类型仓库

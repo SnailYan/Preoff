@@ -18,7 +18,7 @@ namespace Preoff.Controllers
     //[Authorize]
     [Produces("application/json")]
     [Route("AircFac")]
-    public class AirFacController : Controller
+    public class AirFacController : BaseController
     {
         /// <summary>
         /// 无人机厂商仓库

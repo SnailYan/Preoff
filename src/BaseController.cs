@@ -15,18 +15,6 @@ namespace Preoff
     /// </summary>
     public class BaseController : Controller
     {
-        //public override void OnActionExecuting(ActionExecutingContext filterContext)
-        //{
-
-        //    String name = filterContext.HttpContext.Request.Path;
-        //    if (name == null)
-        //    {
-        //        //重定向到登录页面  
-        //        HttpContext.Response.Redirect("Home/Login");
-        //        return;
-        //    }
-        //    base.OnActionExecuting(filterContext);
-        //}
         ILog log = LogManager.GetLogger(Startup.Logrepository.Name, typeof(Startup));
         /// <summary>
         /// 

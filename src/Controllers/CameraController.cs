@@ -18,7 +18,7 @@ namespace Preoff.Controllers
     //[Authorize]
     [Produces("application/json")]
     [Route("Camera")]
-    public class CameraController : Controller
+    public class CameraController : BaseController
     {
         /// <summary>
         /// 摄像头仓库
