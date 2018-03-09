@@ -196,6 +196,7 @@ namespace Preoff
             builder.RegisterType<DivisionRepository>().As<IDivisionRepository>();
             builder.RegisterType<TaskRepository>().As<ITaskRepository>();
             builder.RegisterType<UnitRepository>().As<IUnitRepository>();
+            builder.RegisterType<FireStationDataRepository>().As<IFireStationDataRepository>();
         }
     }
 }

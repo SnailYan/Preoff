@@ -696,6 +696,11 @@ namespace Preoff.Entity
                 entity.Property(e => e.ViewName)
                     .HasColumnName("view_name")
                     .HasMaxLength(20);
+                entity.Property(e => e.TaskStateTableId)
+                    .HasColumnName("taskStateTable_id");
+                entity.Property(e => e.StateName)
+                    .HasColumnName("state_name")
+                    .HasMaxLength(10);
             });
 
             modelBuilder.Entity<UnitTable>(entity =>
