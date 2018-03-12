@@ -120,6 +120,52 @@ namespace Preoff.Controllers
                 });
             }
         }
+
+
+        /// <summary>
+        /// 更新执行任务状态
+        /// </summary>
+        /// <param name="execTaskId">执行任务id</param>
+        /// <param name="statusId">执行任务状态</param>
+        /// <param name="endTime">执行结束时间</param>
+        /// <returns></returns>
+        [HttpPost("UpdateStatus")]
+        public IActionResult UpdateStatus(int execTaskId,int statusId,DateTime endTime)
+        {
+            try
+            {
+                if (_repository.UpdateStatus(execTaskId, statusId, endTime))
+                {
+                    return Json(new
+                    {
+                        state = "0",
+                        msg = "更新成功！"
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        state = "-1",
+                        msg = "更新失败！"
+                    });
+
+                }
+                
+
+            }
+            catch (Exception ex)
+            {
+
+                return Json(new
+                {
+                    state = "-1",
+                    msg = "非法操作！"
+                });
+            }
+        }
+
+
         /// <summary>
         /// 删除指定Id执行任务
         /// </summary>

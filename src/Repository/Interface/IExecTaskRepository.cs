@@ -12,5 +12,6 @@ namespace Preoff.Repository
     public interface IExecTaskRepository : IRepository<ExecTaskTable>
     {
         ExecTaskView Single(int id);
+        bool UpdateStatus(int execTaskId, int statusId, DateTime endTime);
     }
 }
