@@ -701,6 +701,7 @@ namespace Preoff.Entity
                 entity.Property(e => e.StateName)
                     .HasColumnName("state_name")
                     .HasMaxLength(10);
+                entity.Property(e => e.ExecTaskTableId).HasColumnName("execTaskTable_Id");
             });
 
             modelBuilder.Entity<UnitTable>(entity =>

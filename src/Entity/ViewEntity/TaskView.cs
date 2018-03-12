@@ -17,5 +17,6 @@ namespace Preoff.Entity
         public string TaskDesc { get; set; }
         public int? TaskStateTableId { get; set; }
         public string StateName { get; set; }
+        public int? ExecTaskTableId { get; set; }
     }
 }
