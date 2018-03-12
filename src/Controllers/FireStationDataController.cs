@@ -37,8 +37,8 @@ namespace Preoff.Controllers
         /// <summary>
         /// 根据日期和时间获取火险等级
         /// </summary>
-        /// <param name="date">日期20180309</param>
-        /// <param name="hour">小时08</param>
+        /// <param name="date">日期(20180309)</param>
+        /// <param name="hour">小时(08)</param>
         /// <returns></returns>
         [HttpPost("GetList")]
         public IActionResult SelectPage(string date,string hour)
