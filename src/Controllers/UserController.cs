@@ -1,21 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Preoff.Entity;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Options;
-using Microsoft.EntityFrameworkCore;
 using log4net;
 using Preoff.Repository;
 using System.Linq.Expressions;
 using Preoff.Comm;
 using DynamicExpresso;
-using System.Security.Cryptography;
-using System.Text;
-using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Preoff.Controllers
 {
