@@ -157,25 +157,6 @@ namespace Preoff
 
             builder.RegisterGeneric(typeof(RepositoryBase<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
 
-            //builder.RegisterAssemblyTypes(typeof(TestDAL).GetTypeInfo().Assembly).AsImplementedInterfaces().AsSelf().PropertiesAutowired();//dal
-            //builder.RegisterGeneric(typeof(ImplRepository<>))
-            //    .InstancePerLifetimeScope()
-            //    .OnActivating(handler =>
-            //    {
-            //        entityContext.SetDbContext(dbContext);
-
-            //    }).As(typeof(IRepository<>));
-
-            //var dataAccess = Assembly.GetExecutingAssembly();
-
-            //builder.RegisterAssemblyTypes(dataAccess)
-            //       .Where(t => t.Name.EndsWith("Repository"))
-            //       .AsImplementedInterfaces();
-            //var assembly = Assembly.GetExecutingAssembly();
-            //builder.RegisterAssemblyTypes(assembly)
-            //    .InNamespace("Preoff.Entity");
-            //builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("Table"));
-
             builder.RegisterType<UserRepository>().As<IUserRepository>();
             builder.RegisterType<AircRepository>().As<IAircRepository>();
             builder.RegisterType<AirLoadRepository>().As<IAirLoadRepository>();
