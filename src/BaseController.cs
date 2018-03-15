@@ -42,14 +42,12 @@ namespace Preoff
 
 
             var param = (Dictionary<String, Object>)context.ActionArguments;
-            //log.Info($"{HttpContextExtension.GetUserIp(context.HttpContext)}-{context.HttpContext.Request.Path}");
             string x = $"{HttpContextExtension.GetUserIp(context.HttpContext)}-{context.HttpContext.Request.Path}";
             foreach (var item in param.Values)
             {
                 string itemName = item.GetType().Name.ToString();
                 string itemToJson = JsonConvert.SerializeObject(item);
 
-                //log.Info($"{itemName}:{itemToJson}");
                 x += ($",{itemName}={itemToJson}");
             }
             log.Info(x);
