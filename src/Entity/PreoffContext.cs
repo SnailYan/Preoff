@@ -41,6 +41,7 @@ namespace Preoff.Entity
         public virtual DbSet<UserTable> UserTable { get; set; }
         public virtual DbSet<UserView> UserView { get; set; }
         public virtual DbSet<FireStationDataTable> FireStationData { get; set; }
+        public virtual DbSet<HotsPotsTable> HotsPotsTable { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -910,6 +911,105 @@ namespace Preoff.Entity
                 entity.Property(e => e.WindSpeed).HasColumnName("wind_speed");
 
                 entity.Property(e => e.Winddirect).HasColumnName("winddirect");
+            });
+
+            modelBuilder.Entity<HotsPotsTable>(entity =>
+            {
+                entity.ToTable("hotsPotsTable");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.AttackTime)
+                    .HasColumnName("attack_time")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.BriefIntroduction)
+                    .HasColumnName("brief_introduction")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.CauseOfFire)
+                    .HasColumnName("cause_of_fire")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.Continuously)
+                    .HasColumnName("continuously")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.CountyName)
+                    .HasColumnName("county_name")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.FeedbackSituation)
+                    .HasColumnName("feedback_situation")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.FireArea).HasColumnName("fire_area");
+
+                entity.Property(e => e.FireForestryArea).HasColumnName("fire_forestry_area");
+
+                entity.Property(e => e.HotsPotsCode)
+                    .HasColumnName("hots_pots_code")
+                    .HasMaxLength(10);
+
+                entity.Property(e => e.IgnitingTime)
+                    .HasColumnName("igniting_time")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.LandType)
+                    .HasColumnName("land_type")
+                    .HasMaxLength(10);
+
+                entity.Property(e => e.MonitorUnit)
+                    .HasColumnName("monitor_unit")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.MonitorUser)
+                    .HasColumnName("monitor_user")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.OtherLosses)
+                    .HasColumnName("other_losses")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.PicPath)
+                    .HasColumnName("pic_path")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.PixelsNumber).HasColumnName("pixels_number");
+
+                entity.Property(e => e.ReceiveTime)
+                    .HasColumnName("receive_time")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.ReportFile)
+                    .HasColumnName("report_file")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.ReportUnit)
+                    .HasColumnName("report_unit")
+                    .HasMaxLength(10);
+
+                entity.Property(e => e.ReportUser)
+                    .HasColumnName("report_user")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.SatelLite)
+                    .HasColumnName("satel_lite")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Smoke)
+                    .HasColumnName("smoke")
+                    .HasMaxLength(10);
+
+                entity.Property(e => e.SystemCode)
+                    .HasColumnName("system_code")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.VictimForestryArea).HasColumnName("victim_forestry_area");
+
+                entity.Property(e => e.XPos).HasColumnName("x_pos");
+
+                entity.Property(e => e.YPos).HasColumnName("y_pos");
             });
         }
     }
