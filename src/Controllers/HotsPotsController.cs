@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace Preoff.Controllers
 {
     /// <summary>
-    /// 无人机控制器
+    /// 卫星热点控制器
     /// </summary>
     //[Authorize]
     [Produces("application/json")]
@@ -21,7 +21,7 @@ namespace Preoff.Controllers
     public class HotsPotsController : BaseController
     {
         /// <summary>
-        /// 无人机仓库
+        /// 卫星热点仓库
         /// </summary>
         public readonly IHotsPotsRepository _repository;
         ILog log = LogManager.GetLogger(Startup.Logrepository.Name, typeof(Startup));
@@ -35,10 +35,9 @@ namespace Preoff.Controllers
         }
 
         /// <summary>
-        /// 根据日期和时间获取火险等级
+        /// 根据日期获取卫星热点
         /// </summary>
         /// <param name="date">日期(20180309)</param>
-        /// <param name="hour">小时(08)</param>
         /// <returns></returns>
         [HttpGet("GetList")]
         public IActionResult SelectPage(string date)
