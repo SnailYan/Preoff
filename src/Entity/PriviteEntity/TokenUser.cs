@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Preoff.Entity
+﻿namespace Preoff.Entity
 {
     public partial class TokenUser
     {

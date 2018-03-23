@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Preoff.Comm
 {
     public enum OperationStr

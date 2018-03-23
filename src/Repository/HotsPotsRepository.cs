@@ -1,11 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Preoff.Entity;
+﻿using Preoff.Entity;
 using System;
-using System.Collections.Generic;
-using System.Data.Common;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Preoff.Repository
 {

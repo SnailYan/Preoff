@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Preoff.Entity
+﻿namespace Preoff.Entity
 {
     public partial class CameraTypeView
     {
