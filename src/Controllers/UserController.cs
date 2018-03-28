@@ -7,6 +7,7 @@ using Preoff.Repository;
 using System.Linq.Expressions;
 using Preoff.Comm;
 using DynamicExpresso;
+using Microsoft.AspNetCore.Cors;
 
 namespace Preoff.Controllers
 {
@@ -16,6 +17,7 @@ namespace Preoff.Controllers
     //[Authorize]
     [Produces("application/json")]
     [Route("user")]
+    [EnableCors("AllowAllOrigins")]
     public class UserController : BaseController
     {
 

@@ -1,4 +1,5 @@
 ﻿using log4net;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Preoff.Repository;
 
@@ -10,6 +11,7 @@ namespace Preoff.Controllers
     //[Authorize]
     [Produces("application/json")]
     [Route("Weather")]
+    [EnableCors("AllowAllOrigins")]
     public class FireStationDataController : BaseController
     {
         /// <summary>

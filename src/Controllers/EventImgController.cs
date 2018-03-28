@@ -15,8 +15,8 @@ namespace Preoff.Controllers
     /// 任务控制器
     /// </summary>
     //[Authorize]
-    [EnableCors("AllowSpecificOrigin")]
     [Route("EventImg")]
+    [EnableCors("AllowAllOrigins")]
     public class EventImgController : BaseController
     {
         /// <summary>

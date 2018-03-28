@@ -15,8 +15,8 @@ namespace Preoff.Controllers
     /// 任务控制器
     /// </summary>
     //[Authorize]
-    [EnableCors("AllowSpecificOrigin")]
     [Route("EventVideo")]
+    [EnableCors("AllowAllOrigins")]
     public class EventVideoController : BaseController
     {
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using log4net;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Preoff.Repository;
 using System;
@@ -11,6 +12,7 @@ namespace Preoff.Controllers
     //[Authorize]
     [Produces("application/json")]
     [Route("HotsPots")]
+    [EnableCors("AllowAllOrigins")]
     public class HotsPotsController : BaseController
     {
         /// <summary>

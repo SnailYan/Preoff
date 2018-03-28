@@ -1,5 +1,6 @@
 ﻿using DynamicExpresso;
 using log4net;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Preoff.Comm;
 using Preoff.Entity;
@@ -16,6 +17,7 @@ namespace Preoff.Controllers
     //[Authorize]
     [Produces("application/json")]
     [Route("Task")]
+    [EnableCors("AllowAllOrigins")]
     public class TaskController : BaseController
     {
         /// <summary>

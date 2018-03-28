@@ -51,6 +51,19 @@ namespace Preoff
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
+
+            #region CORS
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                 builder => builder.WithOrigins().AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
+            });
+            
+            #endregion
+
+
+
+
             services.Configure<JwtSettings>(Configuration.GetSection("JwtSettings"));
             //services.AddEntityFrameworkSqlServer().AddDbContext<CoreTestContext>(opetions => opetions.UseSqlServer(Configuration.GetConnectionString("ConnDBString")));
             services.AddEntityFrameworkSqlServer().AddDbContext<PreoffContext>(opetions => opetions.UseSqlServer(Configuration.GetConnectionString("ConnDBString"),b=>b.UseRowNumberForPaging()));
@@ -95,14 +108,9 @@ namespace Preoff
             //services.AddUnitOfWork<CoreTestContext>();
             //services.AddScoped(typeof(IDemoService), typeof(DemoService));
 
+            
+
             services.AddMvc();
-            #region CORS
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowSpecificOrigin",
-                 builder => builder.WithOrigins("http://localhost").AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
-            });
-            #endregion
             // 注入的实现ISwaggerProvider使用默认设置
             services.AddSwaggerGen(c =>
             {
@@ -126,6 +134,7 @@ namespace Preoff
         /// <param name="loggerFactory"></param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -135,14 +144,15 @@ namespace Preoff
             app.UseSwaggerUI(c => {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api接口");
             });
+
             app.UseMvc();
-            app.UseCors("AllowSpecificOrigin");
 
             app.UseStaticFiles(new StaticFileOptions()
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(@"E:\", @"corewebapi")),
                 RequestPath = new PathString("/Upload")
             });
+
             //app.UseForwardedHeaders(new ForwardedHeadersOptions
             //{
             //    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto

@@ -1,4 +1,5 @@
 ﻿using log4net;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Preoff.Repository;
 using System;
@@ -11,6 +12,7 @@ namespace Preoff.Controllers
     //[Authorize]
     [Produces("application/json")]
     [Route("Division")]
+    [EnableCors("AllowAllOrigins")]
     public class DivisionController : BaseController
     {
         /// <summary>

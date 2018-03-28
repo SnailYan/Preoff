@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Preoff.Entity;
 using Preoff.Comm;
+using Microsoft.AspNetCore.Cors;
 
 namespace Preoff.Controllers
 {
@@ -15,6 +16,7 @@ namespace Preoff.Controllers
     /// ÊÚÈ¨¿ØÖÆÆ÷
     /// </summary>
     [Route("[controller]")]
+    [EnableCors("AllowAllOrigins")]
     public class AuthorizeController : BaseController
     {
         private JwtSettings _jwtSettings;
