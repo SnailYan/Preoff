@@ -179,6 +179,8 @@ namespace Preoff
             builder.RegisterType<UnitRepository>().As<IUnitRepository>();
             builder.RegisterType<FireStationDataRepository>().As<IFireStationDataRepository>();
             builder.RegisterType<HotsPotsRepository>().As<IHotsPotsRepository>();
+
+            //builder.RegisterAssemblyTypes(System.Reflection.Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("Repository")).AsImplementedInterfaces().InstancePerLifetimeScope();
         }
     }
 }
